@@ -1,39 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:vaccine/components/roundedButtonLight.dart';
-import 'package:vaccine/components/roundedButtonSolid.dart';
-import 'package:vaccine/constants.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+import '../../../components/roundedButtonLight.dart';
+import '../../../components/roundedButtonSolid.dart';
+import '../../../constants.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        textTheme: GoogleFonts.poppinsTextTheme(),
-      ),
-      home: WelcomePage(),
-    );
-  }
-}
-
-class WelcomePage extends StatelessWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+class Body extends StatelessWidget {
+  const Body({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Padding(
+    return Padding(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +51,6 @@ class WelcomePage extends StatelessWidget {
             RoundedButtonLight(size: size, text: "Daftar")
           ],
         ),
-      ),
-    );
+      );
   }
 }
