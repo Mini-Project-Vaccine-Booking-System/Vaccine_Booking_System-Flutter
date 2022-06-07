@@ -14,7 +14,7 @@ class RoundedButtonSolid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: size.width * 0.9,
+      width: size.width,
       height: 55,
       child: ElevatedButton(
           onPressed: () {},

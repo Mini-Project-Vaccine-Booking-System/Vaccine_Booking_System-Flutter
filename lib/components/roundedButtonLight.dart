@@ -15,13 +15,13 @@ class RoundedButtonLight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: size.width * 0.9,
+      width: size.width,
       height: 55,
       child: ElevatedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(
             primary: cMainWhite,
-            side: BorderSide(color: cPrimary1, width: 2),
+            side: const BorderSide(color: cPrimary1, width: 2),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             elevation: 3
           ),

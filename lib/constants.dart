@@ -138,7 +138,7 @@ TextStyle paragraphSemiBold4(colorText) {
 }
 
 TextStyle paragraphMedium4(colorText) {
-  return TextStyle(color: colorText, fontSize: 11, fontWeight: FontWeight.w500);
+  return TextStyle(color: colorText, fontSize: 12, fontWeight: FontWeight.w500);
 }
 
 TextStyle paragraphRegular4(colorText) {
