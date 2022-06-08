@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../components/roundedButtonSolid.dart';
 import '../../../constants.dart';
+import '../../home_screen/home_screen.dart';
 import 'email_field.dart';
 import 'password_field.dart';
 import 'welcoming_text.dart';
@@ -30,7 +31,13 @@ class Body extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-            child: RoundedButtonSolid(size: size, text: "Daftar"),
+            child: RoundedButtonSolid(
+                size: size,
+                text: "Daftar",
+                onAction: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => HomeScreen()));
+                }),
           ),
           SizedBox(height: size.height * 0.02),
           Padding(

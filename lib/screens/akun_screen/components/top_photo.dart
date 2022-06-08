@@ -42,10 +42,10 @@ class TopPhoto extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       shape: BoxShape.rectangle,
-                      color: cNeutral1),
+                      color: cPrimary1),
                   child: Icon(
                     Icons.camera_alt_outlined,
-                    color: Colors.white,
+                    color: cMainWhite,
                   ),
                 ),
               )),

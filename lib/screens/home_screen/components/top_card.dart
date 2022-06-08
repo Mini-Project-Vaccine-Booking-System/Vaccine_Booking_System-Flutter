@@ -29,8 +29,7 @@ class TopCard extends StatelessWidget {
               ])),
       child: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: size.width * 0.08,
-            vertical: size.height * 0.02),
+            horizontal: size.width * 0.08, vertical: size.height * 0.02),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,22 +47,10 @@ class TopCard extends StatelessWidget {
                     SizedBox(
                       height: size.height * 0.002,
                     ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.circle_notifications,
-                          color: cFail,
-                          size: 16,
-                        ),
-                        SizedBox(
-                          width: size.width * 0.02,
-                        ),
-                        Text(
-                          "Belum Vaksin Booster",
-                          style: paragraphSemiBold4(cFail),
-                        )
-                      ],
-                    )
+                    Text(
+                      "3578094008020003",
+                      style: paragraphRegular3(cMainWhite),
+                    ),
                   ],
                 ),
                 IconButton(

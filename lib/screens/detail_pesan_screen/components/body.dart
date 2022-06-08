@@ -105,17 +105,16 @@ class _BodyState extends State<Body> {
           SizedBox(
             height: size.height * 0.05,
           ),
-          RoundedButtonSolid(size: size, text: "Pesan")
+          RoundedButtonSolid(
+            size: size,
+            text: "Pesan",
+            onAction: () {},
+          ),
+          SizedBox(
+            height: size.height * 0.03,
+          )
         ],
       ),
     );
   }
 }
-
-
-
-
-
-
-
-

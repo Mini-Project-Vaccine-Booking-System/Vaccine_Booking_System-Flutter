@@ -8,23 +8,30 @@ class Akun extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(
-        leadingWidth: 70,
+    return Scaffold(
+      appBar: AppBar(
+        shape: const Border(bottom: BorderSide(color: cNeutral2, width: 1)),
+        leadingWidth: 50,
         leading: IconButton(
-            padding: EdgeInsets.all(0.0),
-            onPressed: () {},
-            icon: Icon(
-              Icons.arrow_back_ios_new_rounded,
-              size: 30,
-              color: cNeutral3,
+            padding: const EdgeInsets.all(0.0),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back_rounded,
+              size: 24,
+              color: cMainWhite,
             )),
-        backgroundColor: Colors.transparent,
+        backgroundColor: cPrimary1,
         elevation: 0.0,
-        title: Text(
+        title: const Text(
           "Akun",
-          style: headingRegular2(cMainBlack),
+          style: TextStyle(
+              color: cMainWhite, fontSize: 17, fontWeight: FontWeight.bold),
         ),
-        centerTitle: true,
-      ), body: Body(),);
+        centerTitle: false,
+      ),
+      body: Body(),
+    );
   }
 }
