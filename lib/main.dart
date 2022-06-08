@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vaccine/components/roundedButtonSolid.dart';
-
-import 'components/glass.dart';
-import 'components/roundedContainer.dart';
-import 'constants.dart';
 
 void main() {
   runApp(const MyApp());
