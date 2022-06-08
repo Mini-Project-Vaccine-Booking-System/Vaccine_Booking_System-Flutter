@@ -18,14 +18,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
