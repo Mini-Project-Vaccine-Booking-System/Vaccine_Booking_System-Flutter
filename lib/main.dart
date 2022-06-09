@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vaccine/screens/daftar_vaksin_screen/daftar_vaksin_screen.dart';
+import 'package:vaccine/screens/detail_pesan_screen/detail_pesan_screen.dart';
+
+import 'constants.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
-      home: const HomePage(),
+      home: HomePage(),
     );
   }
 }
