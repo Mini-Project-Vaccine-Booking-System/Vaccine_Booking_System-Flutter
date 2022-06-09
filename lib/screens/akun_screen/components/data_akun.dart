@@ -257,20 +257,35 @@ class DataAkun extends StatelessWidget {
                       SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                "Batal",
-                                style: paragraphBold2(cNeutral3),
-                              )),
-                          TextButton(
-                              onPressed: () {},
-                              child: Text("Simpan",
-                                  style: paragraphBold2(cNeutral3)))
-                        ],
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: size.width * 0.02),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                                style: ButtonStyle(
+                                  side: MaterialStateProperty.all(
+                                      const BorderSide(
+                                          width: 2, color: cPrimary1)),
+                                ),
+                                onPressed: () {},
+                                child: Text(
+                                  "Batal",
+                                  style: paragraphBold2(cPrimary1),
+                                )),
+                            SizedBox(
+                              width: size.width * 0.02,
+                            ),
+                            TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: cPrimary1,
+                                ),
+                                onPressed: () {},
+                                child: Text("Simpan",
+                                    style: paragraphBold2(cMainWhite)))
+                          ],
+                        ),
                       )
                     ]),
               ),

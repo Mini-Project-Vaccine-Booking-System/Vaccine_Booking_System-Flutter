@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vaccine/screens/daftar_vaksin_screen/daftar_vaksin_screen.dart';
 
 import '../../../constants.dart';
 
@@ -14,7 +15,10 @@ class Menu extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => DaftarVaksinScreen()));
+          },
           child: Column(
             children: [
               Image.asset("assets/icons/left.png"),

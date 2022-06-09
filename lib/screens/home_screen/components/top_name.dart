@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vaccine/screens/akun_screen/akun_screen.dart';
 
 import '../../../constants.dart';
 
@@ -43,12 +44,17 @@ class TopName extends StatelessWidget {
             )
           ],
         ),
-        Container(
-            width: 47,
-            height: 47,
-            decoration: const BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.all(Radius.circular(10))))
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) => Akun()));
+          },
+          child: Container(
+              width: 47,
+              height: 47,
+              decoration: const BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.all(Radius.circular(10)))),
+        )
       ],
     );
   }

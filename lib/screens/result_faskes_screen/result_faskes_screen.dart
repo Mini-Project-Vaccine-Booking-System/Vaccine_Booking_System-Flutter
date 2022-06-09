@@ -14,18 +14,20 @@ class ResultFaskesScreen extends StatelessWidget {
         leadingWidth: 50,
         leading: IconButton(
             padding: const EdgeInsets.all(0.0),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back_rounded,
               size: 24,
-              color: Colors.black,
+              color: cMainWhite,
             )),
-        backgroundColor: Colors.transparent,
+        backgroundColor: cPrimary1,
         elevation: 0.0,
         title: const Text(
-          "Fasilitas Kesehatan",
+          "Daftar Fasilitas Kesehatan",
           style: TextStyle(
-              color: Colors.black, fontSize: 17, fontWeight: FontWeight.w500),
+              color: cMainWhite, fontSize: 17, fontWeight: FontWeight.bold),
         ),
         centerTitle: false,
       ),

@@ -10,22 +10,24 @@ class DaftarVaksinScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        shape: Border(bottom: BorderSide(color: cNeutral2, width: 1)),
+        shape: const Border(bottom: BorderSide(color: cNeutral2, width: 1)),
         leadingWidth: 50,
         leading: IconButton(
-            padding: EdgeInsets.all(0.0),
-            onPressed: () {},
-            icon: Icon(
+            padding: const EdgeInsets.all(0.0),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
               Icons.arrow_back_rounded,
               size: 24,
-              color: Colors.black,
+              color: cMainWhite,
             )),
-        backgroundColor: Colors.transparent,
+        backgroundColor: cPrimary1,
         elevation: 0.0,
-        title: Text(
+        title: const Text(
           "Daftar Vaksin",
           style: TextStyle(
-              color: Colors.black, fontSize: 17, fontWeight: FontWeight.w500),
+              color: cMainWhite, fontSize: 17, fontWeight: FontWeight.bold),
         ),
         centerTitle: false,
       ),

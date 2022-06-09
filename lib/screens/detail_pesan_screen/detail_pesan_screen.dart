@@ -13,7 +13,9 @@ class DetailPesanScreen extends StatelessWidget {
         leadingWidth: 50,
         leading: IconButton(
             padding: const EdgeInsets.all(0.0),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back_rounded,
               size: 24,

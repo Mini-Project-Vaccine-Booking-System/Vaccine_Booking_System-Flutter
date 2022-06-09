@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:vaccine/screens/result_faskes_screen/result_faskes_screen.dart';
 
 import '../../../components/roundedButtonSolid.dart';
 import '../../../components/roundedContainer.dart';
@@ -57,7 +58,14 @@ class Body extends StatelessWidget {
           SizedBox(
             height: size.height * 0.05,
           ),
-          RoundedButtonSolid(size: size, text: "Cari")
+          RoundedButtonSolid(
+            size: size,
+            text: "Cari",
+            onAction: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => ResultFaskesScreen()));
+            },
+          )
         ],
       ),
     );

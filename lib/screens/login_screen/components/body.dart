@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vaccine/screens/home_screen/home_screen.dart';
+import 'package:vaccine/screens/register_screen/register_screen.dart';
 
 import '../../../components/roundedButtonSolid.dart';
 import '../../../constants.dart';
@@ -30,7 +32,13 @@ class Body extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-            child: RoundedButtonSolid(size: size, text: "Masuk"),
+            child: RoundedButtonSolid(
+                size: size,
+                text: "Masuk",
+                onAction: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => HomeScreen()));
+                }),
           ),
           SizedBox(height: size.height * 0.02),
           Padding(
@@ -46,7 +54,10 @@ class Body extends StatelessWidget {
                   width: size.width * 0.01,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => RegisterScreen()));
+                  },
                   child: Text(
                     "Daftar",
                     style: paragraphRegular3(cPrimary1),
