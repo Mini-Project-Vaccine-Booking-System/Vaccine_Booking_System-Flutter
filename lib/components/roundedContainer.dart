@@ -12,7 +12,7 @@ class roundedContainer extends StatelessWidget {
     return Container(
         margin: EdgeInsets.only(top: size.width * 0.02),
         padding:
-            EdgeInsets.symmetric(horizontal: size.width * 0.02, vertical: 3),
+            EdgeInsets.symmetric(horizontal: size.width * 0.02),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             border: Border.all(color: cNeutral1, width: 2)),
