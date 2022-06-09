@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vaccine/screens/login_screen/login_screen.dart';
-import 'package:vaccine/screens/welcome_screen/welcome_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,16 +18,16 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
-      home: WelcomeScreen(),
+      home: HomePage(),
     );
   }
 }
 
-// class HomePage extends StatelessWidget {
-//   const HomePage({Key? key}) : super(key: key);
-//   @override
-//   Widget build(BuildContext context) {
-//     Size size = MediaQuery.of(context).size;
-//     return Scaffold();
-//   }
-// }
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Scaffold();
+  }
+}
