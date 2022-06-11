@@ -10,12 +10,13 @@ class PassScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Pendaftaran Berhasil"),
-          centerTitle: true,
-          backgroundColor: cPrimary1,
-          elevation: 0,
-        ),
-        body: Body(),
+        title: Text("Pendaftaran Berhasil"),
+        centerTitle: true,
+        backgroundColor: cPrimary1,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+      ),
+      body: Body(),
     );
   }
 }

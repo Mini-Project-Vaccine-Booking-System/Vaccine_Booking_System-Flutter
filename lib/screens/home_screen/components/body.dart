@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vaccine/screens/home_screen/components/caraousel_news.dart';
+import 'package:vaccine/screens/news_more_screen/news_more_scree.dart';
+import 'package:vaccine/screens/result_faskes_screen/result_faskes_screen.dart';
 import '../../../constants.dart';
 import 'horizontal_list.dart';
 import 'menu.dart';
@@ -40,7 +42,10 @@ class Body extends StatelessWidget {
                 style: paragraphBold3(cNeutral3),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => ResultFaskesScreen()));
+                },
                 child: Text(
                   "Lihat Semua",
                   style: paragraphBold4(cPrimary2),
@@ -64,7 +69,10 @@ class Body extends StatelessWidget {
                 style: paragraphBold3(cNeutral3),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => NewsMoreScreen()));
+                },
                 child: Text(
                   "Lihat Semua",
                   style: paragraphBold4(cPrimary2),

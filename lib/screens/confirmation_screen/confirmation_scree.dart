@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vaccine/screens/confirmation_screen/components/body.dart';
 
 import '../../constants.dart';
 
@@ -13,7 +14,9 @@ class ConfirmationScreen extends StatelessWidget {
         leadingWidth: 50,
         leading: IconButton(
             padding: const EdgeInsets.all(0.0),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back_rounded,
               size: 24,
@@ -28,6 +31,7 @@ class ConfirmationScreen extends StatelessWidget {
         ),
         centerTitle: false,
       ),
+      body: Body(),
     );
   }
 }

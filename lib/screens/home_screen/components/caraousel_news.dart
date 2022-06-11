@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:vaccine/screens/detail_news/detail_news.dart';
 
 import '../../../components/glass.dart';
 import '../../../constants.dart';
@@ -22,8 +23,11 @@ class CarouselNews extends StatelessWidget {
         ),
         itemCount: 3,
         itemBuilder: (context, index, realIndex) {
-          return GestureDetector(
-            onTap: () {},
+          return InkWell(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => DetailNews()));
+            },
             child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 5),
                 decoration: const BoxDecoration(

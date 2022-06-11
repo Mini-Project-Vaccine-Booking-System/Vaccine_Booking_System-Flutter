@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vaccine/screens/anggota_screen/anggota_screen.dart';
 
 import '../../../constants.dart';
 
@@ -54,7 +55,10 @@ class TopCard extends StatelessWidget {
                   ],
                 ),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => AnggotaScreen()));
+                    },
                     icon: Icon(
                       Icons.add_box_rounded,
                       color: cMainWhite,

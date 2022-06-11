@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vaccine/screens/news_more_screen/components/body.dart';
 
 import '../../constants.dart';
 
@@ -30,7 +31,7 @@ class NewsMoreScreen extends StatelessWidget {
         ),
         centerTitle: false,
       ),
-      
+      body: Body(),
     );
   }
 }

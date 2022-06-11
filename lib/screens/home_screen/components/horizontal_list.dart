@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vaccine/screens/detail_pesan_screen/detail_pesan_screen.dart';
 
 import '../../../components/glass.dart';
 import '../../../constants.dart';
@@ -19,26 +20,32 @@ class HorizontalList extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: 3,
         itemBuilder: (context, index) {
-          return Container(
-              width: size.width * 0.6,
-              margin: const EdgeInsets.only(right: 16),
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/rs.png"),
-                      fit: BoxFit.fill),
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              child: Glass(
-                children: [
-                  Text(
-                    "Rumah Sakit Kasih Ibu",
-                    style: paragraphSemiBold2(Colors.white),
-                  ),
-                  Text(
-                    "Jalan Slamet Riyadi Solo",
-                    style: paragraphRegular4(Colors.white),
-                  )
-                ],
-              ));
+          return InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => DetailPesanScreen()));
+            },
+            child: Container(
+                width: size.width * 0.6,
+                margin: const EdgeInsets.only(right: 16),
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/images/rs.png"),
+                        fit: BoxFit.fill),
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                child: Glass(
+                  children: [
+                    Text(
+                      "Rumah Sakit Kasih Ibu",
+                      style: paragraphSemiBold2(Colors.white),
+                    ),
+                    Text(
+                      "Jalan Slamet Riyadi Solo",
+                      style: paragraphRegular4(Colors.white),
+                    )
+                  ],
+                )),
+          );
         },
       ),
     );

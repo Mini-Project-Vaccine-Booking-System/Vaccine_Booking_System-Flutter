@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vaccine/screens/home_screen/home_screen.dart';
 
 import '../../../constants.dart';
 
@@ -18,7 +19,12 @@ class BottomButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (_) => HomeScreen()),
+                    (route) => false);
+              },
               style: ElevatedButton.styleFrom(
                   primary: cPrimary1,
                   shape: RoundedRectangleBorder(

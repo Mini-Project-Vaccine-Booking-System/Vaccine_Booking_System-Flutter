@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vaccine/screens/confirmation_screen/confirmation_scree.dart';
 
 import '../../../components/roundedButtonSolid.dart';
 import '../../../components/roundedContainer.dart';
@@ -108,7 +109,10 @@ class _BodyState extends State<Body> {
           RoundedButtonSolid(
             size: size,
             text: "Pesan",
-            onAction: () {},
+            onAction: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => ConfirmationScreen()));
+            },
           ),
           SizedBox(
             height: size.height * 0.03,

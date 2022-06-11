@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vaccine/screens/welcome_screen/welcome_screen.dart';
+
+import 'constants.dart';
 
 void main() {
   runApp(const MyApp());

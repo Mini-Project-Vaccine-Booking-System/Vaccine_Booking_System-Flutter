@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vaccine/screens/history_ticket_screen/components/body.dart';
 
 import '../../constants.dart';
 
@@ -29,6 +30,7 @@ class HistoryTicketScreen extends StatelessWidget {
         ),
         centerTitle: false,
       ),
+      body: Body(),
     );
   }
 }

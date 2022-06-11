@@ -1,5 +1,6 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:vaccine/screens/pass_screen/pass_screen.dart';
 
 import '../../../constants.dart';
 
@@ -15,12 +16,15 @@ class Body extends StatelessWidget {
       itemCount: 5,
       itemBuilder: (context, index) {
         return InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => PassScreen()));
+          },
           child: Container(
             margin: EdgeInsets.only(bottom: size.width * 0.06),
             width: size.width,
             decoration: BoxDecoration(
-              color: cNeutral2,
+              color: cMainWhite,
               borderRadius: BorderRadius.all(Radius.circular(15)),
               boxShadow: [
                 BoxShadow(

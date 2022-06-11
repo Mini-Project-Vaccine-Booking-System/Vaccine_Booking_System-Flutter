@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vaccine/components/roundedButtonSolid.dart';
+import 'package:vaccine/screens/pass_screen/pass_screen.dart';
 
 import '../../../constants.dart';
 import 'middle_card.dart';
@@ -67,7 +69,6 @@ class _BodyState extends State<Body> {
             borderRadius: BorderRadius.circular(10),
             child: ExpansionPanelList(
                 elevation: 0,
-                dividerColor: Colors.amber,
                 expandedHeaderPadding: EdgeInsets.zero,
                 expansionCallback: (i, isOpen) =>
                     setState(() => _isOpen[i] = !isOpen),
@@ -212,6 +213,19 @@ class _BodyState extends State<Body> {
                   )
                 ]),
           ),
+        ),
+        SizedBox(
+          height: size.height * 0.05,
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+          child: RoundedButtonSolid(
+              size: size,
+              text: "Konfirmasi",
+              onAction: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => PassScreen()));
+              }),
         ),
         SizedBox(
           height: size.height * 0.03,

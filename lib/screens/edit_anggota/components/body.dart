@@ -119,7 +119,12 @@ class Body extends StatelessWidget {
           SizedBox(
             height: size.height * 0.05,
           ),
-          RoundedButtonSolid(size: size, text: "Simpan", onAction: () {}),
+          RoundedButtonSolid(
+              size: size,
+              text: "Simpan",
+              onAction: () {
+                Navigator.pop(context);
+              }),
           SizedBox(
             height: size.height * 0.01,
           ),

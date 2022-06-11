@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../components/glass.dart';
 import '../../../constants.dart';
+import '../../detail_news/detail_news.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -15,7 +16,10 @@ class Body extends StatelessWidget {
         itemCount: 5,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => DetailNews()));
+            },
             child: Container(
                 margin: EdgeInsets.only(bottom: size.height * 0.03),
                 decoration: BoxDecoration(
