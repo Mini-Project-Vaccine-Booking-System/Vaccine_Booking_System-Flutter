@@ -26,7 +26,7 @@ class PasswordText extends StatelessWidget {
           ),
           roundedContainer(
             child: FormBuilderTextField(
-              name: "username",
+              name: "password",
               decoration: InputDecoration(
                 hintText: "ketik password disini",
                 hintStyle: paragraphRegular1(cNeutral1),

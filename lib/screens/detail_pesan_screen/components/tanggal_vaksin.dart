@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 
-class TanggalVaksin extends StatelessWidget {
+class TanggalVaksin extends StatefulWidget {
   const TanggalVaksin({
     Key? key,
     required this.size,
@@ -11,22 +11,31 @@ class TanggalVaksin extends StatelessWidget {
   final Size size;
 
   @override
+  State<TanggalVaksin> createState() => _TanggalVaksinState();
+}
+
+class _TanggalVaksinState extends State<TanggalVaksin> {
+  var indexActive = 0;
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: size.height * 0.1,
+      height: widget.size.height * 0.1,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: 5,
         itemBuilder: (context, index) {
           return InkWell(
-              onTap: () {},
+              onTap: () {
+                setState(() {
+                  indexActive = index;
+                });
+              },
               child: Container(
                   margin: EdgeInsets.all(5),
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: cMainWhite,
+                    color: indexActive == index ? cPrimary1 : cMainWhite,
                     border: Border.all(color: cPrimary1),
                     boxShadow: [
                       BoxShadow(
@@ -43,7 +52,8 @@ class TanggalVaksin extends StatelessWidget {
                       Text(
                         "19",
                         style: TextStyle(
-                            color: cPrimary1,
+                            color:
+                                indexActive == index ? Colors.white : cPrimary1,
                             fontWeight: FontWeight.bold,
                             fontSize: 40),
                       ),
@@ -57,14 +67,19 @@ class TanggalVaksin extends StatelessWidget {
                           Text(
                             "Rabu",
                             style: TextStyle(
-                                color: cPrimary1,
+                                color: indexActive == index
+                                    ? Colors.white
+                                    : cPrimary1,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16),
                           ),
                           Text(
                             "Juni",
-                            style:
-                                TextStyle(fontSize: 16, color: cPrimary1),
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: indexActive == index
+                                    ? Colors.white
+                                    : cPrimary1),
                           )
                         ],
                       )

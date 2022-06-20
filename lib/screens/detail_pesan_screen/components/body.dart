@@ -43,17 +43,6 @@ class _BodyState extends State<Body> {
             height: size.height * 0.04,
           ),
           Text(
-            "Pilih jenis vaksin",
-            style: paragraphSemiBold3(cMainBlack),
-          ),
-          SizedBox(
-            height: size.height * 0.01,
-          ),
-          JenisVaksin(size: size),
-          SizedBox(
-            height: size.height * 0.03,
-          ),
-          Text(
             "Pilih tanggal vaksin",
             style: paragraphSemiBold3(cMainBlack),
           ),
@@ -61,6 +50,17 @@ class _BodyState extends State<Body> {
             height: size.height * 0.01,
           ),
           TanggalVaksin(size: size),
+          SizedBox(
+            height: size.height * 0.03,
+          ),
+          Text(
+            "Pilih jenis vaksin",
+            style: paragraphSemiBold3(cMainBlack),
+          ),
+          SizedBox(
+            height: size.height * 0.01,
+          ),
+          JenisVaksin(size: size),
           SizedBox(
             height: size.height * 0.03,
           ),

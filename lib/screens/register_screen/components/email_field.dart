@@ -26,7 +26,7 @@ class EmailText extends StatelessWidget {
           ),
           roundedContainer(
             child: FormBuilderTextField(
-              name: "username",
+              name: "email",
               decoration: InputDecoration(
                 hintText: "youareemail@gmail.com",
                 hintStyle: paragraphRegular1(cNeutral1),

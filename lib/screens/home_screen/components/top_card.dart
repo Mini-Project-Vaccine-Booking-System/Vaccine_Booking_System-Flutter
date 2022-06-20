@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vaccine/screens/anggota_screen/anggota_screen.dart';
 
 import '../../../constants.dart';
+import '../../../view_model/account_view_model.dart';
 
 class TopCard extends StatelessWidget {
   const TopCard({
@@ -13,6 +15,7 @@ class TopCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final account = Provider.of<AccoutnViewModel>(context);
     return Container(
       width: size.width,
       height: 104,
@@ -42,14 +45,17 @@ class TopCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Jerome Bell",
+                      account.data != null
+                          ? account.data!.name
+                          : "Nama belum diisi",
                       style: paragraphBold1(Colors.white),
                     ),
                     SizedBox(
                       height: size.height * 0.002,
                     ),
-                    Text(
-                      "3578094008020003",
+                    Text(account.data != null
+                          ? account.data!.nik
+                          : "",
                       style: paragraphRegular3(cMainWhite),
                     ),
                   ],
@@ -66,12 +72,18 @@ class TopCard extends StatelessWidget {
                     ))
               ],
             ),
-            GestureDetector(
-              onTap: () {},
-              child: Text(
-                "Lihat Riwayat Vaksin",
-                style: paragraphMedium4(cMainWhite),
-              ),
+            Row(
+              children: [
+                Icon(
+                  Icons.notifications,
+                  color: cMainWhite,
+                ),
+                SizedBox(width: size.width * 0.01),
+                Text(
+                  "Pastikan data sudah lengkap",
+                  style: paragraphMedium4(cMainWhite),
+                ),
+              ],
             )
           ],
         ),
