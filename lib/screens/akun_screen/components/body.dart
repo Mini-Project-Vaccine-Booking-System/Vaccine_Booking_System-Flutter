@@ -50,15 +50,15 @@ class Body extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  auth.logOut().then((value) => Navigator.pushAndRemoveUntil(
+                  /*   auth.logOut().then((value) => Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
                             builder: (_) => const WelcomeScreen()),
                         (Route) => false,
-                      ));
+                      )); */
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 8),
                   height: 50,
                   width: 100,
                   decoration: BoxDecoration(

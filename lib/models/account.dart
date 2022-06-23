@@ -1,29 +1,31 @@
 class Account {
-  String idUser, name, email, password, nik, usia, telp, gender, photo;
+  int idUser, id;
+  String name, email, password, nik, usia, telp, gender, photo;
   DateTime createdAt;
+  bool isParent;
 
   Account(
-      {required this.idUser,
+      {required this.id,
+      required this.idUser,
       required this.name,
       required this.email,
       required this.password,
-      required this.createdAt,
       required this.nik,
       required this.usia,
       required this.telp,
       required this.gender,
-      required this.photo});
+      required this.photo,
+      required this.isParent,
+      required this.createdAt});
 
   Map toJson() => {
-        'name': name,
-        'email': email.toLowerCase(),
-        'password': password,
+        'USERS_PERMISSIONS_USER': idUser,
+        'fullname': name,
         'nik': nik,
         'usia': usia,
         'gender': gender,
-        'photo': photo,
-        'telp': telp,
-        'createdAt': createdAt.toIso8601String(),
+        'phone': telp,
+        'isParent': isParent
       };
 
   Map<String, dynamic> toMap() {

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:vaccine/screens/home_screen/components/skeleton.dart';
+import '../../view_model/account_view_model.dart';
 import 'components/body.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -6,6 +9,23 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Body(),);
+    return Scaffold(
+      body: FutureBuilder(
+        future:
+            Provider.of<AccoutnViewModel>(context, listen: false).inisialData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            /* return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ); */
+            return Skeleton();
+          }
+
+          return Body();
+        },
+      ),
+    );
   }
 }

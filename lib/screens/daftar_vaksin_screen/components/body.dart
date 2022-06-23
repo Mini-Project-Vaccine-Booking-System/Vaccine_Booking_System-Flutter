@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
+import 'package:vaccine/components/roundedButtonLoading.dart';
 import 'package:vaccine/screens/result_faskes_screen/result_faskes_screen.dart';
-import 'package:vaccine/view_model/booking_view_model.dart';
+import 'package:vaccine/view_model/hospital_view_model.dart';
 
 import '../../../components/roundedButtonSolid.dart';
 import '../../../components/roundedContainer.dart';
 import '../../../constants.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
 
   @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  bool isLoading = false;
+  @override
   Widget build(BuildContext context) {
-    var booking = Provider.of<BookingViewModel>(context, listen: false);
+    var hospital = Provider.of<HospitalViewModel>(context, listen: false);
     Size size = MediaQuery.of(context).size;
     final _formKey = GlobalKey<FormBuilderState>();
     return SingleChildScrollView(
@@ -67,24 +74,37 @@ class Body extends StatelessWidget {
                   SizedBox(
                     height: size.height * 0.05,
                   ),
-                  RoundedButtonSolid(
-                    size: size,
-                    text: "Cari",
-                    onAction: () {
-                      _formKey.currentState!.save();
-                      if (_formKey.currentState!.validate()) {
-                        booking
-                            .getHealthByCity(
-                                _formKey.currentState!.value["city"])
-                            .then((value) => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => ResultFaskesScreen())));
-                      }
-                      /*   Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => ResultFaskesScreen())); */
-                    },
-                  )
+                  isLoading != true
+                      ? RoundedButtonSolid(
+                          size: size,
+                          text: "Cari",
+                          onAction: () {
+                            setState(() {
+                              isLoading = !isLoading;
+                            });
+                            _formKey.currentState!.save();
+                            if (_formKey.currentState!.validate()) {
+                              hospital
+                                  .getDataByCity(
+                                      _formKey.currentState!.value["city"])
+                                  .then((value) {
+                                setState(() {
+                                  isLoading = !isLoading;
+                                });
+                                if (value == true) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              ResultFaskesScreen()));
+                                } else {
+                                  print(value);
+                                }
+                              });
+                            }
+                          },
+                        )
+                      : RoundedButtonLoading(size: size)
                 ],
               )),
         ],

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:vaccine/screens/home_screen/home_screen.dart';
 import 'package:vaccine/screens/welcome_screen/welcome_screen.dart';
 import 'package:vaccine/view_model/account_view_model.dart';
 import 'package:vaccine/view_model/auth_view_model.dart';
-import 'package:vaccine/view_model/booking_view_model.dart';
 import 'package:vaccine/view_model/family_view_mode.dart';
+import 'package:vaccine/view_model/hospital_view_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,23 +25,23 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<AuthViewModel, AccoutnViewModel>(
           create: (context) => AccoutnViewModel(),
           update: (context, auth, datas) =>
-              datas!..updateData(auth.userId, auth.userFamily),
+              datas!..updateData(auth.parentId, auth.token),
         ),
         ChangeNotifierProxyProvider<AuthViewModel, FamilyViewModel>(
           create: (context) => FamilyViewModel(),
           update: (context, auth, datas) =>
-              datas!..updateData(auth.userId, auth.userFamily),
+              datas!..updateData(auth.parentId, auth.token),
         ),
-        ChangeNotifierProvider(create: (context) => BookingViewModel()),
+        ChangeNotifierProxyProvider<AuthViewModel, HospitalViewModel>(
+          create: (context) => HospitalViewModel(),
+          update: (context, auth, datas) =>
+              datas!..updateData(auth.parentId, auth.token),
+        ),
       ],
       builder: (context, child) => Consumer<AuthViewModel>(
         builder: (context, auth, child) => MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'VaksinQu',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-              textTheme: GoogleFonts.poppinsTextTheme(),
-            ),
             home: auth.isAuth
                 ? HomeScreen()
                 : FutureBuilder(

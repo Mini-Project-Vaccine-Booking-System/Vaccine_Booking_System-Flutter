@@ -18,15 +18,15 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  bool isInit = true;
-  @override
-  void didChangeDependencies() {
-    if (isInit == true) {
-      Provider.of<AccoutnViewModel>(context, listen: false).inisialData();
-      isInit = false;
-    }
-    super.didChangeDependencies();
-  }
+  // bool isInit = true;
+  // @override
+  // void didChangeDependencies() {
+  //   if (isInit == true) {
+  //     Provider.of<AccoutnViewModel>(context, listen: false).inisialData();
+  //     isInit = false;
+  //   }
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -304,7 +304,7 @@ class DataAkun extends StatelessWidget {
                                         backgroundColor: cPrimary1,
                                       ),
                                       onPressed: () {
-                                        formKey.currentState!.save();
+                                      /*   formKey.currentState!.save();
                                         if (formKey.currentState!.validate()) {
                                           Provider.of<AccoutnViewModel>(context,
                                                   listen: false)
@@ -314,7 +314,7 @@ class DataAkun extends StatelessWidget {
                                                       .value[name])
                                               .then((value) =>
                                                   Navigator.pop(context));
-                                        }
+                                        } */
                                       },
                                       child: Text("Simpan",
                                           style: paragraphBold2(cMainWhite)))

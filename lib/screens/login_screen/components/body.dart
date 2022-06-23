@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:vaccine/screens/home_screen/home_screen.dart';
 import 'package:vaccine/screens/register_screen/register_screen.dart';
 import 'package:vaccine/view_model/auth_view_model.dart';
+import 'package:validators/validators.dart';
 
 import '../../../components/roundedButtonSolid.dart';
 import '../../../constants.dart';
@@ -11,14 +12,31 @@ import 'email_field.dart';
 import 'password_field.dart';
 import 'welcoming_text.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
+
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  bool isLoading = false;
+  late String email;
+  late String password;
 
   @override
   Widget build(BuildContext context) {
     var auth = Provider.of<AuthViewModel>(context);
     Size size = MediaQuery.of(context).size;
     final _formKey = GlobalKey<FormBuilderState>();
+
+    void showError(String message) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(message),
+        backgroundColor: cFail,
+      ));
+    }
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,6 +65,42 @@ class Body extends StatelessWidget {
                         text: "Masuk",
                         onAction: () {
                           _formKey.currentState!.save();
+                          setState(() {
+                            isLoading = !isLoading;
+                            email = _formKey.currentState!.value["email"];
+                            password = _formKey.currentState!.value["password"];
+                          });
+                          if (isValid(_formKey.currentState!.value["email"],
+                              _formKey.currentState!.value["password"])) {
+                            auth
+                                .signIn(_formKey.currentState!.value["email"],
+                                    _formKey.currentState!.value["password"])
+                                .then((value) {
+                              setState(() {
+                                isLoading = !isLoading;
+                              });
+
+                              if (value == false) {
+                                showError("Input yang anda masukkan salah!");
+                              } else {
+                                auth.email = email;
+                                auth.password = password;
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => HomeScreen()),
+                                    (route) => false);
+                              }
+                            });
+                          } else {
+                            setState(() {
+                              isLoading = !isLoading;
+                            });
+
+                            showError("Data yang anda masukkan tidak tepat!");
+                          }
+                          /* 
+                          _formKey.currentState!.save();
                           if (_formKey.currentState!.validate()) {
                             auth
                                 .signIn(_formKey.currentState!.value["email"],
@@ -61,7 +115,7 @@ class Body extends StatelessWidget {
                                 );
                               }
                             });
-                          }
+                          } */
                         }),
                   ),
                 ],
@@ -95,5 +149,15 @@ class Body extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  bool isValid(email, password) {
+    bool result = false;
+
+    if (isEmail(email.toString()) && isLength(password.toString(), 8)) {
+      result = true;
+    }
+
+    return result;
   }
 }

@@ -136,7 +136,6 @@ class TambahAnggota extends StatelessWidget {
                   _formKey.currentState!.save();
                   if (_formKey.currentState!.validate()) {
                     family.addMember(
-                        "",
                         _formKey.currentState!.value["name"],
                         _formKey.currentState!.value["nik"],
                         _formKey.currentState!.value["usia"],
