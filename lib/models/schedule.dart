@@ -1,5 +1,6 @@
 class Schedule {
-  List<Map<String, dynamic>> jadwal;
+  int id;
+  String start, end;
 
-  Schedule({required this.jadwal});
+  Schedule({required this.id, required this.start, required this.end});
 }

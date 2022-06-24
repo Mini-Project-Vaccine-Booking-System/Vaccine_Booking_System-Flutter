@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
+import '../../../view_model/hospital_view_model.dart';
 
 class TanggalVaksin extends StatefulWidget {
-  const TanggalVaksin({
-    Key? key,
-    required this.size,
-  }) : super(key: key);
+  const TanggalVaksin({Key? key, required this.size}) : super(key: key);
 
   final Size size;
 
@@ -15,17 +15,22 @@ class TanggalVaksin extends StatefulWidget {
 }
 
 class _TanggalVaksinState extends State<TanggalVaksin> {
-  var indexActive = 0;
+  int? indexActive;
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
+    var hospital = Provider.of<HospitalViewModel>(context);
     return SizedBox(
-      height: widget.size.height * 0.1,
+      height: widget.size.height * 0.15,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: 5,
+        itemCount: hospital.dataDate.length,
         itemBuilder: (context, index) {
           return InkWell(
               onTap: () {
+                hospital.scheduleSelect = hospital.dataDate[index];
+                hospital.getVaccine(hospital.dataDate[index].id);
                 setState(() {
                   indexActive = index;
                 });
@@ -45,44 +50,66 @@ class _TanggalVaksinState extends State<TanggalVaksin> {
                           offset: Offset(0, 1)),
                     ],
                   ),
-                  child: Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        "19",
-                        style: TextStyle(
-                            color:
-                                indexActive == index ? Colors.white : cPrimary1,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 40),
-                      ),
-                      SizedBox(
-                        width: 6,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Rabu",
+                            DateFormat('dd')
+                                .format(DateTime.parse(
+                                    hospital.dataDate[index].start))
+                                .toString(),
                             style: TextStyle(
                                 color: indexActive == index
                                     ? Colors.white
                                     : cPrimary1,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 16),
+                                fontSize: 40),
                           ),
-                          Text(
-                            "Juni",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: indexActive == index
-                                    ? Colors.white
-                                    : cPrimary1),
+                          SizedBox(
+                            width: 6,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                DateFormat('E')
+                                    .format(DateTime.parse(
+                                        hospital.dataDate[index].start))
+                                    .toString(),
+                                style: TextStyle(
+                                    color: indexActive == index
+                                        ? Colors.white
+                                        : cPrimary1,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                              Text(
+                                DateFormat('MMMM')
+                                    .format(DateTime.parse(
+                                        hospital.dataDate[index].start))
+                                    .toString(),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: indexActive == index
+                                        ? Colors.white
+                                        : cPrimary1),
+                              )
+                            ],
                           )
                         ],
-                      )
+                      ),
+                      Center(
+                        child: Text(
+                          "${DateFormat.Hm().format(DateTime.parse(hospital.dataDate[index].start)).toString()} - ${DateFormat.Hm().format(DateTime.parse(hospital.dataDate[index].end)).toString()}",
+                          style: paragraphRegular2(
+                              indexActive == index ? Colors.white : cPrimary1),
+                        ),
+                      ),
                     ],
                   )));
         },

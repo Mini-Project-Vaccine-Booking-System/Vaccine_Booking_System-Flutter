@@ -1,6 +1,9 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:vaccine/screens/pass_screen/pass_screen.dart';
+import 'package:vaccine/view_model/ticket_view_model.dart';
 
 import '../../../constants.dart';
 
@@ -10,10 +13,11 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    var ticket = Provider.of<TicketViewModel>(context);
     return ListView.builder(
       padding: EdgeInsets.symmetric(
           horizontal: size.width * 0.05, vertical: size.height * 0.03),
-      itemCount: 5,
+      itemCount: ticket.userVaccine.length,
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
@@ -71,16 +75,18 @@ class Body extends StatelessWidget {
                         children: [
                           ConstrainedBox(
                               constraints:
-                                  BoxConstraints(maxWidth: size.width * 0.4),
+                                  BoxConstraints(maxWidth: size.width * 0.25),
                               child: Text(
-                                "Jerome Bell",
+                                ticket.userVaccine[index].userName,
                                 style: paragraphSemiBold2(cMainWhite),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
                               )),
                           SizedBox(
                             height: size.height * 0.01,
                           ),
                           Text(
-                            "3578094008020003",
+                            ticket.userVaccine[index].userNik,
                             style: paragraphMedium4(cMainWhite),
                           )
                         ],
@@ -89,14 +95,17 @@ class Body extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            "22 Juni 2022",
+                            DateFormat('E, d MMMM y')
+                                .format(DateTime.parse(ticket
+                                    .userVaccine[index].userScheduleStart))
+                                .toString(),
                             style: paragraphSemiBold2(cMainWhite),
                           ),
                           SizedBox(
                             height: size.height * 0.01,
                           ),
                           Text(
-                            "08.00 - 12.00",
+                            "${DateFormat.Hm().format(DateTime.parse(ticket.userVaccine[index].userScheduleStart)).toString()} - ${DateFormat.Hm().format(DateTime.parse(ticket.userVaccine[index].userScheduleEnd)).toString()}",
                             style: paragraphMedium4(cMainWhite),
                           )
                         ],

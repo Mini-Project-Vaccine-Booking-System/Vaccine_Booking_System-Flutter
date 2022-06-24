@@ -4,10 +4,17 @@ import 'package:vaccine/screens/detail_pesan_screen/detail_pesan_screen.dart';
 import 'package:vaccine/view_model/hospital_view_model.dart';
 
 import '../../../constants.dart';
+import '../../../view_model/family_view_model.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
 
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  int? indexBox;
   @override
   Widget build(BuildContext context) {
     var hospital = Provider.of<HospitalViewModel>(context);
@@ -34,19 +41,42 @@ class Body extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    print(hospital.data[index].availability);
                     return GestureDetector(
                       onTap: () {
-                        hospital.data[index].availability == true
-                            ? Navigator.push(
+                        if (hospital.data[index].availability == true) {
+                          setState(() {
+                            indexBox = index;
+                          });
+
+                          hospital
+                              .initialData(hospital.data[index].id)
+                              .then((value) {
+                            setState(() {
+                              indexBox = null;
+                            });
+
+                            Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => DetailPesanScreen()))
-                            : ScaffoldMessenger.of(context)
-                                .showSnackBar(SnackBar(
-                                content: Text("Jadwal tidak tersedia"),
-                                duration: Duration(seconds: 1),
-                              ));
+                                    builder: (_) => DetailPesanScreen()));
+                          });
+                        } else {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text("Jadwal tidak tersedia"),
+                            duration: Duration(seconds: 1),
+                          ));
+                        }
+                        // hospital.data[index].availability == true
+                        //     ? Navigator.push(
+                        //         context,
+                        //         MaterialPageRoute(
+                        //             builder: (_) => DetailPesanScreen()))
+                        //     : ScaffoldMessenger.of(context)
+                        //         .showSnackBar(const SnackBar(
+                        //         content: Text("Jadwal tidak tersedia"),
+                        //         duration: Duration(seconds: 1),
+                        //       ));
                       },
                       child: Container(
                         height: size.height * 0.13,
@@ -137,13 +167,23 @@ class Body extends StatelessWidget {
                                       )
                               ],
                             ),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 24,
-                              color: hospital.data[index].availability == true
-                                  ? cMainWhite
-                                  : cNeutral3,
-                            )
+                            if (indexBox == null || indexBox != index) ...[
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 24,
+                                color: hospital.data[index].availability == true
+                                    ? cMainWhite
+                                    : cNeutral3,
+                              )
+                            ],
+                            if (indexBox != null && indexBox == index) ...[
+                              Container(
+                                  width: 24,
+                                  height: 24,
+                                  child: const CircularProgressIndicator(
+                                    color: cMainWhite,
+                                  ))
+                            ]
                           ],
                         ),
                       ),

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../../models/family.dart';
+
 class MiddleCard extends StatelessWidget {
-  const MiddleCard({
-    Key? key,
-    required this.size,
-  }) : super(key: key);
+  const MiddleCard({Key? key, required this.size, required this.dataUser})
+      : super(key: key);
 
   final Size size;
+  final Family? dataUser;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class MiddleCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Jerome Bell",
+                  dataUser!.name,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 )
               ],
@@ -44,7 +45,7 @@ class MiddleCard extends StatelessWidget {
           ),
           SizedBox(height: size.height * 0.01),
           Text(
-            "NIK : 3578094008020003",
+            "NIK : ${dataUser!.nik}",
           ),
         ],
       ),

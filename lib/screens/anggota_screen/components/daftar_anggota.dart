@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vaccine/screens/edit_anggota/edit_anggota.dart';
-import 'package:vaccine/view_model/family_view_mode.dart';
+import 'package:vaccine/view_model/family_view_model.dart';
 
 import '../../../constants.dart';
 

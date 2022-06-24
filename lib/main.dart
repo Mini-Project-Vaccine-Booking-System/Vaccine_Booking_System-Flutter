@@ -6,8 +6,9 @@ import 'package:vaccine/screens/home_screen/home_screen.dart';
 import 'package:vaccine/screens/welcome_screen/welcome_screen.dart';
 import 'package:vaccine/view_model/account_view_model.dart';
 import 'package:vaccine/view_model/auth_view_model.dart';
-import 'package:vaccine/view_model/family_view_mode.dart';
+import 'package:vaccine/view_model/family_view_model.dart';
 import 'package:vaccine/view_model/hospital_view_model.dart';
+import 'package:vaccine/view_model/ticket_view_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +35,11 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<AuthViewModel, HospitalViewModel>(
           create: (context) => HospitalViewModel(),
+          update: (context, auth, datas) =>
+              datas!..updateData(auth.parentId, auth.token),
+        ),
+        ChangeNotifierProxyProvider<AuthViewModel, TicketViewModel>(
+          create: (context) => TicketViewModel(),
           update: (context, auth, datas) =>
               datas!..updateData(auth.parentId, auth.token),
         ),

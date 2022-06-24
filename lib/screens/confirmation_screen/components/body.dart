@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:vaccine/components/roundedButtonLoading.dart';
 import 'package:vaccine/components/roundedButtonSolid.dart';
 import 'package:vaccine/screens/pass_screen/pass_screen.dart';
 
 import '../../../constants.dart';
+import '../../../view_model/ticket_view_model.dart';
 import 'middle_card.dart';
 import 'top_card.dart';
 
@@ -14,16 +17,22 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  bool isLoading = false;
   List<bool> _isOpen = [false, false];
   @override
   Widget build(BuildContext context) {
+    var ticket = Provider.of<TicketViewModel>(context);
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SizedBox(
           height: size.height * 0.03,
         ),
-        TopCard(size: size),
+        TopCard(
+            size: size,
+            dataHospital: ticket.hospitalSelect,
+            dataVaccine: ticket.vaccineSelect,
+            dataSchedule: ticket.scheduleSelect),
         SizedBox(
           height: size.height * 0.03,
         ),
@@ -37,7 +46,7 @@ class _BodyState extends State<Body> {
         SizedBox(
           height: size.height * 0.01,
         ),
-        MiddleCard(size: size),
+        MiddleCard(size: size, dataUser: ticket.userSelect),
         SizedBox(
           height: size.height * 0.03,
         ),
@@ -219,13 +228,32 @@ class _BodyState extends State<Body> {
         ),
         Container(
           margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-          child: RoundedButtonSolid(
-              size: size,
-              text: "Konfirmasi",
-              onAction: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => PassScreen()));
-              }),
+          child: isLoading == false
+              ? RoundedButtonSolid(
+                  size: size,
+                  text: "Konfirmasi",
+                  onAction: () {
+                    setState(() {
+                      isLoading = !isLoading;
+                    });
+                    ticket
+                        .saveTicket(
+                            family_id: ticket.userSelect!.id,
+                            vaccine_id: ticket.vaccineSelect!.id,
+                            shcedule_id: ticket.scheduleSelect!.id,
+                            hospital_id: ticket.hospitalSelect!.id)
+                        .then((value) {
+                      setState(() {
+                        isLoading = !isLoading;
+                      });
+
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (_) => PassScreen()),
+                          (route) => false);
+                    });
+                  })
+              : RoundedButtonLoading(size: size),
         ),
         SizedBox(
           height: size.height * 0.03,

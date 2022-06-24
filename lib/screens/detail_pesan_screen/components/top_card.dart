@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
 class TopCard extends StatelessWidget {
-  const TopCard({
-    Key? key,
-    required this.size,
-  }) : super(key: key);
+  const TopCard(
+      {Key? key, required this.size, required this.nama, required this.alamat})
+      : super(key: key);
 
   final Size size;
-
+  final String nama;
+  final String alamat;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,8 +48,7 @@ class TopCard extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       height: 40,
                       decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(24)),
+                          borderRadius: BorderRadius.all(Radius.circular(24)),
                           shape: BoxShape.rectangle,
                           color: cNeutral1.withOpacity(0.6)),
                       child: Row(
@@ -78,11 +77,11 @@ class TopCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Rumah Sakit Gotong Royong",
+                  nama,
                   style: paragraphBold1(cMainBlack),
                 ),
                 Text(
-                  "Jalan Pemuda No.100 Surabaya, Jawa Timur",
+                  alamat,
                   style: paragraphRegular3(cMainBlack),
                 ),
               ],

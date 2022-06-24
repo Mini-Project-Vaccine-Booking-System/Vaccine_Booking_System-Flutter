@@ -39,7 +39,6 @@ class AuthViewModel extends ChangeNotifier {
   }
 
   bool get isAuth {
-    print(_token != null);
     return _token != null;
   }
 
@@ -138,7 +137,6 @@ class AuthViewModel extends ChangeNotifier {
   }
 
   Future<void> autoLogin() async {
-    print("autologin");
     final prefs = await SharedPreferences.getInstance();
     if (!prefs.containsKey('userData')) {
       return;

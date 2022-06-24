@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:vaccine/view_model/family_view_mode.dart';
+import 'package:vaccine/view_model/family_view_model.dart';
 import 'daftar_anggota.dart';
 import 'tambah_anggota.dart';
 

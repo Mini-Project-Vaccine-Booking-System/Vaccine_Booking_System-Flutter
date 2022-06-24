@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../components/roundedButtonSolid.dart';
 import '../../../components/roundedContainer.dart';
 import '../../../constants.dart';
-import '../../../view_model/family_view_mode.dart';
+import '../../../view_model/family_view_model.dart';
 
 class TambahAnggota extends StatelessWidget {
   const TambahAnggota({

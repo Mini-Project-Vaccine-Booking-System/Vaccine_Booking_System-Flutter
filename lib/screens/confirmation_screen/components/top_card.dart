@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:vaccine/models/hospital.dart';
+import 'package:vaccine/models/schedule.dart';
+import 'package:vaccine/models/vaccine.dart';
 
 import '../../../constants.dart';
 
 class TopCard extends StatelessWidget {
-  const TopCard({
-    Key? key,
-    required this.size,
-  }) : super(key: key);
+  const TopCard(
+      {Key? key,
+      required this.size,
+      required this.dataHospital,
+      required this.dataVaccine,
+      required this.dataSchedule})
+      : super(key: key);
 
   final Size size;
+  final Hospital? dataHospital;
+  final Vaccine? dataVaccine;
+  final Schedule? dataSchedule;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +60,7 @@ class TopCard extends StatelessWidget {
                   ConstrainedBox(
                     constraints: BoxConstraints(maxWidth: size.width * 0.5),
                     child: Text(
-                      "RS Gotong Royong",
+                      dataHospital!.name,
                       style: paragraphBold1(cMainBlack),
                       textAlign: TextAlign.start,
                     ),
@@ -58,7 +68,7 @@ class TopCard extends StatelessWidget {
                   ConstrainedBox(
                     constraints: BoxConstraints(maxWidth: size.width * 0.5),
                     child: Text(
-                      "Jalan Pemuda No.100 Surabaya, Jawa Timur",
+                      dataHospital!.address,
                       style: paragraphRegular3(cMainBlack),
                     ),
                   ),
@@ -78,7 +88,7 @@ class TopCard extends StatelessWidget {
                   "Jenis Vaksin",
                 ),
                 Text(
-                  "Sinovac",
+                  dataVaccine!.name,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 )
               ],
@@ -99,7 +109,9 @@ class TopCard extends StatelessWidget {
                       "Tanggal",
                     ),
                     Text(
-                      "Selasa, 9 Juni 2022",
+                      DateFormat('EEEE, d MMMM y')
+                          .format(DateTime.parse(dataSchedule!.start))
+                          .toString(),
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )
                   ],
@@ -114,7 +126,7 @@ class TopCard extends StatelessWidget {
                       "Waktu",
                     ),
                     Text(
-                      "08.00 - 12.00",
+                      "${DateFormat.Hm().format(DateTime.parse(dataSchedule!.start)).toString()} - ${DateFormat.Hm().format(DateTime.parse(dataSchedule!.end)).toString()}",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )
                   ],

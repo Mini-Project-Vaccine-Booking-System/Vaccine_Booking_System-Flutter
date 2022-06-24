@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vaccine/screens/history_ticket_screen/components/body.dart';
+import 'package:vaccine/view_model/ticket_view_model.dart';
 
 import '../../constants.dart';
+import 'components/skeleton.dart';
 
 class HistoryTicketScreen extends StatelessWidget {
   const HistoryTicketScreen({Key? key}) : super(key: key);
@@ -30,7 +33,22 @@ class HistoryTicketScreen extends StatelessWidget {
         ),
         centerTitle: false,
       ),
-      body: Body(),
+      body: FutureBuilder(
+        future:
+            Provider.of<TicketViewModel>(context, listen: false).initialData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            /* return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ); */
+            return Skeleton();
+          }
+
+          return Body();
+        },
+      ),
     );
   }
 }

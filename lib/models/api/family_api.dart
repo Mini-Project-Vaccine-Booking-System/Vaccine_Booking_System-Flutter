@@ -32,14 +32,31 @@ class FamilyAPI {
     }
   }
 
-  static Future getDataById(userId) async {
+  static Future getAllData(userId, token) async {
     Uri url = Uri.parse(
-        "https://vaccine-13ee4-default-rtdb.asia-southeast1.firebasedatabase.app/family/$userId.json");
+        'https://vaccine-api-strapi.herokuapp.com/api/families?filters[user_id][\$eq]=$userId');
 
     try {
-      var response = await http.get(url);
-      var hasilResponse = jsonDecode(response.body) as Map<String, dynamic>;
-      return hasilResponse;
+      var response = await http.get(url, headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      });
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future getDataById(userId, token) async {
+    Uri url = Uri.parse(
+        'https://vaccine-api-strapi.herokuapp.com/api/families?filters[id][\$eq]=$userId');
+
+    try {
+      var response = await http.get(url, headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      });
+      return response;
     } catch (e) {
       rethrow;
     }

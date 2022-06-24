@@ -18,6 +18,9 @@ class FamilyViewModel extends ChangeNotifier {
   List<Family> _data = [];
   List<Family> get data => _data;
 
+  List<Family> _allData = [];
+  List<Family> get allData => _allData;
+
   Future<void> inisialData() async {
     Response data = await FamilyAPI.getData(userId, token);
     if (data.statusCode == 200) {
@@ -56,6 +59,30 @@ class FamilyViewModel extends ChangeNotifier {
     if (data.statusCode != null) {
       final dataResponse = jsonDecode(data.body);
       print(dataResponse);
+    }
+  }
+
+  Future<void> getAllData() async {
+    Response data = await FamilyAPI.getAllData(userId, token);
+    if (data.statusCode == 200) {
+      final dataResponse = jsonDecode(data.body) as Map<String, dynamic>;
+      _allData.clear();
+      final dataUsers = dataResponse["data"] as List;
+      for (var value in dataUsers) {
+        Family acc = Family(
+          usia: value["attributes"]["usia"].toString(),
+          telp: value["attributes"]["phone"].toString(),
+          nik: value["attributes"]["nik"].toString(),
+          name: value["attributes"]["fullname"].toString(),
+          idUser: value["attributes"]["user_id"],
+          id: value["id"],
+          gender: value["attributes"]["gender"].toString(),
+        );
+
+        _allData.add(acc);
+      }
+
+      notifyListeners();
     }
   }
 
