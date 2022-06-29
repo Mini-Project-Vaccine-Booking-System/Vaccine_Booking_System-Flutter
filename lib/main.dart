@@ -8,6 +8,7 @@ import 'package:vaccine/view_model/account_view_model.dart';
 import 'package:vaccine/view_model/auth_view_model.dart';
 import 'package:vaccine/view_model/family_view_model.dart';
 import 'package:vaccine/view_model/hospital_view_model.dart';
+import 'package:vaccine/view_model/news_view_model.dart';
 import 'package:vaccine/view_model/ticket_view_model.dart';
 
 void main() {
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthViewModel()),
+        ChangeNotifierProvider(create: (context) => NewsViewModel()),
         ChangeNotifierProxyProvider<AuthViewModel, AccoutnViewModel>(
           create: (context) => AccoutnViewModel(),
           update: (context, auth, datas) =>
@@ -61,7 +63,7 @@ class MyApp extends StatelessWidget {
                         );
                       }
 
-                      return WelcomeScreen();
+                      return const WelcomeScreen();
                     },
                   )),
       ),

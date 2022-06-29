@@ -128,7 +128,7 @@ class AuthViewModel extends ChangeNotifier {
   }
 
   Future signIn(String email, String password) async {
-    final data = _authenticate(email, password, "login");
+    final data = await _authenticate(email, password, "login");
     if (data == true) {
       return true;
     } else {

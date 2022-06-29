@@ -36,6 +36,12 @@ class _BodyState extends State<Body> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(message),
         backgroundColor: cFail,
+        behavior: SnackBarBehavior.floating,
+        action: SnackBarAction(
+          label: 'Abaikan',
+          textColor: Colors.white,
+          onPressed: () {},
+        ),
       ));
     }
 
@@ -71,12 +77,12 @@ class _BodyState extends State<Body> {
                               _formKey.currentState!.save();
                               setState(() {
                                 isLoading = !isLoading;
-                                email = _formKey.currentState!.value["email"];
-                                password =
-                                    _formKey.currentState!.value["password"];
                               });
                               if (isValid(_formKey.currentState!.value["email"],
                                   _formKey.currentState!.value["password"])) {
+                                email = _formKey.currentState!.value["email"];
+                                password =
+                                    _formKey.currentState!.value["password"];
                                 auth
                                     .checkEmail(
                                         _formKey.currentState!.value["email"])

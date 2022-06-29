@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:vaccine/screens/daftar_vaksin_screen/components/body.dart';
 
 import '../../constants.dart';
+import 'components/body.dart';
 
-class DaftarVaksinScreen extends StatelessWidget {
-  const DaftarVaksinScreen({Key? key}) : super(key: key);
+class CovidScreen extends StatelessWidget {
+  const CovidScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class DaftarVaksinScreen extends StatelessWidget {
       //   backgroundColor: cPrimary1,
       //   elevation: 0.0,
       //   title: const Text(
-      //     "Daftar Vaksin",
+      //     "Informasi Covid",
       //     style: TextStyle(
       //         color: cMainWhite, fontSize: 17, fontWeight: FontWeight.bold),
       //   ),

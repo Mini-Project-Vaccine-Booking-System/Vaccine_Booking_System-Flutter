@@ -35,6 +35,7 @@ class _PasswordTextState extends State<PasswordText> {
           ),
           roundedContainer(
             child: FormBuilderTextField(
+              keyboardType: TextInputType.visiblePassword,
               onChanged: (value) {
                 if (isLength(value!, 8)) {
                   setState(() {

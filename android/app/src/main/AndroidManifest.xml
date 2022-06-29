@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.vaccine">
-   <application
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
         android:label="vaccine"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

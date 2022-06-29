@@ -52,6 +52,9 @@ class TicketViewModel extends ChangeNotifier {
   List<Booking> _userVaccine = [];
   List<Booking> get userVaccine => _userVaccine;
 
+  late Booking _bookingSelect;
+  Booking get bookingSelect => _bookingSelect;
+
   Future saveTicket({family_id, shcedule_id, vaccine_id, hospital_id}) async {
     final dataTicket = {
       "family_id": family_id,
@@ -160,5 +163,10 @@ class TicketViewModel extends ChangeNotifier {
         }
       }
     }
+  }
+
+  Future getDetailPass(id) async {
+    _bookingSelect = userVaccine.firstWhere((element) => element.id == id);
+    print(bookingSelect);
   }
 }

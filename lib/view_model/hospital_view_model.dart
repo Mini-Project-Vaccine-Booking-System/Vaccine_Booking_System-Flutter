@@ -18,6 +18,9 @@ class HospitalViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<Hospital> _dataHome = [];
+  List<Hospital> get dataHome => _dataHome;
+
   List<Hospital> _data = [];
   List<Hospital> get data => _data;
 
@@ -31,10 +34,45 @@ class HospitalViewModel extends ChangeNotifier {
   Schedule? scheduleSelect;
   Vaccine? vaccineSelect;
 
-  Future initialData(id) async {
-    for (var item in data) {
-      if (item.id == id) {
-        dataSelect = item;
+  Future homeData() async {
+    _dataHome.clear();
+    Response data = await HospitalAPI.getDataByCity('surakarta', token);
+    if (data.statusCode == 200) {
+      final dataHospital = jsonDecode(data.body) as Map<String, dynamic>;
+      if (dataHospital["data"].length > 0) {
+        for (var value in dataHospital["data"]) {
+          Response schedules =
+              await HospitalAPI.checkSchedule(value["id"], token);
+          final dataSchedules =
+              jsonDecode(schedules.body) as Map<String, dynamic>;
+          Hospital data = Hospital(
+              id: value["id"],
+              name: value["attributes"]["name"].toString(),
+              address: value["attributes"]["address"].toString(),
+              city: value["attributes"]["city"].toString(),
+              availability: dataSchedules["data"].length > 0 ? true : false);
+
+          _dataHome.add(data);
+          notifyListeners();
+        }
+
+        return true;
+      }
+    }
+  }
+
+  Future initialData(id, {status = 'search'}) async {
+    if (status == 'home') {
+      for (var item in dataHome) {
+        if (item.id == id) {
+          dataSelect = item;
+        }
+      }
+    } else {
+      for (var item in data) {
+        if (item.id == id) {
+          dataSelect = item;
+        }
       }
     }
 

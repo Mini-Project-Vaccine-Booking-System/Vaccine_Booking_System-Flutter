@@ -20,15 +20,11 @@ class TambahAnggota extends StatelessWidget {
     var family = Provider.of<FamilyViewModel>(context);
     final _formKey = GlobalKey<FormBuilderState>();
     return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
       child: FormBuilder(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: size.height * 0.03,
-            ),
             Text(
               "Nama Lengkap",
               style: paragraphMedium2(cMainBlack),
@@ -142,7 +138,10 @@ class TambahAnggota extends StatelessWidget {
                         _formKey.currentState!.value["phone"],
                         _formKey.currentState!.value["gender"]);
                   }
-                })
+                }),
+            SizedBox(
+              height: size.height * 0.02,
+            ),
           ],
         ),
       ),

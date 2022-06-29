@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:vaccine/components/roundedButtonLoading.dart';
 import 'package:vaccine/screens/result_faskes_screen/result_faskes_screen.dart';
 import 'package:vaccine/view_model/hospital_view_model.dart';
+import 'package:validators/validators.dart';
 
 import '../../../components/roundedButtonSolid.dart';
 import '../../../components/roundedContainer.dart';
@@ -29,11 +31,43 @@ class _BodyState extends State<Body> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: size.height * 0.03,
+            height: size.height * 0.02,
           ),
-          Center(child: Image.asset("assets/icons/icon.png")),
+          SafeArea(
+            child: Stack(
+              alignment: Alignment.centerLeft,
+              children: [
+                Center(
+                  child: Text(
+                    "Daftar Vaksin",
+                    style: GoogleFonts.poppins(
+                        textStyle: const TextStyle(
+                            color: cMainBlack,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: 32,
+                    height: 32,
+                    decoration:
+                        BoxDecoration(color: cPrimary1, shape: BoxShape.circle),
+                    child: Icon(
+                      Icons.arrow_back_ios_rounded,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          // Center(child: Image.asset("assets/icons/icon.png")),
           SizedBox(
-            height: size.height * 0.03,
+            height: size.height * 0.05,
           ),
           Text(
             "Lindungi diri dan sekitar dengan vaksinasi COVID-19",
@@ -84,23 +118,39 @@ class _BodyState extends State<Body> {
                             });
                             _formKey.currentState!.save();
                             if (_formKey.currentState!.validate()) {
-                              hospital
-                                  .getDataByCity(
-                                      _formKey.currentState!.value["city"])
-                                  .then((value) {
-                                setState(() {
-                                  isLoading = !isLoading;
-                                });
-                                if (value == true) {
+                              if (!isNull(
+                                  _formKey.currentState!.value["city"])) {
+                                hospital
+                                    .getDataByCity(
+                                        _formKey.currentState!.value["city"])
+                                    .then((value) {
+                                  setState(() {
+                                    isLoading = !isLoading;
+                                  });
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (_) =>
                                               ResultFaskesScreen()));
-                                } else {
-                                  print(value);
-                                }
-                              });
+                                });
+                              } else {
+                                setState(() {
+                                  isLoading = !isLoading;
+                                });
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  backgroundColor: cPrimary1,
+                                  behavior: SnackBarBehavior.floating,
+                                  content: const Text(
+                                    "Input tidak boleh kosong!",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  action: SnackBarAction(
+                                      label: 'Abaikan',
+                                      textColor: Colors.white,
+                                      onPressed: () {}),
+                                ));
+                              }
                             }
                           },
                         )

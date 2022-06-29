@@ -8,7 +8,7 @@ class DetailPesanScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+    /*   appBar: AppBar(
         shape: const Border(bottom: BorderSide(color: cNeutral2, width: 1)),
         leadingWidth: 50,
         leading: IconButton(
@@ -29,7 +29,7 @@ class DetailPesanScreen extends StatelessWidget {
               color: cMainWhite, fontSize: 17, fontWeight: FontWeight.bold),
         ),
         centerTitle: false,
-      ),
+      ), */
       body: Body(),
     );
   }

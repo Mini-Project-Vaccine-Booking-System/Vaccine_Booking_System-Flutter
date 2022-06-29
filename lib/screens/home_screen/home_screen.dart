@@ -15,11 +15,6 @@ class HomeScreen extends StatelessWidget {
             Provider.of<AccoutnViewModel>(context, listen: false).inisialData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            /* return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ); */
             return Skeleton();
           }
 

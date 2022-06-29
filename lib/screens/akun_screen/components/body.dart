@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:vaccine/screens/welcome_screen/welcome_screen.dart';
 import 'package:vaccine/view_model/auth_view_model.dart';
@@ -20,6 +21,41 @@ class Body extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
       child: Column(
         children: [
+          SizedBox(
+            height: size.height * 0.02,
+          ),
+          SafeArea(
+            child: Stack(
+              alignment: Alignment.centerLeft,
+              children: [
+                Center(
+                  child: Text(
+                    "Daftar Vaksin",
+                    style: GoogleFonts.poppins(
+                        textStyle: const TextStyle(
+                            color: cMainBlack,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: 32,
+                    height: 32,
+                    decoration:
+                        BoxDecoration(color: cPrimary1, shape: BoxShape.circle),
+                    child: Icon(
+                      Icons.arrow_back_ios_rounded,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
           SizedBox(
             height: size.height * 0.05,
           ),
@@ -63,7 +99,7 @@ class Body extends StatelessWidget {
                   width: 100,
                   decoration: BoxDecoration(
                     color: cPrimary1,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                     boxShadow: [
                       BoxShadow(
                           spreadRadius: 2,
@@ -75,7 +111,7 @@ class Body extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.logout,
                         color: cMainWhite,
                         size: 24,

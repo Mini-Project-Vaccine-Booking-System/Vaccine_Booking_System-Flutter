@@ -33,6 +33,7 @@ class _EmailTextState extends State<EmailText> {
           ),
           roundedContainer(
             child: FormBuilderTextField(
+              keyboardType: TextInputType.emailAddress,
               name: "email",
               cursorColor: cPrimary1,
               onChanged: (value) {

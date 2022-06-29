@@ -1,6 +1,8 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
+import 'package:vaccine/components/roundedButtonLoading.dart';
 import 'package:vaccine/screens/home_screen/home_screen.dart';
 import 'package:vaccine/screens/register_screen/register_screen.dart';
 import 'package:vaccine/view_model/auth_view_model.dart';
@@ -30,11 +32,20 @@ class _BodyState extends State<Body> {
     Size size = MediaQuery.of(context).size;
     final _formKey = GlobalKey<FormBuilderState>();
 
-    void showError(String message) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(message),
+    void showError() {
+      var snackBar = SnackBar(
+        content: const Text(
+          "Input yang anda masukkan tidak sesuai, silahkan periksa kembali!",
+          style: TextStyle(color: Colors.white),
+        ),
+        elevation: 0,
+        behavior: SnackBarBehavior.floating,
         backgroundColor: cFail,
-      ));
+        action: SnackBarAction(
+            label: 'Abaikan', textColor: Colors.white, onPressed: () {}),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
 
     return SingleChildScrollView(
@@ -60,46 +71,51 @@ class _BodyState extends State<Body> {
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                    child: RoundedButtonSolid(
-                        size: size,
-                        text: "Masuk",
-                        onAction: () {
-                          _formKey.currentState!.save();
-                          setState(() {
-                            isLoading = !isLoading;
-                            email = _formKey.currentState!.value["email"];
-                            password = _formKey.currentState!.value["password"];
-                          });
-                          if (isValid(_formKey.currentState!.value["email"],
-                              _formKey.currentState!.value["password"])) {
-                            auth
-                                .signIn(_formKey.currentState!.value["email"],
-                                    _formKey.currentState!.value["password"])
-                                .then((value) {
+                    child: isLoading == false
+                        ? RoundedButtonSolid(
+                            size: size,
+                            text: "Masuk",
+                            onAction: () {
+                              _formKey.currentState!.save();
                               setState(() {
                                 isLoading = !isLoading;
                               });
+                              if (isValid(_formKey.currentState!.value["email"],
+                                  _formKey.currentState!.value["password"])) {
+                                email = _formKey.currentState!.value["email"];
+                                password =
+                                    _formKey.currentState!.value["password"];
+                                auth
+                                    .signIn(
+                                        _formKey.currentState!.value["email"],
+                                        _formKey
+                                            .currentState!.value["password"])
+                                    .then((value) {
+                                  print(value);
+                                  setState(() {
+                                    isLoading = !isLoading;
+                                  });
 
-                              if (value == false) {
-                                showError("Input yang anda masukkan salah!");
+                                  if (value == false) {
+                                    showError();
+                                  } else {
+                                    auth.email = email;
+                                    auth.password = password;
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => const HomeScreen()),
+                                        (route) => false);
+                                  }
+                                });
                               } else {
-                                auth.email = email;
-                                auth.password = password;
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => HomeScreen()),
-                                    (route) => false);
-                              }
-                            });
-                          } else {
-                            setState(() {
-                              isLoading = !isLoading;
-                            });
+                                setState(() {
+                                  isLoading = !isLoading;
+                                });
 
-                            showError("Data yang anda masukkan tidak tepat!");
-                          }
-                          /* 
+                                showError();
+                              }
+                              /* 
                           _formKey.currentState!.save();
                           if (_formKey.currentState!.validate()) {
                             auth
@@ -116,7 +132,8 @@ class _BodyState extends State<Body> {
                               }
                             });
                           } */
-                        }),
+                            })
+                        : RoundedButtonLoading(size: size),
                   ),
                 ],
               )),
