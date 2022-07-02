@@ -25,11 +25,11 @@ class _BodyState extends State<Body> {
   bool isLoading = false;
   late String email;
   late String password;
+  final _formKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
     var auth = Provider.of<AuthViewModel>(context, listen: false);
-    final _formKey = GlobalKey<FormBuilderState>();
     Size size = MediaQuery.of(context).size;
 
     void showError(String message) {
@@ -49,9 +49,17 @@ class _BodyState extends State<Body> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          WelcomeText(size: size),
           SizedBox(
-            height: size.height * 0.03,
+            height: size.height * 0.1,
+          ),
+          Center(
+            child: Text(
+              "VaksinQu",
+              style: headingBold1(cPrimary1),
+            ),
+          ),
+          SizedBox(
+            height: size.height * 0.1,
           ),
           FormBuilder(
               key: _formKey,

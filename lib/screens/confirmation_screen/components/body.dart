@@ -19,51 +19,13 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   bool isLoading = false;
-  List<bool> _isOpen = [false, false];
+  final List<bool> _isOpen = [false, false];
   @override
   Widget build(BuildContext context) {
     var ticket = Provider.of<TicketViewModel>(context);
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        SizedBox(
-          height: size.height * 0.02,
-        ),
-        SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Center(
-                  child: Text(
-                    "Konfirmasi Pemesanan",
-                    style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                            color: cMainBlack,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 32,
-                    height: 32,
-                    decoration:
-                        BoxDecoration(color: cPrimary1, shape: BoxShape.circle),
-                    child: Icon(
-                      Icons.arrow_back_ios_rounded,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
         SizedBox(
           height: size.height * 0.03,
         ),
@@ -124,7 +86,7 @@ class _BodyState extends State<Body> {
                   ExpansionPanel(
                     canTapOnHeader: true,
                     isExpanded: _isOpen[0],
-                    headerBuilder: (context, isExpanded) => ListTile(
+                    headerBuilder: (context, isExpanded) => const ListTile(
                       title: Text(
                         "Syarat Vaksin",
                         style: TextStyle(
@@ -141,10 +103,10 @@ class _BodyState extends State<Body> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
+                            SizedBox(
                               width: size.width * 0.1,
                               height: 20,
-                              child: Center(
+                              child: const Center(
                                 child: CircleAvatar(
                                   radius: 3,
                                   backgroundColor: cMainBlack,
@@ -166,10 +128,10 @@ class _BodyState extends State<Body> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
+                            SizedBox(
                               width: size.width * 0.1,
                               height: 20,
-                              child: Center(
+                              child: const Center(
                                 child: CircleAvatar(
                                   radius: 3,
                                   backgroundColor: cMainBlack,
@@ -191,10 +153,10 @@ class _BodyState extends State<Body> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
+                            SizedBox(
                               width: size.width * 0.1,
                               height: 20,
-                              child: Center(
+                              child: const Center(
                                 child: CircleAvatar(
                                   radius: 3,
                                   backgroundColor: cMainBlack,
@@ -218,7 +180,7 @@ class _BodyState extends State<Body> {
                   ExpansionPanel(
                     canTapOnHeader: true,
                     isExpanded: _isOpen[1],
-                    headerBuilder: (context, isExpanded) => ListTile(
+                    headerBuilder: (context, isExpanded) => const ListTile(
                       title: Text(
                         "Ketentuan Fasilitas Kesehatan",
                         style: TextStyle(
@@ -235,10 +197,10 @@ class _BodyState extends State<Body> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
+                            SizedBox(
                               width: size.width * 0.1,
                               height: 20,
-                              child: Center(
+                              child: const Center(
                                 child: CircleAvatar(
                                   radius: 3,
                                   backgroundColor: cMainBlack,
@@ -263,40 +225,40 @@ class _BodyState extends State<Body> {
           ),
         ),
         SizedBox(
-          height: size.height * 0.05,
+          height: size.height * 0.12,
         ),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-          child: isLoading == false
-              ? RoundedButtonSolid(
-                  size: size,
-                  text: "Konfirmasi",
-                  onAction: () {
-                    setState(() {
-                      isLoading = !isLoading;
-                    });
-                    ticket
-                        .saveTicket(
-                            family_id: ticket.userSelect!.id,
-                            vaccine_id: ticket.vaccineSelect!.id,
-                            shcedule_id: ticket.scheduleSelect!.id,
-                            hospital_id: ticket.hospitalSelect!.id)
-                        .then((value) {
-                      setState(() {
-                        isLoading = !isLoading;
-                      });
+        // Container(
+        //   margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+        //   child: isLoading == false
+        //       ? RoundedButtonSolid(
+        //           size: size,
+        //           text: "Konfirmasi",
+        //           onAction: () {
+        //             setState(() {
+        //               isLoading = !isLoading;
+        //             });
+        //             ticket
+        //                 .saveTicket(
+        //                     family_id: ticket.userSelect!.id,
+        //                     vaccine_id: ticket.vaccineSelect!.id,
+        //                     shcedule_id: ticket.scheduleSelect!.id,
+        //                     hospital_id: ticket.hospitalSelect!.id)
+        //                 .then((value) {
+        //               setState(() {
+        //                 isLoading = !isLoading;
+        //               });
 
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (_) => PassScreen()),
-                          (route) => false);
-                    });
-                  })
-              : RoundedButtonLoading(size: size),
-        ),
-        SizedBox(
-          height: size.height * 0.03,
-        )
+        //               Navigator.pushAndRemoveUntil(
+        //                   context,
+        //                   MaterialPageRoute(builder: (_) => PassScreen()),
+        //                   (route) => false);
+        //             });
+        //           })
+        //       : RoundedButtonLoading(size: size),
+        // ),
+        // SizedBox(
+        //   height: size.height * 0.03,
+        // )
       ]),
     );
   }

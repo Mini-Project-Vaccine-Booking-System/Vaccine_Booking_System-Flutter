@@ -30,6 +30,17 @@ class Body extends StatelessWidget {
                   child: Column(
                     children: [
                       Center(
+                        child: Text(
+                          "Pendaftaran Berhasil",
+                          style: GoogleFonts.poppins(
+                              textStyle: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600)),
+                        ),
+                      ),
+                      SizedBox(height: size.height * 0.04),
+                      Center(
                         child: Container(
                             margin: EdgeInsets.only(
                                 left: size.width * 0.12,
@@ -41,7 +52,7 @@ class Body extends StatelessWidget {
                             height: size.height * 0.71,
                             decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
+                                  const BorderRadius.all(Radius.circular(20)),
                               color: cMainWhite,
                               boxShadow: [
                                 BoxShadow(
@@ -74,9 +85,9 @@ class Body extends StatelessWidget {
                                 Row(
                                   children: [
                                     Container(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 10),
-                                      decoration: BoxDecoration(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      decoration: const BoxDecoration(
                                           color: cPrimary1,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5))),
@@ -101,7 +112,7 @@ class Body extends StatelessWidget {
                                     )
                                   ],
                                 ),
-                                Divider(
+                                const Divider(
                                   thickness: 1,
                                   color: cNeutral2,
                                 ),
@@ -118,7 +129,7 @@ class Body extends StatelessWidget {
                                     )
                                   ],
                                 ),
-                                Divider(
+                                const Divider(
                                   thickness: 1,
                                   color: cNeutral2,
                                 ),
@@ -138,7 +149,7 @@ class Body extends StatelessWidget {
                                     )
                                   ],
                                 ),
-                                Divider(
+                                const Divider(
                                   thickness: 1,
                                   color: cNeutral2,
                                 ),
@@ -158,9 +169,9 @@ class Body extends StatelessWidget {
                               ],
                             )),
                       ),
-                      SizedBox(height: size.height * 0.07),
-                      BottomButton(size: size),
-                      SizedBox(height: size.height * 0.03),
+                      // SizedBox(height: size.height * 0.07),
+                      // BottomButton(size: size),
+                      // SizedBox(height: size.height * 0.03),
                     ],
                   ),
                 ),
@@ -182,12 +193,12 @@ class Body extends StatelessWidget {
                       children: [
                         Center(
                           child: Text(
-                            "Tiket Vaksin",
+                            "Detail Tiket",
                             style: GoogleFonts.poppins(
                                 textStyle: const TextStyle(
                                     color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold)),
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600)),
                           ),
                         ),
                         InkWell(

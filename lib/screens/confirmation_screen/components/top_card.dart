@@ -45,7 +45,7 @@ class TopCard extends StatelessWidget {
               Container(
                 width: 80,
                 height: 80,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
                     image: DecorationImage(
                         image: AssetImage("assets/images/rs.png"),
@@ -77,62 +77,58 @@ class TopCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: size.height * 0.01),
-          Divider(
+          const Divider(
             thickness: 2,
           ),
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Jenis Vaksin",
-                ),
-                Text(
-                  dataVaccine!.name,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Jenis Vaksin",
+              ),
+              Text(
+                dataVaccine!.name,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              )
+            ],
           ),
-          Divider(
+          const Divider(
             thickness: 2,
           ),
           SizedBox(height: size.height * 0.01),
-          Container(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Tanggal",
-                    ),
-                    Text(
-                      DateFormat('EEEE, d MMMM y')
-                          .format(DateTime.parse(dataSchedule!.start))
-                          .toString(),
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  width: size.width * 0.07,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Waktu",
-                    ),
-                    Text(
-                      "${DateFormat.Hm().format(DateTime.parse(dataSchedule!.start)).toString()} - ${DateFormat.Hm().format(DateTime.parse(dataSchedule!.end)).toString()}",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )
-                  ],
-                )
-              ],
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Tanggal",
+                  ),
+                  Text(
+                    DateFormat('EEEE, d MMMM y')
+                        .format(DateTime.parse(dataSchedule!.start))
+                        .toString(),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              SizedBox(
+                width: size.width * 0.07,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Waktu",
+                  ),
+                  Text(
+                    "${DateFormat.Hm().format(DateTime.parse(dataSchedule!.start)).toString()} - ${DateFormat.Hm().format(DateTime.parse(dataSchedule!.end)).toString()}",
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  )
+                ],
+              )
+            ],
           ),
         ],
       ),

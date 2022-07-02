@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 import '../../../view_model/hospital_view_model.dart';
+import '../../../view_model/ticket_view_model.dart';
 
 class JenisVaksin extends StatefulWidget {
   const JenisVaksin({Key? key, required this.size}) : super(key: key);
@@ -18,6 +19,7 @@ class _JenisVaksinState extends State<JenisVaksin> {
   @override
   Widget build(BuildContext context) {
     var hospital = Provider.of<HospitalViewModel>(context);
+    var ticket = Provider.of<TicketViewModel>(context);
     return hospital.dataVaccine.isNotEmpty
         ? SizedBox(
             height: widget.size.height * 0.06,
@@ -27,10 +29,11 @@ class _JenisVaksinState extends State<JenisVaksin> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    hospital.vaccineSelect = hospital.dataVaccine[index];
+                    // hospital.vaccineSelect = hospital.dataVaccine[index];
                     setState(() {
                       indexActive = index;
                     });
+                    ticket.setVaccineSelect = hospital.dataVaccine[index];
                   },
                   child: Container(
                     margin: EdgeInsets.all(5),

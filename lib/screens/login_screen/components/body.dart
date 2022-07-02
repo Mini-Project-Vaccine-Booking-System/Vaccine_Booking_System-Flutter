@@ -11,7 +11,6 @@ import '../../../components/roundedButtonSolid.dart';
 import '../../../constants.dart';
 import 'email_field.dart';
 import 'password_field.dart';
-import 'welcoming_text.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -24,17 +23,17 @@ class _BodyState extends State<Body> {
   bool isLoading = false;
   late String email;
   late String password;
+  final _formKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
     var auth = Provider.of<AuthViewModel>(context);
     Size size = MediaQuery.of(context).size;
-    final _formKey = GlobalKey<FormBuilderState>();
 
     void showError() {
       var snackBar = SnackBar(
         content: const Text(
-          "Input yang anda masukkan tidak sesuai, silahkan periksa kembali!",
+          "Input tidak sesuai!",
           style: TextStyle(color: Colors.white),
         ),
         elevation: 0,
@@ -51,9 +50,17 @@ class _BodyState extends State<Body> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          WelcomeText(size: size),
           SizedBox(
-            height: size.height * 0.03,
+            height: size.height * 0.1,
+          ),
+          Center(
+            child: Text(
+              "VaksinQu",
+              style: headingBold1(cPrimary1),
+            ),
+          ),
+          SizedBox(
+            height: size.height * 0.1,
           ),
           FormBuilder(
               key: _formKey,

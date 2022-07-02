@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vaccine/constants.dart';
 
 import 'components/body.dart';
 
@@ -7,7 +8,9 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: TopBar(context, size, "Daftar"),
       body: Body(),
     );
   }

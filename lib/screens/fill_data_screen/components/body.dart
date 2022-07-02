@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:vaccine/components/roundedButtonLoading.dart';
 import 'package:vaccine/screens/home_screen/home_screen.dart';
+import 'package:validators/validators.dart';
 
 import '../../../components/roundedButtonSolid.dart';
 import '../../../components/roundedContainer.dart';
@@ -18,50 +18,18 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  String? dropdownvalue;
+  List gender = ["Laki-Laki", "Perempuan"];
   bool isLoading = false;
+  final _formKey = GlobalKey<FormBuilderState>();
+  List<bool> listLoading = [true, true, true, true];
   @override
   Widget build(BuildContext context) {
     var auth = Provider.of<AuthViewModel>(context, listen: false);
-    final _formKey = GlobalKey<FormBuilderState>();
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
       child: Column(children: [
-        SizedBox(
-          height: size.height * 0.02,
-        ),
-        SafeArea(
-          child: Stack(
-            alignment: Alignment.centerLeft,
-            children: [
-              Center(
-                child: Text(
-                  "Data Profil",
-                  style: GoogleFonts.poppins(
-                      textStyle: const TextStyle(
-                          color: cMainBlack,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold)),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  width: 32,
-                  height: 32,
-                  decoration:
-                      BoxDecoration(color: cPrimary1, shape: BoxShape.circle),
-                  child: Icon(
-                    Icons.arrow_back_ios_rounded,
-                    color: Colors.white,
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
         SizedBox(
           height: size.height * 0.03,
         ),
@@ -69,21 +37,21 @@ class _BodyState extends State<Body> {
           child: Stack(
             children: [
               Container(
-                margin: EdgeInsets.only(bottom: 15, right: 15, left: 15),
+                margin: const EdgeInsets.only(bottom: 15, right: 15, left: 15),
                 width: 150,
                 height: 150,
                 decoration: BoxDecoration(
                   color: cMainWhite,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
                   boxShadow: [
                     BoxShadow(
                         spreadRadius: 2,
                         blurRadius: 10,
                         color: Colors.black.withOpacity(0.4),
-                        offset: Offset(0, 1)),
+                        offset: const Offset(0, 1)),
                   ],
                   shape: BoxShape.rectangle,
-                  image: DecorationImage(
+                  image: const DecorationImage(
                       fit: BoxFit.fill,
                       image: AssetImage("assets/images/user-avatar.png")),
                 ),
@@ -96,11 +64,11 @@ class _BodyState extends State<Body> {
                     child: Container(
                       height: 40,
                       width: 40,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           shape: BoxShape.rectangle,
                           color: cPrimary1),
-                      child: Icon(
+                      child: const Icon(
                         Icons.camera_alt_outlined,
                         color: cMainWhite,
                       ),
@@ -122,6 +90,19 @@ class _BodyState extends State<Body> {
                 style: paragraphMedium2(cMainBlack),
               ),
               BuildTextField(
+                index: listLoading[0],
+                onCange: (value) {
+                  if (isNull(value)) {
+                    setState(() {
+                      listLoading[0] = true;
+                    });
+                  } else {
+                    setState(() {
+                      listLoading[0] = false;
+                    });
+                  }
+                },
+                capital: TextCapitalization.words,
                 size: size,
                 inputType: TextInputType.name,
                 name: "username",
@@ -135,6 +116,19 @@ class _BodyState extends State<Body> {
                 style: paragraphMedium2(cMainBlack),
               ),
               BuildTextField(
+                index: listLoading[1],
+                onCange: (value) {
+                  if (!isNumeric(value!) && !isLength(value, 16, 16)) {
+                    setState(() {
+                      listLoading[1] = true;
+                    });
+                  } else {
+                    setState(() {
+                      listLoading[1] = false;
+                    });
+                  }
+                },
+                capital: TextCapitalization.none,
                 size: size,
                 inputType: TextInputType.number,
                 name: "nik",
@@ -148,6 +142,19 @@ class _BodyState extends State<Body> {
                 style: paragraphMedium2(cMainBlack),
               ),
               BuildTextField(
+                index: listLoading[2],
+                onCange: (value) {
+                  if (!isNumeric(value!)) {
+                    setState(() {
+                      listLoading[2] = true;
+                    });
+                  } else {
+                    setState(() {
+                      listLoading[2] = false;
+                    });
+                  }
+                },
+                capital: TextCapitalization.none,
                 size: size,
                 inputType: TextInputType.number,
                 name: "usia",
@@ -161,6 +168,19 @@ class _BodyState extends State<Body> {
                 style: paragraphMedium2(cMainBlack),
               ),
               BuildTextField(
+                index: listLoading[3],
+                onCange: (value) {
+                  if (isNumeric(value!) && isLength(value, 9)) {
+                    setState(() {
+                      listLoading[3] = false;
+                    });
+                  } else {
+                    setState(() {
+                      listLoading[3] = true;
+                    });
+                  }
+                },
+                capital: TextCapitalization.none,
                 size: size,
                 inputType: TextInputType.phone,
                 name: "phone",
@@ -173,11 +193,33 @@ class _BodyState extends State<Body> {
                 "Jenis Kelamin",
                 style: paragraphMedium2(cMainBlack),
               ),
-              BuildTextField(
-                size: size,
-                inputType: TextInputType.name,
-                name: "gender",
-                hint: "ketik jenis kelamin disini",
+              roundedContainer(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                      hint: const Text("Jenis kelamin"),
+                      value: dropdownvalue == null
+                          ? null
+                          : gender.firstWhere(
+                              (element) => element == dropdownvalue!),
+                      isExpanded: true,
+                      iconSize: 36,
+                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                      items: gender.map((items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(items),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          dropdownvalue = newValue as String;
+                        });
+                      },
+                    ),
+                  ),
+                ),
               ),
               SizedBox(
                 height: size.height * 0.05,
@@ -232,13 +274,19 @@ class BuildTextField extends StatelessWidget {
       required this.size,
       required this.name,
       required this.inputType,
-      required this.hint})
+      required this.hint,
+      required this.capital,
+      required this.onCange,
+      required this.index})
       : super(key: key);
 
   final Size size;
   final String name;
   final TextInputType inputType;
   final String hint;
+  final TextCapitalization capital;
+  final Function(String?) onCange;
+  final bool index;
 
   @override
   Widget build(BuildContext context) {
@@ -246,13 +294,23 @@ class BuildTextField extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
         child: FormBuilderTextField(
+          onChanged: onCange,
+          textCapitalization: capital,
           keyboardType: inputType,
           name: name,
           decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: paragraphRegular1(cNeutral1),
-            border: InputBorder.none,
-          ),
+              hintText: hint,
+              hintStyle: paragraphRegular1(cNeutral1),
+              border: InputBorder.none,
+              suffixIcon: index == true
+                  ? const Icon(
+                      Icons.error_outline,
+                      color: cFail,
+                    )
+                  : const Icon(
+                      Icons.check,
+                      color: cSuccess,
+                    )),
         ),
       ),
     );

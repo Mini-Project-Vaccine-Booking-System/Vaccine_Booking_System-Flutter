@@ -43,44 +43,9 @@ class _BodyState extends State<Body> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: size.height * 0.02,
-          ),
-          SafeArea(
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Center(
-                  child: Text(
-                    "Tiket Vaksin",
-                    style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                            color: cMainBlack,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 32,
-                    height: 32,
-                    decoration:
-                        BoxDecoration(color: cPrimary1, shape: BoxShape.circle),
-                    child: Icon(
-                      Icons.arrow_back_ios_rounded,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
           if (isInit == false) ...[
             SizedBox(
-              height: size.height * 0.03,
+              height: size.height * 0.02,
             ),
             Text(
               "Hasil tiket vaksin yang sudah terdaftar",

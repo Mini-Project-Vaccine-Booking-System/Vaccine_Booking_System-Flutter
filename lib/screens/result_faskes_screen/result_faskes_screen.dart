@@ -8,7 +8,9 @@ class ResultFaskesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: TopBar(context, size, "Fasilitas Kesehatan"),
     /*   appBar: AppBar(
         shape: const Border(bottom: BorderSide(color: cNeutral2, width: 1)),
         leadingWidth: 50,

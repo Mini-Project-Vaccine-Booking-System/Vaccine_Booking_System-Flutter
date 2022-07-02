@@ -8,7 +8,9 @@ class CovidScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: TopBar(context, size, "Informasi Covid"),
       // appBar: AppBar(
       //   shape: const Border(bottom: BorderSide(color: cNeutral2, width: 1)),
       //   leadingWidth: 50,

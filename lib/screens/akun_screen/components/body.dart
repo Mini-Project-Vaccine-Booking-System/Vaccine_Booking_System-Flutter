@@ -21,43 +21,43 @@ class Body extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
       child: Column(
         children: [
+          // SizedBox(
+          //   height: size.height * 0.02,
+          // ),
+          // SafeArea(
+          //   child: Stack(
+          //     alignment: Alignment.centerLeft,
+          //     children: [
+          //       Center(
+          //         child: Text(
+          //           "Daftar Vaksin",
+          //           style: GoogleFonts.poppins(
+          //               textStyle: const TextStyle(
+          //                   color: cMainBlack,
+          //                   fontSize: 18,
+          //                   fontWeight: FontWeight.bold)),
+          //         ),
+          //       ),
+          //       InkWell(
+          //         onTap: () {
+          //           Navigator.pop(context);
+          //         },
+          //         child: Container(
+          //           width: 32,
+          //           height: 32,
+          //           decoration:
+          //               BoxDecoration(color: cPrimary1, shape: BoxShape.circle),
+          //           child: Icon(
+          //             Icons.arrow_back_ios_rounded,
+          //             color: Colors.white,
+          //           ),
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
           SizedBox(
-            height: size.height * 0.02,
-          ),
-          SafeArea(
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Center(
-                  child: Text(
-                    "Daftar Vaksin",
-                    style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                            color: cMainBlack,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 32,
-                    height: 32,
-                    decoration:
-                        BoxDecoration(color: cPrimary1, shape: BoxShape.circle),
-                    child: Icon(
-                      Icons.arrow_back_ios_rounded,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          SizedBox(
-            height: size.height * 0.05,
+            height: size.height * 0.03,
           ),
           TopPhoto(),
           SizedBox(

@@ -18,41 +18,6 @@ class Body extends StatelessWidget {
             SizedBox(
               height: size.height * 0.02,
             ),
-            SafeArea(
-              child: Stack(
-                alignment: Alignment.centerLeft,
-                children: [
-                  Center(
-                    child: Text(
-                      "Informasi Covid",
-                      style: GoogleFonts.poppins(
-                          textStyle: const TextStyle(
-                              color: cMainBlack,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                          color: cPrimary1, shape: BoxShape.circle),
-                      child: Icon(
-                        Icons.arrow_back_ios_rounded,
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: size.height * 0.02,
-            ),
             Text(
               "Data perkembangan covid hari ini",
               style: paragraphSemiBold2(cNeutral3),
@@ -141,7 +106,7 @@ class Body extends StatelessWidget {
             Container(
               height: 48,
               decoration: BoxDecoration(
-                  color: Color(0xFF292639),
+                  color: cNeutral2,
                   borderRadius: BorderRadius.circular(10)),
               child: const Padding(
                 padding: EdgeInsets.all(7.0),

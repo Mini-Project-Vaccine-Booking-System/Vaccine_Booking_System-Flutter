@@ -18,20 +18,60 @@ class TopCard extends StatelessWidget {
     final account = Provider.of<AccoutnViewModel>(context);
     return Container(
       width: size.width,
-      height: 104,
+      height: 120,
       decoration: const BoxDecoration(
-          color: cPrimaryG2,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Color(0xFF238DFF),
-                // Color(0xFF66A7FF),
-                Color(0xFF86B9FF),
-                // Color(0xFFAED0FF)
-              ])),
-      child: Padding(
+        color: cPrimary1,
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        // boxShadow: [
+        //   BoxShadow(
+        //       spreadRadius: 2,
+        //       blurRadius: 1,
+        //       color: Colors.black.withOpacity(0.2),
+        //       offset: Offset(0, 1)),
+        // ],
+      ),
+      child: Stack(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+                left: size.width * 0.05, top: size.height * 0.02),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: size.width * 0.6,
+                  child: Text(
+                    "Ayo dapatkan vaksin untuk hidup lebih sehat",
+                    style: paragraphSemiBold2(cMainWhite),
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: cPrimary3,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8))),
+                    onPressed: () {},
+                    child: Text(
+                      "Daftar Sekarang",
+                      style: paragraphBold3(Colors.white),
+                    ))
+              ],
+            ),
+          ),
+          Positioned(
+              bottom: 0,
+              right: 0,
+              child: Image.asset(
+                "assets/images/image_banner.png",
+                fit: BoxFit.cover,
+                scale: 1.4,
+              ))
+        ],
+      ),
+      /* Padding(
         padding: EdgeInsets.symmetric(
             horizontal: size.width * 0.08, vertical: size.height * 0.02),
         child: Column(
@@ -53,9 +93,8 @@ class TopCard extends StatelessWidget {
                     SizedBox(
                       height: size.height * 0.002,
                     ),
-                    Text(account.data != null
-                          ? account.data!.nik
-                          : "",
+                    Text(
+                      account.data != null ? account.data!.nik : "",
                       style: paragraphRegular3(cMainWhite),
                     ),
                   ],
@@ -87,7 +126,7 @@ class TopCard extends StatelessWidget {
             )
           ],
         ),
-      ),
+      ), */
     );
   }
 }

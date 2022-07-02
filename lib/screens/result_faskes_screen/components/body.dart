@@ -26,55 +26,24 @@ class _BodyState extends State<Body> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: size.height * 0.02,
-          ),
-          SafeArea(
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Center(
-                  child: Text(
-                    "Fasilitas Kesehatan",
-                    style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                            color: cMainBlack,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 32,
-                    height: 32,
-                    decoration:
-                        BoxDecoration(color: cPrimary1, shape: BoxShape.circle),
-                    child: Icon(
-                      Icons.arrow_back_ios_rounded,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
           if (hospital.data.isEmpty) ...[
             SizedBox(
               height: size.height * 0.05,
             ),
-            Image.asset("assets/images/data.png"),
-            Text(
-              "Data Tidak Tersedia!",
-              style: headingBold2(cMainBlack),
-              textAlign: TextAlign.center,
+            Center(child: Image.asset("assets/images/data.png")),
+            Center(
+              child: Text(
+                "Data Tidak Tersedia!",
+                style: headingBold2(cMainBlack),
+                textAlign: TextAlign.center,
+              ),
             ),
-            Text(
-              "Silahkan lakukan pencarian dengan kata kunci lain untuk mendapatkan data.",
-              style: paragraphSemiBold2(cNeutral1),
-              textAlign: TextAlign.center,
+            Center(
+              child: Text(
+                "Silahkan lakukan pencarian dengan kata kunci lain untuk mendapatkan data.",
+                style: paragraphSemiBold2(cNeutral1),
+                textAlign: TextAlign.center,
+              ),
             ),
             SizedBox(
               height: size.height * 0.03,
@@ -87,11 +56,14 @@ class _BodyState extends State<Body> {
                 })
           ] else ...[
             SizedBox(
-              height: size.height * 0.03,
+              height: size.height * 0.02,
             ),
             Text(
               "Hasil pencarian berdasarkan filter",
               style: paragraphSemiBold3(cNeutral1),
+            ),
+            SizedBox(
+              height: size.height * 0.02,
             ),
             ListView.builder(
               itemCount: hospital.data.length,
@@ -147,11 +119,11 @@ class _BodyState extends State<Body> {
                               offset: Offset(0, 1)),
                         ],
                         border: hospital.data[index].availability == false
-                            ? Border.all(color: cPrimary1, width: 2)
+                            ? Border.all(color: cNeutral1, width: 2)
                             : Border.all(color: Colors.transparent),
                         color: hospital.data[index].availability == true
                             ? cPrimary1
-                            : cMainWhite,
+                            : cNeutral2,
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -176,7 +148,7 @@ class _BodyState extends State<Body> {
                               style: paragraphSemiBold1(
                                 hospital.data[index].availability == true
                                     ? cMainWhite
-                                    : cMainBlack,
+                                    : Colors.grey,
                               ),
                             ),
                             ConstrainedBox(
@@ -186,7 +158,7 @@ class _BodyState extends State<Body> {
                                 style: paragraphRegular3(
                                   hospital.data[index].availability == true
                                       ? cMainWhite
-                                      : cMainBlack,
+                                      : Colors.grey,
                                 ),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -227,7 +199,7 @@ class _BodyState extends State<Body> {
                             size: 24,
                             color: hospital.data[index].availability == true
                                 ? cMainWhite
-                                : cNeutral3,
+                                : Colors.grey,
                           )
                         ],
                         if (indexBox != null && indexBox == index) ...[

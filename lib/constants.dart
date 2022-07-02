@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 // Constant Colors
 const cPrimary1 = Color(0xFF026DE1);
 const cPrimary2 = Color(0xFF66A7FF);
+const cPrimary3 = Color(0xFF37A3ED);
 
 const cPrimaryG2 = Color(0xFF238DFF);
 const cPrimaryG = Color(0xFF026DE1);
@@ -267,4 +268,37 @@ TextStyle paragraphLight0(colorText) {
   return GoogleFonts.poppins(
       textStyle: TextStyle(
           color: colorText, fontSize: 24, fontWeight: FontWeight.w300));
+}
+
+AppBar TopBar(BuildContext context, Size size, String text) {
+  return AppBar(
+    automaticallyImplyLeading: false,
+    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    elevation: 0.7,
+    centerTitle: true,
+    titleSpacing: 0,
+    title: Text(
+      text,
+      style: GoogleFonts.poppins(
+          textStyle: const TextStyle(
+              color: cMainBlack, fontSize: 24, fontWeight: FontWeight.w600)),
+    ),
+    leading: Container(
+      margin: EdgeInsets.only(left: size.width * 0.02),
+      decoration: BoxDecoration(
+        border: Border.all(
+            width: 1, color: Theme.of(context).scaffoldBackgroundColor),
+      ),
+      child: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(
+          Icons.arrow_back_ios_new_outlined,
+          size: 25,
+          color: cMainBlack,
+        ),
+      ),
+    ),
+  );
 }

@@ -12,7 +12,7 @@ import '../../../components/roundedContainer.dart';
 import '../../../constants.dart';
 
 class Body extends StatefulWidget {
-  const Body({Key? key}) : super(key: key);
+  Body({Key? key}) : super(key: key);
 
   @override
   State<Body> createState() => _BodyState();
@@ -20,54 +20,19 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   bool isLoading = false;
+  final _formKey = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
     var hospital = Provider.of<HospitalViewModel>(context, listen: false);
     Size size = MediaQuery.of(context).size;
-    final _formKey = GlobalKey<FormBuilderState>();
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: size.height * 0.02,
-          ),
-          SafeArea(
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Center(
-                  child: Text(
-                    "Daftar Vaksin",
-                    style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                            color: cMainBlack,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 32,
-                    height: 32,
-                    decoration:
-                        BoxDecoration(color: cPrimary1, shape: BoxShape.circle),
-                    child: Icon(
-                      Icons.arrow_back_ios_rounded,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
           // Center(child: Image.asset("assets/icons/icon.png")),
           SizedBox(
-            height: size.height * 0.05,
+            height: size.height * 0.03,
           ),
           Text(
             "Lindungi diri dan sekitar dengan vaksinasi COVID-19",
@@ -83,79 +48,101 @@ class _BodyState extends State<Body> {
           SizedBox(
             height: size.height * 0.03,
           ),
-          Text(
-            "Cari lokasi vaksin",
-            style: paragraphMedium2(cMainBlack),
-          ),
           FormBuilder(
               key: _formKey,
-              child: Column(
-                children: [
-                  roundedContainer(
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                      child: FormBuilderTextField(
-                        name: "city",
-                        decoration: InputDecoration(
-                          hintText: "e.g Jakarta",
-                          hintStyle: paragraphRegular1(cNeutral1),
-                          border: InputBorder.none,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Cari lokasi vaksin",
+                      style: paragraphMedium2(cMainBlack),
+                    ),
+                    roundedContainer(
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                        child: FormBuilderTextField(
+                          name: "city",
+                          decoration: InputDecoration(
+                            hintText: "e.g Jakarta",
+                            hintStyle: paragraphRegular1(cNeutral1),
+                            border: InputBorder.none,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: size.height * 0.05,
-                  ),
-                  isLoading != true
-                      ? RoundedButtonSolid(
-                          size: size,
-                          text: "Cari",
-                          onAction: () {
-                            setState(() {
-                              isLoading = !isLoading;
-                            });
-                            _formKey.currentState!.save();
-                            if (_formKey.currentState!.validate()) {
-                              if (!isNull(
-                                  _formKey.currentState!.value["city"])) {
-                                hospital
-                                    .getDataByCity(
-                                        _formKey.currentState!.value["city"])
-                                    .then((value) {
+                    SizedBox(height: size.height * 0.02),
+                    Text(
+                      "Tanggal vaksin",
+                      style: paragraphMedium2(cMainBlack),
+                    ),
+                    roundedContainer(
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                        child: FormBuilderTextField(
+                          name: "date",
+                          decoration: InputDecoration(
+                            hintText: "e.g Jakarta",
+                            hintStyle: paragraphRegular1(cNeutral1),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: size.height * 0.05,
+                    ),
+                    isLoading != true
+                        ? RoundedButtonSolid(
+                            size: size,
+                            text: "Cari",
+                            onAction: () {
+                              setState(() {
+                                isLoading = !isLoading;
+                              });
+                              _formKey.currentState!.save();
+                              if (_formKey.currentState!.validate()) {
+                                if (!isNull(
+                                    _formKey.currentState!.value["city"])) {
+                                  hospital
+                                      .getDataByCity(
+                                          _formKey.currentState!.value["city"])
+                                      .then((value) {
+                                    setState(() {
+                                      isLoading = !isLoading;
+                                    });
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                ResultFaskesScreen()));
+                                  });
+                                } else {
                                   setState(() {
                                     isLoading = !isLoading;
                                   });
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) =>
-                                              ResultFaskesScreen()));
-                                });
-                              } else {
-                                setState(() {
-                                  isLoading = !isLoading;
-                                });
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  backgroundColor: cPrimary1,
-                                  behavior: SnackBarBehavior.floating,
-                                  content: const Text(
-                                    "Input tidak boleh kosong!",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  action: SnackBarAction(
-                                      label: 'Abaikan',
-                                      textColor: Colors.white,
-                                      onPressed: () {}),
-                                ));
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    backgroundColor: cFail,
+                                    behavior: SnackBarBehavior.floating,
+                                    content: const Text(
+                                      "Input tidak boleh kosong!",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    action: SnackBarAction(
+                                        label: 'Abaikan',
+                                        textColor: Colors.white,
+                                        onPressed: () {}),
+                                  ));
+                                }
                               }
-                            }
-                          },
-                        )
-                      : RoundedButtonLoading(size: size)
-                ],
+                            },
+                          )
+                        : RoundedButtonLoading(size: size)
+                  ],
+                ),
               )),
         ],
       ),

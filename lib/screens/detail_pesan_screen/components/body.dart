@@ -47,41 +47,6 @@ class _BodyState extends State<Body> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: size.height * 0.02,
-          ),
-          SafeArea(
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Center(
-                  child: Text(
-                    "Detail Pemesanan",
-                    style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                            color: cMainBlack,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 32,
-                    height: 32,
-                    decoration:
-                        BoxDecoration(color: cPrimary1, shape: BoxShape.circle),
-                    child: Icon(
-                      Icons.arrow_back_ios_rounded,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          SizedBox(
             height: size.height * 0.03,
           ),
           TopCard(
@@ -155,38 +120,39 @@ class _BodyState extends State<Body> {
                   setState(() {
                     dropdownvalue = newValue as Family?;
                   });
+                  ticket.setUserSelect = dropdownvalue;
                 },
               ),
             ),
           ),
           SizedBox(
-            height: size.height * 0.05,
+            height: size.height * 0.12,
           ),
-          RoundedButtonSolid(
-            size: size,
-            text: "Pesan",
-            onAction: () {
-              if (hospital.dataSelect != null &&
-                  hospital.scheduleSelect != null &&
-                  hospital.vaccineSelect != null &&
-                  dropdownvalue != null) {
-                ticket.setHospitalSelect = hospital.dataSelect;
-                ticket.setScheduleSelect = hospital.scheduleSelect;
-                ticket.setVaccineSelect = hospital.vaccineSelect;
-                ticket.setUserSelect = dropdownvalue;
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => ConfirmationScreen()));
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text("Data pendaftaran tidak lengkap!"),
-                  backgroundColor: cFail,
-                ));
-              }
-            },
-          ),
-          SizedBox(
-            height: size.height * 0.03,
-          )
+          // RoundedButtonSolid(
+          //   size: size,
+          //   text: "Pesan",
+          //   onAction: () {
+          //     if (hospital.dataSelect != null &&
+          //         hospital.scheduleSelect != null &&
+          //         hospital.vaccineSelect != null &&
+          //         dropdownvalue != null) {
+          //       ticket.setHospitalSelect = hospital.dataSelect;
+          //       ticket.setScheduleSelect = hospital.scheduleSelect;
+          //       ticket.setVaccineSelect = hospital.vaccineSelect;
+          //       ticket.setUserSelect = dropdownvalue;
+          //       Navigator.push(context,
+          //           MaterialPageRoute(builder: (_) => ConfirmationScreen()));
+          //     } else {
+          //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          //         content: Text("Data pendaftaran tidak lengkap!"),
+          //         backgroundColor: cFail,
+          //       ));
+          //     }
+          //   },
+          // ),
+          // SizedBox(
+          //   height: size.height * 0.03,
+          // )
         ],
       ),
     );

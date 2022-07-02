@@ -10,13 +10,24 @@ class WelcomeText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.asset("assets/images/background.png"),
+        SizedBox(
+          width: size.width,
+          height: size.height * 0.5,
+        ),
+        Positioned(
+            top: -size.height * 0.05,
+            left: -size.width * 0.21,
+            child: Image.asset(
+              "assets/images/background.png",
+              width: size.width,
+              fit: BoxFit.fill,
+            )),
         Positioned(
             top: size.height * 0.3,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
               child: Text(
-                "Daftar Akun",
+                "Register",
                 style: headingBold1(cMainWhite),
               ),
             ))

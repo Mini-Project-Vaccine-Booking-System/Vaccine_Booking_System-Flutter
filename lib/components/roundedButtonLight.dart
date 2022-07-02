@@ -4,7 +4,10 @@ import '../constants.dart';
 
 class RoundedButtonLight extends StatelessWidget {
   const RoundedButtonLight(
-      {Key? key, required this.size, required this.text, required this.onAction})
+      {Key? key,
+      required this.size,
+      required this.text,
+      required this.onAction})
       : super(key: key);
 
   final Size size;
@@ -26,7 +29,7 @@ class RoundedButtonLight extends StatelessWidget {
               elevation: 3),
           child: Text(
             text,
-            style: paragraphSemiBold1(cPrimary2),
+            style: paragraphSemiBold1(cPrimary1),
           )),
     );
   }

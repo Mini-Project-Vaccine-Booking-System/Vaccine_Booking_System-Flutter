@@ -26,7 +26,7 @@ class TopName extends StatelessWidget {
               RichText(
                 text: TextSpan(children: [
                   TextSpan(
-                    text: "👋 Halo, ",
+                    text: "Halo, ",
                     style: headingBold2(Colors.black),
                   ),
                   TextSpan(
@@ -37,31 +37,20 @@ class TopName extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
-              // ConstrainedBox(
-              //   constraints: BoxConstraints(maxWidth: 250),
-              //   child: Text(
-              //     "👋 Halo, ${account.data != null ? account.data!.name : ""}",
-              //     style: headingBold2(Colors.black),
-              //     overflow: TextOverflow.ellipsis,
-              //     maxLines: 1,
-              //   ),
-              // ),
-              SizedBox(
-                height: size.height * 0.005,
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const Icon(
                     Icons.location_on_rounded,
                     color: cPrimaryG,
+                    size: 16,
                   ),
                   SizedBox(
                     width: size.width * 0.02,
                   ),
                   Text(
                     "Surakarta, Jawa Tengah",
-                    style: paragraphMedium3(cNeutral1),
+                    style: paragraphMedium2(cNeutral1),
                   )
                 ],
               )
@@ -73,8 +62,8 @@ class TopName extends StatelessWidget {
             Navigator.push(context, MaterialPageRoute(builder: (_) => Akun()));
           },
           child: Container(
-              width: 47,
-              height: 47,
+              width: 50,
+              height: 50,
               decoration: const BoxDecoration(
                 color: Colors.grey,
                 borderRadius: BorderRadius.all(Radius.circular(10)),

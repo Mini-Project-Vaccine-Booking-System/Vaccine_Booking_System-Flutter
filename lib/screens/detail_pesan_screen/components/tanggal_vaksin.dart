@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 import '../../../view_model/hospital_view_model.dart';
+import '../../../view_model/ticket_view_model.dart';
 
 class TanggalVaksin extends StatefulWidget {
   const TanggalVaksin({Key? key, required this.size}) : super(key: key);
@@ -21,6 +22,7 @@ class _TanggalVaksinState extends State<TanggalVaksin> {
   @override
   Widget build(BuildContext context) {
     var hospital = Provider.of<HospitalViewModel>(context);
+    var ticket = Provider.of<TicketViewModel>(context);
     return SizedBox(
       height: widget.size.height * 0.15,
       child: ListView.builder(
@@ -29,11 +31,12 @@ class _TanggalVaksinState extends State<TanggalVaksin> {
         itemBuilder: (context, index) {
           return InkWell(
               onTap: () {
-                hospital.scheduleSelect = hospital.dataDate[index];
+                // hospital.scheduleSelect = hospital.dataDate[index];
                 hospital.getVaccine(hospital.dataDate[index].id);
                 setState(() {
                   indexActive = index;
                 });
+                ticket.setScheduleSelect = hospital.dataDate[index];
               },
               child: Container(
                   margin: EdgeInsets.all(5),

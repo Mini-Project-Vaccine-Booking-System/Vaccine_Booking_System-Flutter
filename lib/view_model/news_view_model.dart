@@ -23,10 +23,11 @@ class NewsViewModel extends ChangeNotifier {
     Response newsResponse = await NewsAPI.getData();
     if (newsResponse.statusCode == 200) {
       var news = jsonDecode(newsResponse.body) as Map<String, dynamic>;
+      // print(news);
       for (var element in news["articles"]) {
         News data = News(
-            author: element["author"],
-            publishedAt: element["publishedAt"],
+            author: "",
+            publishedAt: "",
             title: element["title"],
             description: element["description"],
             image: element["urlToImage"],

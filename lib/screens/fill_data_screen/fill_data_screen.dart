@@ -8,7 +8,9 @@ class FillDataScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: TopBar(context, size, "Data Profil"),
       // appBar: AppBar(
       //   shape: const Border(bottom: BorderSide(color: cNeutral2, width: 1)),
       //   leadingWidth: 50,

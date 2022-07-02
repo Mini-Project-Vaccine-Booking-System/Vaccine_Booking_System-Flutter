@@ -27,51 +27,106 @@ class _BodyState extends State<Body> {
     var hospital = Provider.of<HospitalViewModel>(context, listen: false);
     var news = Provider.of<NewsViewModel>(context, listen: false);
     return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: size.height * 0.06),
-          TopName(size: size),
           SizedBox(
-            height: size.height * 0.04,
+            height: size.height * 0.02,
           ),
-          TopCard(size: size),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+            child: TopCard(size: size),
+          ),
           SizedBox(
             height: size.height * 0.03,
           ),
-          Menu(),
-          SizedBox(
-            height: size.height * 0.05,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+            child: const Menu(),
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Lokasi Vaksin Terdekat",
-                style: paragraphBold3(cNeutral3),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isLoading[0] = true;
-                  });
-                  hospital.getDataByCity("surakarta").then((value) {
+          SizedBox(
+            height: size.height * 0.03,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Lokasi Vaksin Hari Ini",
+                  style: paragraphBold2(cMainBlack),
+                ),
+                GestureDetector(
+                  onTap: () {
                     setState(() {
-                      isLoading[0] = false;
+                      isLoading[0] = true;
                     });
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => ResultFaskesScreen()));
-                  });
-                },
-                child: isLoading[0] == false
-                    ? Text(
-                        "Lihat Semua",
-                        style: paragraphBold4(cPrimary2),
+                    hospital.getDataByCity("surakarta").then((value) {
+                      setState(() {
+                        isLoading[0] = false;
+                      });
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => ResultFaskesScreen()));
+                    });
+                  },
+                  child: isLoading[0] == false
+                      ? Text(
+                          "Lihat Semua",
+                          style: paragraphBold4(cPrimary1),
+                        )
+                      : const SizedBox(
+                          width: 11,
+                          height: 11,
+                          child: CircularProgressIndicator(
+                            color: cPrimary2,
+                          ),
+                        ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: size.height * 0.02,
+          ),
+          HorizontalList(size: size),
+          SizedBox(
+            height: size.height * 0.03,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Informasi Covid-19 Terkini",
+                  style: paragraphBold2(cMainBlack),
+                ),
+                isLoading[1] == false
+                    ? GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isLoading[1] = true;
+                          });
+                          news.getDataNews().then((value) {
+                            setState(() {
+                              isLoading[1] = false;
+                            });
+
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => NewsMoreScreen()));
+                          });
+                        },
+                        child: Text(
+                          "Lihat Semua",
+                          style: paragraphBold4(cPrimary1),
+                        ),
                       )
                     : const SizedBox(
                         width: 11,
@@ -80,54 +135,8 @@ class _BodyState extends State<Body> {
                           color: cPrimary2,
                         ),
                       ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: size.height * 0.02,
-          ),
-          HorizontalList(size: size),
-          SizedBox(
-            height: size.height * 0.05,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Informasi Covid-19 Terkini",
-                style: paragraphBold3(cNeutral3),
-              ),
-              isLoading[1] == false
-                  ? GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isLoading[1] = true;
-                        });
-                        news.getDataNews().then((value) {
-                          setState(() {
-                            isLoading[1] = false;
-                          });
-
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => NewsMoreScreen()));
-                        });
-                      },
-                      child: Text(
-                        "Lihat Semua",
-                        style: paragraphBold4(cPrimary2),
-                      ),
-                    )
-                  : const SizedBox(
-                      width: 11,
-                      height: 11,
-                      child: CircularProgressIndicator(
-                        color: cPrimary2,
-                      ),
-                    ),
-            ],
+              ],
+            ),
           ),
           SizedBox(
             height: size.height * 0.02,
