@@ -59,7 +59,7 @@ class Body extends StatelessWidget {
                                     spreadRadius: 1,
                                     blurRadius: 10,
                                     color: Colors.black.withOpacity(0.2),
-                                    offset: Offset(0.0, 0.95)),
+                                    offset: const Offset(0.0, 0.95)),
                               ],
                             ),
                             child: Column(
@@ -103,11 +103,11 @@ class Body extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      ticket.userSelect!.name,
+                                      ticket.ticketSelect.namaPasien,
                                       style: paragraphBold2(Colors.black),
                                     ),
                                     Text(
-                                      ticket.userSelect!.nik,
+                                      ticket.ticketSelect.nik,
                                       style: paragraphMedium4(cPrimary1),
                                     )
                                   ],
@@ -120,12 +120,13 @@ class Body extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      ticket.hospitalSelect!.name,
+                                      ticket.ticketSelect.namaRumahSakit,
                                       style: paragraphBold2(Colors.black),
                                     ),
                                     Text(
-                                      ticket.hospitalSelect!.address,
+                                      ticket.ticketSelect.alamatRumahSakit,
                                       style: paragraphMedium4(cPrimary1),
+                                      maxLines: 4,
                                     )
                                   ],
                                 ),
@@ -137,14 +138,14 @@ class Body extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      DateFormat('EEEE, d MMMM y')
-                                          .format(DateTime.parse(
-                                              ticket.scheduleSelect!.start))
+                                      DateFormat("EEEE, dd MMMM yyyy")
+                                          .format(
+                                              ticket.ticketSelect.dateSession)
                                           .toString(),
                                       style: paragraphBold2(Colors.black),
                                     ),
                                     Text(
-                                      "${DateFormat.Hm().format(DateTime.parse(ticket.scheduleSelect!.start)).toString()} - ${DateFormat.Hm().format(DateTime.parse(ticket.scheduleSelect!.end)).toString()}",
+                                      "${ticket.ticketSelect.start.substring(0, 5)} - ${ticket.ticketSelect.end.substring(0, 5)}",
                                       style: paragraphMedium4(cPrimary1),
                                     )
                                   ],
@@ -157,7 +158,7 @@ class Body extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      ticket.vaccineSelect!.name,
+                                      ticket.ticketSelect.namaVaksin,
                                       style: paragraphBold2(Colors.black),
                                     ),
                                     Text(
@@ -208,9 +209,9 @@ class Body extends StatelessWidget {
                           child: Container(
                             width: 32,
                             height: 32,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Colors.white, shape: BoxShape.circle),
-                            child: Icon(
+                            child: const Icon(
                               Icons.arrow_back_ios_rounded,
                               color: cPrimary1,
                             ),
@@ -236,14 +237,14 @@ class Body extends StatelessWidget {
                             height: size.height * 0.71,
                             decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
+                                  const BorderRadius.all(Radius.circular(20)),
                               color: cMainWhite,
                               boxShadow: [
                                 BoxShadow(
                                     spreadRadius: 1,
                                     blurRadius: 10,
                                     color: Colors.black.withOpacity(0.2),
-                                    offset: Offset(0.0, 0.95)),
+                                    offset: const Offset(0.0, 0.95)),
                               ],
                             ),
                             child: Column(
@@ -270,8 +271,8 @@ class Body extends StatelessWidget {
                                   children: [
                                     Container(
                                       padding:
-                                          EdgeInsets.symmetric(horizontal: 10),
-                                      decoration: BoxDecoration(
+                                          const EdgeInsets.symmetric(horizontal: 10),
+                                      decoration: const BoxDecoration(
                                           color: cPrimary1,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5))),
@@ -287,16 +288,16 @@ class Body extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      ticket.bookingSelect.userName,
+                                      ticket.ticketSelect.namaPasien,
                                       style: paragraphBold2(Colors.black),
                                     ),
                                     Text(
-                                      ticket.bookingSelect.userNik,
+                                      ticket.ticketSelect.nik,
                                       style: paragraphMedium4(cPrimary1),
                                     )
                                   ],
                                 ),
-                                Divider(
+                                const Divider(
                                   thickness: 1,
                                   color: cNeutral2,
                                 ),
@@ -304,16 +305,17 @@ class Body extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      ticket.bookingSelect.userHospitalName,
+                                      ticket.ticketSelect.namaRumahSakit,
                                       style: paragraphBold2(Colors.black),
                                     ),
                                     Text(
-                                      ticket.bookingSelect.userHospitalAddress,
+                                      ticket.ticketSelect.alamatRumahSakit,
                                       style: paragraphMedium4(cPrimary1),
+                                      maxLines: 4,
                                     )
                                   ],
                                 ),
-                                Divider(
+                                const Divider(
                                   thickness: 1,
                                   color: cNeutral2,
                                 ),
@@ -321,19 +323,19 @@ class Body extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      DateFormat('EEEE, d MMMM y')
-                                          .format(DateTime.parse(ticket
-                                              .bookingSelect.userScheduleStart))
+                                      DateFormat("EEEE, dd MMMM yyyy")
+                                          .format(
+                                              ticket.ticketSelect.dateSession)
                                           .toString(),
                                       style: paragraphBold2(Colors.black),
                                     ),
                                     Text(
-                                      "${DateFormat.Hm().format(DateTime.parse(ticket.bookingSelect.userScheduleStart)).toString()} - ${DateFormat.Hm().format(DateTime.parse(ticket.bookingSelect.userScheduleEnd)).toString()}",
+                                      "${ticket.ticketSelect.start.substring(0, 5)} - ${ticket.ticketSelect.end.substring(0, 5)}",
                                       style: paragraphMedium4(cPrimary1),
                                     )
                                   ],
                                 ),
-                                Divider(
+                                const Divider(
                                   thickness: 1,
                                   color: cNeutral2,
                                 ),
@@ -341,7 +343,7 @@ class Body extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      ticket.bookingSelect.userVaccineName,
+                                      ticket.ticketSelect.namaVaksin,
                                       style: paragraphBold2(Colors.black),
                                     ),
                                     Text(

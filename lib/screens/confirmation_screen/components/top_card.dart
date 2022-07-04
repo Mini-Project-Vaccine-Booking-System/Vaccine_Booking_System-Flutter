@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:vaccine/models/hospital.dart';
 import 'package:vaccine/models/schedule.dart';
 import 'package:vaccine/models/vaccine.dart';
+import 'package:vaccine/view_model/hospital_view_model.dart';
 
 import '../../../constants.dart';
+import '../../../view_model/family_view_model.dart';
 
 class TopCard extends StatelessWidget {
-  const TopCard(
-      {Key? key,
-      required this.size,
-      required this.dataHospital,
-      required this.dataVaccine,
-      required this.dataSchedule})
-      : super(key: key);
+  const TopCard({Key? key, required this.size}) : super(key: key);
 
   final Size size;
-  final Hospital? dataHospital;
-  final Vaccine? dataVaccine;
-  final Schedule? dataSchedule;
 
   @override
   Widget build(BuildContext context) {
+    var hospital = Provider.of<HospitalViewModel>(context);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
       padding: EdgeInsets.symmetric(
@@ -60,16 +55,20 @@ class TopCard extends StatelessWidget {
                   ConstrainedBox(
                     constraints: BoxConstraints(maxWidth: size.width * 0.5),
                     child: Text(
-                      dataHospital!.name,
+                      hospital.dataSelect.name,
                       style: paragraphBold1(cMainBlack),
                       textAlign: TextAlign.start,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   ConstrainedBox(
                     constraints: BoxConstraints(maxWidth: size.width * 0.5),
                     child: Text(
-                      dataHospital!.address,
+                      hospital.dataSelect.address,
                       style: paragraphRegular3(cMainBlack),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],
@@ -87,7 +86,7 @@ class TopCard extends StatelessWidget {
                 "Jenis Vaksin",
               ),
               Text(
-                dataVaccine!.name,
+                hospital.dataSelect.vaccine,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               )
             ],
@@ -97,6 +96,7 @@ class TopCard extends StatelessWidget {
           ),
           SizedBox(height: size.height * 0.01),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
@@ -106,8 +106,8 @@ class TopCard extends StatelessWidget {
                     "Tanggal",
                   ),
                   Text(
-                    DateFormat('EEEE, d MMMM y')
-                        .format(DateTime.parse(dataSchedule!.start))
+                    DateFormat("EEEE, dd MMMM yyyy")
+                        .format(hospital.dataSelect.date)
                         .toString(),
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   )
@@ -123,7 +123,7 @@ class TopCard extends StatelessWidget {
                     "Waktu",
                   ),
                   Text(
-                    "${DateFormat.Hm().format(DateTime.parse(dataSchedule!.start)).toString()} - ${DateFormat.Hm().format(DateTime.parse(dataSchedule!.end)).toString()}",
+                    "${hospital.dataSelect.start.substring(0, 5)} - ${hospital.dataSelect.end.substring(0, 5)}",
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],

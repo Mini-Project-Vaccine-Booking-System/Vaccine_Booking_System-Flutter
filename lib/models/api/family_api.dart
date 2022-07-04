@@ -2,89 +2,105 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class FamilyAPI {
-  static Future addData(data, token) async {
+  static Future addData(data) async {
     Uri url =
-        Uri.parse("https://vaccine-api-strapi.herokuapp.com/api/families");
+        Uri.parse("https://booking-vaksin-alta.herokuapp.com/api/kelompok");
 
     try {
-      var response = await http.post(url, body: jsonEncode(data), headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      });
-      return response;
+      bool result = false;
+      var response = await http.post(url,
+          body: jsonEncode(data),
+          headers: {"Content-Type": "application/json"});
+      if (response.statusCode == 200) {
+        result = true;
+      }
+
+      return result;
     } catch (e) {
       rethrow;
     }
   }
 
-  static Future getData(userId, token) async {
+  static Future getAllData(id) async {
     Uri url = Uri.parse(
-        'https://vaccine-api-strapi.herokuapp.com/api/families?filters[user_id][\$eq]=$userId&filters[isParent][\$eq]=false');
-
-    try {
-      var response = await http.get(url, headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      });
-      return response;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  static Future getAllData(userId, token) async {
-    Uri url = Uri.parse(
-        'https://vaccine-api-strapi.herokuapp.com/api/families?filters[user_id][\$eq]=$userId');
-
-    try {
-      var response = await http.get(url, headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      });
-      return response;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  static Future getDataById(userId, token) async {
-    Uri url = Uri.parse(
-        'https://vaccine-api-strapi.herokuapp.com/api/families?filters[id][\$eq]=$userId');
-
-    try {
-      var response = await http.get(url, headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      });
-      return response;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  static Future updateDataById(userId, data) async {
-    Uri url = Uri.parse(
-        "https://vaccine-13ee4-default-rtdb.asia-southeast1.firebasedatabase.app/family/$userId.json");
-
-    try {
-      var response = await http.patch(url, body: data);
-      var hasilResponse = jsonDecode(response.body);
-      return hasilResponse;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  static Future isAdmin() async {
-    Uri url = Uri.parse(
-        'https://vaccine-13ee4-default-rtdb.asia-southeast1.firebasedatabase.app/family.json?orderBy="isAdmin"&equalTo="true"');
+        "https://booking-vaksin-alta.herokuapp.com/api/kelompok/user/$id");
 
     try {
       var response = await http.get(url);
-      var hasilResponse = jsonDecode(response.body) as Map<String, dynamic>;
-      return hasilResponse;
+      return response;
     } catch (e) {
       rethrow;
     }
   }
+
+  // static Future getData(userId, token) async {
+  //   Uri url = Uri.parse(
+  //       'https://vaccine-api-strapi.herokuapp.com/api/families?filters[user_id][\$eq]=$userId&filters[isParent][\$eq]=false');
+
+  //   try {
+  //     var response = await http.get(url, headers: {
+  //       "Content-Type": "application/json",
+  //       "Authorization": "Bearer $token"
+  //     });
+  //     return response;
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+
+  // static Future getAllData(userId, token) async {
+  //   Uri url = Uri.parse(
+  //       'https://vaccine-api-strapi.herokuapp.com/api/families?filters[user_id][\$eq]=$userId');
+
+  //   try {
+  //     var response = await http.get(url, headers: {
+  //       "Content-Type": "application/json",
+  //       "Authorization": "Bearer $token"
+  //     });
+  //     return response;
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+
+  // static Future getDataById(userId, token) async {
+  //   Uri url = Uri.parse(
+  //       'https://vaccine-api-strapi.herokuapp.com/api/families?filters[id][\$eq]=$userId');
+
+  //   try {
+  //     var response = await http.get(url, headers: {
+  //       "Content-Type": "application/json",
+  //       "Authorization": "Bearer $token"
+  //     });
+  //     return response;
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+
+  // static Future updateDataById(userId, data) async {
+  //   Uri url = Uri.parse(
+  //       "https://vaccine-13ee4-default-rtdb.asia-southeast1.firebasedatabase.app/family/$userId.json");
+
+  //   try {
+  //     var response = await http.patch(url, body: data);
+  //     var hasilResponse = jsonDecode(response.body);
+  //     return hasilResponse;
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+
+  // static Future isAdmin() async {
+  //   Uri url = Uri.parse(
+  //       'https://vaccine-13ee4-default-rtdb.asia-southeast1.firebasedatabase.app/family.json?orderBy="isAdmin"&equalTo="true"');
+
+  //   try {
+  //     var response = await http.get(url);
+  //     var hasilResponse = jsonDecode(response.body) as Map<String, dynamic>;
+  //     return hasilResponse;
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
 }

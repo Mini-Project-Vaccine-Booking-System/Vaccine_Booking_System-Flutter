@@ -30,7 +30,7 @@ class TopName extends StatelessWidget {
                     style: headingBold2(Colors.black),
                   ),
                   TextSpan(
-                    text: account.data != null ? account.data!.name : "",
+                    text: account.data != null ? account.data!.nama : "",
                     style: headingBold2(Colors.black),
                   ),
                 ]),

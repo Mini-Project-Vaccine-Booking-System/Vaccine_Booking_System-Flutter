@@ -20,7 +20,7 @@ class HorizontalList extends StatefulWidget {
 }
 
 class _HorizontalListState extends State<HorizontalList> {
-  bool? isInit = null;
+  bool? isInit;
 
   @override
   void didChangeDependencies() async {
@@ -107,7 +107,8 @@ class _HorizontalListState extends State<HorizontalList> {
                           image: const DecorationImage(
                               image: AssetImage("assets/images/rs.png"),
                               fit: BoxFit.fill),
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20)),
                           boxShadow: [
                             BoxShadow(
                                 spreadRadius: 2,
@@ -128,16 +129,16 @@ class _HorizontalListState extends State<HorizontalList> {
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 2),
                               decoration: BoxDecoration(
                                   color: cNeutral3.withOpacity(0.30),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10))),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -145,14 +146,14 @@ class _HorizontalListState extends State<HorizontalList> {
                                   Expanded(
                                     flex: 1,
                                     child: Text(
-                                      "08.00 - 12.00",
+                                      "${hospital.dataHome[index].start.substring(0, 5)} - ${hospital.dataHome[index].end.substring(0, 5)}",
                                       style: paragraphSemiBold3(cMainBlack),
                                     ),
                                   ),
                                   Expanded(
                                     flex: 1,
                                     child: Text(
-                                      "Sinovac",
+                                      hospital.dataHome[index].vaccine,
                                       style: paragraphBold2(cPrimary1),
                                       textAlign: TextAlign.right,
                                     ),

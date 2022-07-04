@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 import '../../../view_model/account_view_model.dart';
 
 class DataAkun extends StatelessWidget {
-  const DataAkun({Key? key, required this.size}) : super(key: key);
+  DataAkun({Key? key, required this.size}) : super(key: key);
   final Size size;
+  final _formKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
     final account = Provider.of<AccoutnViewModel>(context);
-    final _formKey = GlobalKey<FormBuilderState>();
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
         color: Colors.white,
         boxShadow: [
           BoxShadow(
               spreadRadius: 2,
               blurRadius: 10,
               color: Colors.black.withOpacity(0.1),
-              offset: Offset(0, 1)),
+              offset: const Offset(0, 1)),
         ],
       ),
       child: Column(
@@ -37,19 +38,19 @@ class DataAkun extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  bottomModal(context, "name", "Masukkan nama kamu",
-                      account.data!.name, _formKey);
+                  bottomModal(context, "nama", "Masukkan nama kamu",
+                      account.data!.nama, _formKey);
                 },
                 child: Row(
                   children: [
                     Text(
-                      account.data != null ? account.data!.name : "",
+                      account.data != null ? account.data!.nama : "",
                       style: paragraphRegular2(Colors.black),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward_ios_rounded,
                       size: 15,
                       color: Colors.black,
@@ -59,7 +60,7 @@ class DataAkun extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
+          const Divider(
             color: Colors.black,
             thickness: 0.5,
           ),
@@ -81,10 +82,10 @@ class DataAkun extends StatelessWidget {
                       account.data != null ? account.data!.nik : "",
                       style: paragraphRegular2(Colors.black),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward_ios_rounded,
                       size: 15,
                       color: Colors.black,
@@ -94,7 +95,7 @@ class DataAkun extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
+          const Divider(
             color: Colors.black,
             thickness: 0.5,
           ),
@@ -102,24 +103,34 @@ class DataAkun extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Usia",
+                "Tanggal Lahir",
                 style: paragraphSemiBold2(Colors.black),
               ),
               GestureDetector(
                 onTap: () {
-                  bottomModal(context, "usia", "Masukkan usia kamu",
-                      account.data!.usia, _formKey);
+                  bottomModal(
+                      context,
+                      "usia",
+                      "Masukkan usia kamu",
+                      DateFormat("dd-mm-yyyy")
+                          .format(account.data!.tanggalLahir)
+                          .toString(),
+                      _formKey);
                 },
                 child: Row(
                   children: [
                     Text(
-                      account.data != null ? account.data!.usia : "",
+                      account.data != null
+                          ? DateFormat("dd-M-yyyy")
+                              .format(account.data!.tanggalLahir)
+                              .toString()
+                          : "",
                       style: paragraphRegular2(Colors.black),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward_ios_rounded,
                       size: 15,
                       color: Colors.black,
@@ -129,7 +140,7 @@ class DataAkun extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
+          const Divider(
             color: Colors.black,
             thickness: 0.5,
           ),
@@ -142,19 +153,19 @@ class DataAkun extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  bottomModal(context, "telp", "Masukkan no telp kamu",
-                      account.data!.telp, _formKey);
+                  bottomModal(context, "phone", "Masukkan no telp kamu",
+                      account.data!.phone, _formKey);
                 },
                 child: Row(
                   children: [
                     Text(
-                      account.data != null ? account.data!.telp : "",
+                      account.data != null ? account.data!.phone : "",
                       style: paragraphRegular2(Colors.black),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward_ios_rounded,
                       size: 15,
                       color: Colors.black,
@@ -164,7 +175,7 @@ class DataAkun extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
+          const Divider(
             color: Colors.black,
             thickness: 0.5,
           ),
@@ -183,17 +194,17 @@ class DataAkun extends StatelessWidget {
                 child: Row(
                   children: [
                     ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 100),
+                      constraints: const BoxConstraints(maxWidth: 100),
                       child: Text(
                         account.data != null ? account.data!.email : "",
                         style: paragraphRegular2(Colors.black),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward_ios_rounded,
                       size: 15,
                       color: Colors.black,
@@ -203,7 +214,7 @@ class DataAkun extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
+          const Divider(
             color: Colors.black,
             thickness: 0.5,
           ),
@@ -221,14 +232,18 @@ class DataAkun extends StatelessWidget {
                 },
                 child: Row(
                   children: [
-                    Text(
-                      account.data != null ? account.data!.password : "",
-                      style: paragraphRegular2(Colors.black),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 100),
+                      child: Text(
+                        account.data != null ? account.data!.password : "",
+                        style: paragraphRegular2(Colors.black),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward_ios_rounded,
                       size: 15,
                       color: Colors.black,
@@ -250,7 +265,7 @@ class DataAkun extends StatelessWidget {
         builder: (context) => Padding(
               padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: Container(
+              child: SizedBox(
                 width: size.width,
                 height: 150,
                 child: ListView(
@@ -266,7 +281,7 @@ class DataAkun extends StatelessWidget {
                         child: Column(
                           children: [
                             FormBuilderTextField(
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                   focusedBorder: UnderlineInputBorder(
                                       borderSide:
                                           BorderSide(color: cNeutral1))),
@@ -274,7 +289,7 @@ class DataAkun extends StatelessWidget {
                               name: name,
                               autofocus: true,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Padding(
@@ -304,17 +319,20 @@ class DataAkun extends StatelessWidget {
                                         backgroundColor: cPrimary1,
                                       ),
                                       onPressed: () {
-                                      /*   formKey.currentState!.save();
+                                        formKey.currentState!.save();
                                         if (formKey.currentState!.validate()) {
                                           Provider.of<AccoutnViewModel>(context,
                                                   listen: false)
-                                              .updateAccount(
+                                              .updateUser(
                                                   name,
                                                   formKey.currentState!
                                                       .value[name])
-                                              .then((value) =>
-                                                  Navigator.pop(context));
-                                        } */
+                                              .then((value) {
+                                            if (value == true) {
+                                              Navigator.pop(context);
+                                            }
+                                          });
+                                        }
                                       },
                                       child: Text("Simpan",
                                           style: paragraphBold2(cMainWhite)))

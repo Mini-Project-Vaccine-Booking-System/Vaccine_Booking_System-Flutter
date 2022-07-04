@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:vaccine/components/roundedButtonLoading.dart';
 import 'package:vaccine/components/roundedButtonSolid.dart';
+import 'package:vaccine/models/family.dart';
 import 'package:vaccine/screens/pass_screen/pass_screen.dart';
+import 'package:vaccine/view_model/family_view_model.dart';
 
+import '../../../components/roundedContainer.dart';
 import '../../../constants.dart';
 import '../../../view_model/ticket_view_model.dart';
 import 'middle_card.dart';
@@ -20,34 +24,63 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   bool isLoading = false;
   final List<bool> _isOpen = [false, false];
+  final _formKey = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
-    var ticket = Provider.of<TicketViewModel>(context);
+    var family = Provider.of<FamilyViewModel>(context);
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SizedBox(
           height: size.height * 0.03,
         ),
-        TopCard(
-            size: size,
-            dataHospital: ticket.hospitalSelect,
-            dataVaccine: ticket.vaccineSelect,
-            dataSchedule: ticket.scheduleSelect),
+        TopCard(size: size),
         SizedBox(
           height: size.height * 0.03,
         ),
         Container(
           margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
           child: Text(
-            "Detail Pasien",
-            style: paragraphBold1(cMainBlack),
+            "Tambah Pasien",
+            style: paragraphSemiBold2(cMainBlack),
           ),
         ),
         SizedBox(
           height: size.height * 0.01,
         ),
-        MiddleCard(size: size, dataUser: ticket.userSelect),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+          child: FormBuilder(
+            key: _formKey,
+            child: Column(
+              children: [
+                roundedContainer(
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                    child: FormBuilderDropdown(
+                      onChanged: (value) {
+                        family.dataSelect = value as Family;
+                      },
+                      name: "pasien",
+                      decoration:
+                          const InputDecoration(border: InputBorder.none),
+                      // initialValue: 'Male',
+                      allowClear: true,
+                      hint: const Text('Pilih Pasien'),
+                      items: family.allData
+                          .map((item) => DropdownMenuItem(
+                                value: item,
+                                child: Text(item.name),
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         SizedBox(
           height: size.height * 0.03,
         ),
@@ -55,7 +88,7 @@ class _BodyState extends State<Body> {
           margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
           child: Text(
             "Informasi Syarat dan Ketentuan Vaksin",
-            style: paragraphBold1(cMainBlack),
+            style: paragraphSemiBold2(cMainBlack),
           ),
         ),
         SizedBox(

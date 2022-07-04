@@ -1,24 +1,25 @@
 class Family {
-  int idUser, id;
-  String name, nik, usia, telp, gender;
+  int id, idParent;
+  String name, nik, telp, gender, hubungan;
+  DateTime tanggalLahir;
 
-  Family({
-    required this.idUser,
-    required this.id,
-    required this.name,
-    required this.nik,
-    required this.usia,
-    required this.telp,
-    required this.gender,
-  });
+  Family(
+      {required this.id,
+      required this.idParent,
+      required this.name,
+      required this.nik,
+      required this.tanggalLahir,
+      required this.telp,
+      required this.gender,
+      required this.hubungan});
 
   Map toJson() => {
-        'fullname': name,
-        'nik': nik,
-        'usia': usia,
-        'user_id': idUser,
-        'gender': gender,
-        'phone': telp,
-        'isParent': false
+        "id_user": idParent,
+        "nik": nik,
+        "tlp": telp,
+        "nama_kelompok": name,
+        "tgl_lahir": tanggalLahir.toIso8601String(),
+        "hubungan": hubungan,
+        "gender": gender
       };
 }

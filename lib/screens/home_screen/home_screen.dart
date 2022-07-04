@@ -1,13 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vaccine/components/initial.dart';
 import 'package:vaccine/screens/home_screen/components/skeleton.dart';
 import '../../constants.dart';
 import '../../view_model/account_view_model.dart';
 import '../akun_screen/akun_screen.dart';
 import 'components/body.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool? isInit;
+
+  @override
+  void didChangeDependencies() async {
+    if (isInit == null) {
+      await Initial.getInitialData(context).then((value) {
+        if (value == true) {
+          setState(() {
+            isInit = false;
+          });
+        }
+      });
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                           width: size.width * 0.02,
                         ),
                         Text(
-                          "Surakarta, Jawa Tengah",
+                          "Yogyakarta, DIY",
                           style: paragraphMedium2(cNeutral1),
                         )
                       ],

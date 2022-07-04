@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:vaccine/components/roundedButtonLoading.dart';
 import 'package:vaccine/screens/home_screen/home_screen.dart';
@@ -22,7 +23,6 @@ class _BodyState extends State<Body> {
   List gender = ["Laki-Laki", "Perempuan"];
   bool isLoading = false;
   final _formKey = GlobalKey<FormBuilderState>();
-  List<bool> listLoading = [true, true, true, true];
   @override
   Widget build(BuildContext context) {
     var auth = Provider.of<AuthViewModel>(context, listen: false);
@@ -90,18 +90,6 @@ class _BodyState extends State<Body> {
                 style: paragraphMedium2(cMainBlack),
               ),
               BuildTextField(
-                index: listLoading[0],
-                onCange: (value) {
-                  if (isNull(value)) {
-                    setState(() {
-                      listLoading[0] = true;
-                    });
-                  } else {
-                    setState(() {
-                      listLoading[0] = false;
-                    });
-                  }
-                },
                 capital: TextCapitalization.words,
                 size: size,
                 inputType: TextInputType.name,
@@ -116,18 +104,6 @@ class _BodyState extends State<Body> {
                 style: paragraphMedium2(cMainBlack),
               ),
               BuildTextField(
-                index: listLoading[1],
-                onCange: (value) {
-                  if (!isNumeric(value!) && !isLength(value, 16, 16)) {
-                    setState(() {
-                      listLoading[1] = true;
-                    });
-                  } else {
-                    setState(() {
-                      listLoading[1] = false;
-                    });
-                  }
-                },
                 capital: TextCapitalization.none,
                 size: size,
                 inputType: TextInputType.number,
@@ -138,27 +114,24 @@ class _BodyState extends State<Body> {
                 height: size.height * 0.02,
               ),
               Text(
-                "Usia",
+                "Tanggal Lahir",
                 style: paragraphMedium2(cMainBlack),
               ),
-              BuildTextField(
-                index: listLoading[2],
-                onCange: (value) {
-                  if (!isNumeric(value!)) {
-                    setState(() {
-                      listLoading[2] = true;
-                    });
-                  } else {
-                    setState(() {
-                      listLoading[2] = false;
-                    });
-                  }
-                },
-                capital: TextCapitalization.none,
-                size: size,
-                inputType: TextInputType.number,
-                name: "usia",
-                hint: "ketik usia disini",
+              roundedContainer(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                  child: FormBuilderDateTimePicker(
+                    format: DateFormat("EEEE, d MMMM yyyy"),
+                    name: 'date',
+                    inputType: InputType.date,
+                    decoration: InputDecoration(
+                      suffixIcon: const Icon(Icons.date_range),
+                      hintText: "Sunday, 1 January 1945",
+                      hintStyle: paragraphRegular1(cNeutral1),
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
               ),
               SizedBox(
                 height: size.height * 0.02,
@@ -168,18 +141,6 @@ class _BodyState extends State<Body> {
                 style: paragraphMedium2(cMainBlack),
               ),
               BuildTextField(
-                index: listLoading[3],
-                onCange: (value) {
-                  if (isNumeric(value!) && isLength(value, 9)) {
-                    setState(() {
-                      listLoading[3] = false;
-                    });
-                  } else {
-                    setState(() {
-                      listLoading[3] = true;
-                    });
-                  }
-                },
                 capital: TextCapitalization.none,
                 size: size,
                 inputType: TextInputType.phone,
@@ -195,32 +156,50 @@ class _BodyState extends State<Body> {
               ),
               roundedContainer(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      hint: const Text("Jenis kelamin"),
-                      value: dropdownvalue == null
-                          ? null
-                          : gender.firstWhere(
-                              (element) => element == dropdownvalue!),
-                      isExpanded: true,
-                      iconSize: 36,
-                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                      items: gender.map((items) {
-                        return DropdownMenuItem(
-                          value: items,
-                          child: Text(items),
-                        );
-                      }).toList(),
-                      onChanged: (newValue) {
-                        setState(() {
-                          dropdownvalue = newValue as String;
-                        });
-                      },
-                    ),
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                  child: FormBuilderDropdown(
+                    decoration: const InputDecoration(border: InputBorder.none),
+                    name: 'gender',
+                    // initialValue: 'Male',
+                    allowClear: true,
+                    hint: const Text('Jenis Kelamin'),
+                    items: gender
+                        .map((gender) => DropdownMenuItem(
+                              value: gender,
+                              child: Text('$gender'),
+                            ))
+                        .toList(),
                   ),
                 ),
               ),
+              // roundedContainer(
+              //   child: Padding(
+              //     padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
+              //     child: DropdownButtonHideUnderline(
+              //       child: DropdownButton(
+              //         hint: const Text("Jenis kelamin"),
+              //         value: dropdownvalue == null
+              //             ? null
+              //             : gender.firstWhere(
+              //                 (element) => element == dropdownvalue!),
+              //         isExpanded: true,
+              //         iconSize: 36,
+              //         icon: const Icon(Icons.keyboard_arrow_down_rounded),
+              //         items: gender.map((items) {
+              //           return DropdownMenuItem(
+              //             value: items,
+              //             child: Text(items),
+              //           );
+              //         }).toList(),
+              //         onChanged: (newValue) {
+              //           setState(() {
+              //             dropdownvalue = newValue as String;
+              //           });
+              //         },
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: size.height * 0.05,
               ),
@@ -234,26 +213,46 @@ class _BodyState extends State<Body> {
                         });
                         _formKey.currentState!.save();
                         if (_formKey.currentState!.validate()) {
-                          auth
-                              .signUp(
-                                  _formKey.currentState!.value["username"],
-                                  _formKey.currentState!.value["nik"],
-                                  _formKey.currentState!.value["usia"],
-                                  _formKey.currentState!.value["phone"],
-                                  _formKey.currentState!.value["gender"])
-                              .then((value) {
+                          if (_formKey.currentState!.value["username"] !=
+                                  null &&
+                              _formKey.currentState!.value["nik"] != null &&
+                              isInt(_formKey.currentState!.value["nik"]) &&
+                              isLength(_formKey.currentState!.value["nik"], 16,
+                                  16) &&
+                              _formKey.currentState!.value["date"] != null &&
+                              _formKey.currentState!.value["phone"] != null &&
+                              _formKey.currentState!.value["gender"] != null) {
+                            auth
+                                .signUp(
+                                    _formKey.currentState!.value["username"],
+                                    _formKey.currentState!.value["nik"],
+                                    _formKey.currentState!.value["date"],
+                                    _formKey.currentState!.value["phone"],
+                                    _formKey.currentState!.value["gender"])
+                                .then((value) {
+                              setState(() {
+                                isLoading = !isLoading;
+                              });
+                              // print(value);
+                              if (value == true) {
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => HomeScreen()),
+                                    (route) => false);
+                              } else {
+                                showError(const Text("Kesalahan server!"), context);
+                              }
+                            });
+                          } else {
                             setState(() {
                               isLoading = !isLoading;
                             });
-
-                            if (value == true) {
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => HomeScreen()),
-                                  (route) => false);
-                            }
-                          });
+                            showError(
+                                const Text(
+                                    "Pastikan semua input terisi dengan benar, dan NIK memiliki 16 karakter angka"),
+                                context);
+                          }
                         }
                       })
                   : RoundedButtonLoading(size: size)
@@ -275,9 +274,7 @@ class BuildTextField extends StatelessWidget {
       required this.name,
       required this.inputType,
       required this.hint,
-      required this.capital,
-      required this.onCange,
-      required this.index})
+      required this.capital})
       : super(key: key);
 
   final Size size;
@@ -285,8 +282,6 @@ class BuildTextField extends StatelessWidget {
   final TextInputType inputType;
   final String hint;
   final TextCapitalization capital;
-  final Function(String?) onCange;
-  final bool index;
 
   @override
   Widget build(BuildContext context) {
@@ -294,23 +289,13 @@ class BuildTextField extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
         child: FormBuilderTextField(
-          onChanged: onCange,
           textCapitalization: capital,
           keyboardType: inputType,
           name: name,
           decoration: InputDecoration(
               hintText: hint,
               hintStyle: paragraphRegular1(cNeutral1),
-              border: InputBorder.none,
-              suffixIcon: index == true
-                  ? const Icon(
-                      Icons.error_outline,
-                      color: cFail,
-                    )
-                  : const Icon(
-                      Icons.check,
-                      color: cSuccess,
-                    )),
+              border: InputBorder.none),
         ),
       ),
     );

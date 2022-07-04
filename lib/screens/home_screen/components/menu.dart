@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:vaccine/screens/anggota_screen/anggota_screen.dart';
 import 'package:vaccine/screens/covid_screen/covid_screen.dart';
 import 'package:vaccine/screens/daftar_vaksin_screen/daftar_vaksin_screen.dart';
 import 'package:vaccine/screens/history_ticket_screen/history_ticket_screen.dart';
@@ -23,8 +24,8 @@ class Menu extends StatelessWidget {
       children: [
         GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => DaftarVaksinScreen()));
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => AnggotaScreen()));
             },
             child: Column(
               children: [

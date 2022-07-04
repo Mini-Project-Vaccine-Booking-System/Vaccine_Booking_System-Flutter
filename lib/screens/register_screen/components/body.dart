@@ -32,9 +32,9 @@ class _BodyState extends State<Body> {
     var auth = Provider.of<AuthViewModel>(context, listen: false);
     Size size = MediaQuery.of(context).size;
 
-    void showError(String message) {
+    void showError(content) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(message),
+        content: content,
         backgroundColor: cFail,
         behavior: SnackBarBehavior.floating,
         action: SnackBarAction(
@@ -99,7 +99,7 @@ class _BodyState extends State<Body> {
                                     isLoading = !isLoading;
                                   });
 
-                                  if (!value.isEmpty) {
+                                  if (value == false) {
                                     showError("Email sudah digunakan");
                                   } else {
                                     auth.email = email;
@@ -108,7 +108,6 @@ class _BodyState extends State<Body> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (_) => FillDataScreen()));
-                                    print(auth.email);
                                   }
                                 });
                               } else {

@@ -18,21 +18,21 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  bool? isInit = null;
+  bool? isInit = false;
 
-  @override
-  void didChangeDependencies() async {
-    if (isInit == null) {
-      await Provider.of<TicketViewModel>(context, listen: false)
-          .initialData()
-          .then((value) {
-        setState(() {
-          isInit = false;
-        });
-      });
-    }
-    super.didChangeDependencies();
-  }
+  // @override
+  // void didChangeDependencies() async {
+  //   if (isInit == null) {
+  //     await Provider.of<TicketViewModel>(context, listen: false)
+  //         .initialData()
+  //         .then((value) {
+  //       setState(() {
+  //         isInit = false;
+  //       });
+  //     });
+  //   }
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -55,15 +55,15 @@ class _BodyState extends State<Body> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.symmetric(vertical: size.height * 0.03),
-              itemCount: ticket.userVaccine.length,
+              itemCount: ticket.dataTicket.length,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    ticket.getDetailPass(ticket.userVaccine[index].id);
+                    ticket.setTikectSelect = ticket.dataTicket[index];
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => PassScreen(
+                            builder: (_) => const PassScreen(
                                   status: true,
                                 )));
                   },
@@ -107,7 +107,7 @@ class _BodyState extends State<Body> {
                               horizontal: size.width * 0.1,
                               vertical: size.height * 0.02),
                           width: size.width,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: cPrimary1,
                             borderRadius: BorderRadius.all(Radius.circular(15)),
                           ),
@@ -121,7 +121,7 @@ class _BodyState extends State<Body> {
                                       constraints: BoxConstraints(
                                           maxWidth: size.width * 0.25),
                                       child: Text(
-                                        ticket.userVaccine[index].userName,
+                                        ticket.dataTicket[index].namaPasien,
                                         style: paragraphSemiBold2(cMainWhite),
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
@@ -130,7 +130,7 @@ class _BodyState extends State<Body> {
                                     height: size.height * 0.01,
                                   ),
                                   Text(
-                                    ticket.userVaccine[index].userNik,
+                                    ticket.dataTicket[index].nik,
                                     style: paragraphMedium4(cMainWhite),
                                   )
                                 ],
@@ -139,10 +139,9 @@ class _BodyState extends State<Body> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    DateFormat('E, d MMMM y')
-                                        .format(DateTime.parse(ticket
-                                            .userVaccine[index]
-                                            .userScheduleStart))
+                                    DateFormat("EEE, dd/MM/yyyy")
+                                        .format(ticket
+                                            .dataTicket[index].dateSession)
                                         .toString(),
                                     style: paragraphSemiBold2(cMainWhite),
                                   ),
@@ -150,7 +149,7 @@ class _BodyState extends State<Body> {
                                     height: size.height * 0.01,
                                   ),
                                   Text(
-                                    "${DateFormat.Hm().format(DateTime.parse(ticket.userVaccine[index].userScheduleStart)).toString()} - ${DateFormat.Hm().format(DateTime.parse(ticket.userVaccine[index].userScheduleEnd)).toString()}",
+                                    "${ticket.dataTicket[index].start.substring(0, 5)} - ${ticket.dataTicket[index].end.substring(0, 5)}",
                                     style: paragraphMedium4(cMainWhite),
                                   )
                                 ],

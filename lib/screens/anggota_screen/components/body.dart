@@ -14,15 +14,15 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  bool isInit = true;
-  @override
-  void didChangeDependencies() {
-    if (isInit == true) {
-      Provider.of<FamilyViewModel>(context, listen: false).inisialData();
-      isInit = false;
-    }
-    super.didChangeDependencies();
-  }
+  // bool? isInit = null;
+  // @override
+  // void didChangeDependencies() {
+  //   if (isInit == null) {
+  //     Provider.of<FamilyViewModel>(context, listen: false).inisialData();
+  //     isInit = false;
+  //   }
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class _BodyState extends State<Body> {
           //   ),
           // ),
           SizedBox(
-            height: size.height * 0.03,
+            height: size.height * 0.02,
           ),
           Expanded(
             child: TabBarView(children: [

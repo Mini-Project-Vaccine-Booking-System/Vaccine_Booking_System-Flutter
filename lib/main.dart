@@ -2,6 +2,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vaccine/components/loading.dart';
+import 'package:vaccine/models/family.dart';
 import 'package:vaccine/screens/home_screen/home_screen.dart';
 import 'package:vaccine/screens/welcome_screen/welcome_screen.dart';
 import 'package:vaccine/view_model/account_view_model.dart';
@@ -32,23 +33,19 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => NewsViewModel()),
         ChangeNotifierProxyProvider<AuthViewModel, AccoutnViewModel>(
           create: (context) => AccoutnViewModel(),
-          update: (context, auth, datas) =>
-              datas!..updateData(auth.parentId, auth.token),
+          update: (context, auth, datas) => datas!..updateData(auth.parentId),
         ),
         ChangeNotifierProxyProvider<AuthViewModel, FamilyViewModel>(
           create: (context) => FamilyViewModel(),
-          update: (context, auth, datas) =>
-              datas!..updateData(auth.parentId, auth.token),
+          update: (context, auth, datas) => datas!..updateData(auth.parentId),
         ),
         ChangeNotifierProxyProvider<AuthViewModel, HospitalViewModel>(
           create: (context) => HospitalViewModel(),
-          update: (context, auth, datas) =>
-              datas!..updateData(auth.parentId, auth.token),
+          update: (context, auth, datas) => datas!..updateData(auth.parentId),
         ),
         ChangeNotifierProxyProvider<AuthViewModel, TicketViewModel>(
           create: (context) => TicketViewModel(),
-          update: (context, auth, datas) =>
-              datas!..updateData(auth.parentId, auth.token),
+          update: (context, auth, datas) => datas!..updateData(auth.parentId),
         ),
       ],
       builder: (context, child) => Consumer<AuthViewModel>(
@@ -62,11 +59,7 @@ class MyApp extends StatelessWidget {
             home: auth.isAuth
                 ? HomeScreen()
                 : FutureBuilder(
-                    future: auth.autoLogin().then(
-                          (value) => Provider.of<AccoutnViewModel>(context,
-                                  listen: false)
-                              .inisialData(),
-                        ),
+                    future: auth.autoLogin(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Scaffold(

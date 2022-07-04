@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:vaccine/components/roundedButtonLoading.dart';
 import 'package:vaccine/screens/result_faskes_screen/result_faskes_screen.dart';
@@ -64,6 +65,7 @@ class _BodyState extends State<Body> {
                             EdgeInsets.symmetric(horizontal: size.width * 0.05),
                         child: FormBuilderTextField(
                           name: "city",
+                          textCapitalization: TextCapitalization.words,
                           decoration: InputDecoration(
                             hintText: "e.g Jakarta",
                             hintStyle: paragraphRegular1(cNeutral1),
@@ -81,10 +83,13 @@ class _BodyState extends State<Body> {
                       child: Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                        child: FormBuilderTextField(
-                          name: "date",
+                        child: FormBuilderDateTimePicker(
+                          format: DateFormat("EEEE, d MMMM yyyy"),
+                          name: 'date',
+                          inputType: InputType.date,
                           decoration: InputDecoration(
-                            hintText: "e.g Jakarta",
+                            suffixIcon: const Icon(Icons.date_range),
+                            hintText: "Sunday, 1 January 1945",
                             hintStyle: paragraphRegular1(cNeutral1),
                             border: InputBorder.none,
                           ),
@@ -104,11 +109,17 @@ class _BodyState extends State<Body> {
                               });
                               _formKey.currentState!.save();
                               if (_formKey.currentState!.validate()) {
-                                if (!isNull(
-                                    _formKey.currentState!.value["city"])) {
+                                if (_formKey.currentState!.value["city"] !=
+                                        null &&
+                                    _formKey.currentState!.value["date"] !=
+                                        null) {
                                   hospital
                                       .getDataByCity(
-                                          _formKey.currentState!.value["city"])
+                                          _formKey.currentState!.value["city"],
+                                          DateFormat("yyyy-MM-dd")
+                                              .format(_formKey
+                                                  .currentState!.value["date"])
+                                              .toString())
                                       .then((value) {
                                     setState(() {
                                       isLoading = !isLoading;
@@ -128,7 +139,7 @@ class _BodyState extends State<Body> {
                                     backgroundColor: cFail,
                                     behavior: SnackBarBehavior.floating,
                                     content: const Text(
-                                      "Input tidak boleh kosong!",
+                                      "Input tidak valid!",
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     action: SnackBarAction(
@@ -137,7 +148,7 @@ class _BodyState extends State<Body> {
                                         onPressed: () {}),
                                   ));
                                 }
-                              }
+                              } else {}
                             },
                           )
                         : RoundedButtonLoading(size: size)

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:vaccine/components/roundedButtonLoading.dart';
+import 'package:validators/validators.dart';
 
 import '../../../components/roundedButtonSolid.dart';
 import '../../../components/roundedContainer.dart';
 import '../../../constants.dart';
 import '../../../view_model/family_view_model.dart';
 
-class TambahAnggota extends StatelessWidget {
+class TambahAnggota extends StatefulWidget {
   const TambahAnggota({
     Key? key,
     required this.size,
@@ -16,9 +19,16 @@ class TambahAnggota extends StatelessWidget {
   final Size size;
 
   @override
+  State<TambahAnggota> createState() => _TambahAnggotaState();
+}
+
+class _TambahAnggotaState extends State<TambahAnggota> {
+  List gender = ["Laki-Laki", "Perempuan"];
+  final _formKey = GlobalKey<FormBuilderState>();
+  bool isLoading = false;
+  @override
   Widget build(BuildContext context) {
     var family = Provider.of<FamilyViewModel>(context);
-    final _formKey = GlobalKey<FormBuilderState>();
     return SingleChildScrollView(
       child: FormBuilder(
         key: _formKey,
@@ -31,9 +41,12 @@ class TambahAnggota extends StatelessWidget {
             ),
             roundedContainer(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                padding:
+                    EdgeInsets.symmetric(horizontal: widget.size.width * 0.05),
                 child: FormBuilderTextField(
-                  name: "name",
+                  textCapitalization: TextCapitalization.words,
+                  keyboardType: TextInputType.name,
+                  name: "username",
                   decoration: InputDecoration(
                     hintText: "ketik nama lengkap disini",
                     hintStyle: paragraphRegular1(cNeutral1),
@@ -43,7 +56,7 @@ class TambahAnggota extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: size.height * 0.02,
+              height: widget.size.height * 0.02,
             ),
             Text(
               "NIK",
@@ -51,8 +64,11 @@ class TambahAnggota extends StatelessWidget {
             ),
             roundedContainer(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                padding:
+                    EdgeInsets.symmetric(horizontal: widget.size.width * 0.05),
                 child: FormBuilderTextField(
+                  textCapitalization: TextCapitalization.none,
+                  keyboardType: TextInputType.number,
                   name: "nik",
                   decoration: InputDecoration(
                     hintText: "ketik nama lengkap disini",
@@ -63,19 +79,23 @@ class TambahAnggota extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: size.height * 0.02,
+              height: widget.size.height * 0.02,
             ),
             Text(
-              "Usia",
+              "Tanggal Lahir",
               style: paragraphMedium2(cMainBlack),
             ),
             roundedContainer(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                child: FormBuilderTextField(
-                  name: "usia",
+                padding:
+                    EdgeInsets.symmetric(horizontal: widget.size.width * 0.05),
+                child: FormBuilderDateTimePicker(
+                  format: DateFormat("EEEE, d MMMM yyyy"),
+                  name: 'date',
+                  inputType: InputType.date,
                   decoration: InputDecoration(
-                    hintText: "ketika usia disini",
+                    suffixIcon: const Icon(Icons.date_range),
+                    hintText: "Sunday, 1 January 1945",
                     hintStyle: paragraphRegular1(cNeutral1),
                     border: InputBorder.none,
                   ),
@@ -83,7 +103,7 @@ class TambahAnggota extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: size.height * 0.02,
+              height: widget.size.height * 0.02,
             ),
             Text(
               "No. Handphone",
@@ -91,8 +111,10 @@ class TambahAnggota extends StatelessWidget {
             ),
             roundedContainer(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                padding:
+                    EdgeInsets.symmetric(horizontal: widget.size.width * 0.05),
                 child: FormBuilderTextField(
+                  keyboardType: TextInputType.phone,
                   name: "phone",
                   decoration: InputDecoration(
                     hintText: "ketik no handphone disini",
@@ -103,7 +125,7 @@ class TambahAnggota extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: size.height * 0.02,
+              height: widget.size.height * 0.02,
             ),
             Text(
               "Jenis Kelamin",
@@ -111,36 +133,78 @@ class TambahAnggota extends StatelessWidget {
             ),
             roundedContainer(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                child: FormBuilderTextField(
-                  name: "gender",
-                  decoration: InputDecoration(
-                    hintText: "ketik jenis kelamin disini",
-                    hintStyle: paragraphRegular1(cNeutral1),
-                    border: InputBorder.none,
-                  ),
+                padding:
+                    EdgeInsets.symmetric(horizontal: widget.size.width * 0.05),
+                child: FormBuilderDropdown(
+                  decoration: const InputDecoration(border: InputBorder.none),
+                  name: 'gender',
+                  // initialValue: 'Male',
+                  allowClear: true,
+                  hint: const Text('Jenis Kelamin'),
+                  items: gender
+                      .map((gender) => DropdownMenuItem(
+                            value: gender,
+                            child: Text('$gender'),
+                          ))
+                      .toList(),
                 ),
               ),
             ),
             SizedBox(
-              height: size.height * 0.05,
+              height: widget.size.height * 0.05,
             ),
-            RoundedButtonSolid(
-                size: size,
-                text: "Simpan",
-                onAction: () {
-                  _formKey.currentState!.save();
-                  if (_formKey.currentState!.validate()) {
-                    family.addMember(
-                        _formKey.currentState!.value["name"],
-                        _formKey.currentState!.value["nik"],
-                        _formKey.currentState!.value["usia"],
-                        _formKey.currentState!.value["phone"],
-                        _formKey.currentState!.value["gender"]);
-                  }
-                }),
+            isLoading != true
+                ? RoundedButtonSolid(
+                    size: widget.size,
+                    text: "Simpan",
+                    onAction: () {
+                      setState(() {
+                        isLoading = !isLoading;
+                      });
+                      _formKey.currentState!.save();
+                      if (_formKey.currentState!.validate()) {
+                        if (_formKey.currentState!.value["username"] != null &&
+                            _formKey.currentState!.value["nik"] != null &&
+                            isInt(_formKey.currentState!.value["nik"]) &&
+                            isLength(
+                                _formKey.currentState!.value["nik"], 16, 16) &&
+                            _formKey.currentState!.value["date"] != null &&
+                            _formKey.currentState!.value["phone"] != null &&
+                            _formKey.currentState!.value["gender"] != null) {
+                          family
+                              .addMember(
+                                  _formKey.currentState!.value["username"],
+                                  _formKey.currentState!.value["nik"],
+                                  _formKey.currentState!.value["date"],
+                                  _formKey.currentState!.value["phone"],
+                                  _formKey.currentState!.value["gender"])
+                              .then((value) {
+                            setState(() {
+                              isLoading = !isLoading;
+                            });
+
+                            if (value == true) {
+                              showSuccess(const Text("Data berhasil disimpan!"),
+                                  context);
+                            } else {
+                              showError(
+                                  const Text("Kesalahan server!"), context);
+                            }
+                          });
+                        } else {
+                          setState(() {
+                            isLoading = !isLoading;
+                          });
+                          showError(
+                              const Text(
+                                  "Pastikan semua input terisi dengan benar, dan NIK memiliki 16 karakter angka"),
+                              context);
+                        }
+                      }
+                    })
+                : RoundedButtonLoading(size: widget.size),
             SizedBox(
-              height: size.height * 0.02,
+              height: widget.size.height * 0.02,
             ),
           ],
         ),

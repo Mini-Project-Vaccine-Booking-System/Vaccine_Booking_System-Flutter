@@ -3,15 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class HospitalAPI {
-  static Future getDataByCity(city, token) async {
+  static Future getDataByCity(city, date) async {
     Uri url = Uri.parse(
-        'https://vaccine-api-strapi.herokuapp.com/api/hospitals?filters[city][\$eq]=$city');
+        'https://booking-vaksin-alta.herokuapp.com/api/session/date/$date/$city');
 
     try {
-      var response = await http.get(url, headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      });
+      var response = await http.get(url);
       return response;
     } catch (e) {
       rethrow;

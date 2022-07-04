@@ -60,10 +60,10 @@ class _BodyState extends State<Body> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    setState(() {
+                    /*   setState(() {
                       isLoading[0] = true;
-                    });
-                    hospital.getDataByCity("surakarta").then((value) {
+                    }); */
+                    /* hospital.getDataByCity("surakarta").then((value) {
                       setState(() {
                         isLoading[0] = false;
                       });
@@ -71,7 +71,7 @@ class _BodyState extends State<Body> {
                           context,
                           MaterialPageRoute(
                               builder: (_) => ResultFaskesScreen()));
-                    });
+                    }); */
                   },
                   child: isLoading[0] == false
                       ? Text(

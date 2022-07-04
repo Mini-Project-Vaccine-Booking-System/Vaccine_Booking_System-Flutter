@@ -4,6 +4,7 @@ import 'package:vaccine/screens/anggota_screen/anggota_screen.dart';
 
 import '../../../constants.dart';
 import '../../../view_model/account_view_model.dart';
+import '../../daftar_vaksin_screen/daftar_vaksin_screen.dart';
 
 class TopCard extends StatelessWidget {
   const TopCard({
@@ -53,7 +54,12 @@ class TopCard extends StatelessWidget {
                         primary: cPrimary3,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8))),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => DaftarVaksinScreen()));
+                    },
                     child: Text(
                       "Daftar Sekarang",
                       style: paragraphBold3(Colors.white),

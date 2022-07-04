@@ -302,3 +302,29 @@ AppBar TopBar(BuildContext context, Size size, String text) {
     ),
   );
 }
+
+void showError(content, context) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: content,
+    backgroundColor: cFail,
+    behavior: SnackBarBehavior.floating,
+    action: SnackBarAction(
+      label: 'Abaikan',
+      textColor: Colors.white,
+      onPressed: () {},
+    ),
+  ));
+}
+
+void showSuccess(content, context) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: content,
+    backgroundColor: cSuccess,
+    behavior: SnackBarBehavior.floating,
+    action: SnackBarAction(
+      label: 'Abaikan',
+      textColor: Colors.white,
+      onPressed: () {},
+    ),
+  ));
+}

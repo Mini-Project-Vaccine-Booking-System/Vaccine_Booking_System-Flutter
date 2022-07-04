@@ -9,8 +9,11 @@ class FamilyViewModel extends ChangeNotifier {
   int? userId;
   String? token;
 
-  void updateData(uid, tokenData) {
-    token = tokenData;
+  void updateData(
+    uid,
+    /* tokenData */
+  ) {
+    // token = tokenData;
     userId = uid;
     notifyListeners();
   }
@@ -21,65 +24,68 @@ class FamilyViewModel extends ChangeNotifier {
   List<Family> _allData = [];
   List<Family> get allData => _allData;
 
-  Future<void> inisialData() async {
-    Response data = await FamilyAPI.getData(userId, token);
-    if (data.statusCode == 200) {
-      final dataResponse = jsonDecode(data.body) as Map<String, dynamic>;
-      _data.clear();
-      final dataUsers = dataResponse["data"] as List;
-      for (var value in dataUsers) {
-        Family acc = Family(
-          usia: value["attributes"]["usia"].toString(),
-          telp: value["attributes"]["phone"].toString(),
-          nik: value["attributes"]["nik"].toString(),
-          name: value["attributes"]["fullname"].toString(),
-          idUser: value["attributes"]["user_id"],
-          id: value["id"],
-          gender: value["attributes"]["gender"].toString(),
-        );
+  late Family dataSelect;
 
-        _data.add(acc);
+  Future<void> inisialData() async {
+    _data.clear();
+    Response response = await FamilyAPI.getAllData(userId);
+    if (response.statusCode == 200) {
+      final dataResponse = jsonDecode(response.body) as List;
+      for (var element in dataResponse) {
+        if (element["hubungan"] != "userParent") {
+          Family dataFamily = Family(
+              id: element["idKelompok"],
+              idParent: userId!,
+              name: element["namaKelompok"],
+              nik: element["nik"],
+              tanggalLahir: DateTime.parse(element["tglLahir"]),
+              telp: element["tlp"],
+              gender: element["gender"],
+              hubungan: element["hubungan"]);
+
+          _data.add(dataFamily);
+        }
       }
 
       notifyListeners();
     }
   }
 
-  Future addMember(String name, nik, usia, telp, gender) async {
-    var userData = Family(
+  Future addMember(String username, nik, date, phone, gender) async {
+    Family dataFamily = Family(
         id: 0,
-        idUser: userId!,
-        name: name,
+        idParent: userId!,
+        name: username,
         nik: nik,
-        usia: usia,
-        telp: telp,
-        gender: gender);
+        tanggalLahir: date,
+        telp: phone,
+        gender: gender,
+        hubungan: "");
 
-    Response data = await FamilyAPI.addData({"data": userData.toJson()}, token);
-    if (data.statusCode != null) {
-      final dataResponse = jsonDecode(data.body);
-      print(dataResponse);
+    var response = await FamilyAPI.addData(dataFamily.toJson());
+    if (response == true) {
+      _data.add(dataFamily);
+      return true;
     }
   }
 
   Future<void> getAllData() async {
-    Response data = await FamilyAPI.getAllData(userId, token);
-    if (data.statusCode == 200) {
-      final dataResponse = jsonDecode(data.body) as Map<String, dynamic>;
-      _allData.clear();
-      final dataUsers = dataResponse["data"] as List;
-      for (var value in dataUsers) {
-        Family acc = Family(
-          usia: value["attributes"]["usia"].toString(),
-          telp: value["attributes"]["phone"].toString(),
-          nik: value["attributes"]["nik"].toString(),
-          name: value["attributes"]["fullname"].toString(),
-          idUser: value["attributes"]["user_id"],
-          id: value["id"],
-          gender: value["attributes"]["gender"].toString(),
-        );
+    _allData.clear();
+    Response response = await FamilyAPI.getAllData(userId);
+    if (response.statusCode == 200) {
+      final dataResponse = jsonDecode(response.body) as List;
+      for (var element in dataResponse) {
+        Family dataFamily = Family(
+            id: element["idKelompok"],
+            idParent: userId!,
+            name: element["namaKelompok"],
+            nik: element["nik"],
+            tanggalLahir: DateTime.parse(element["tglLahir"]),
+            telp: element["tlp"],
+            gender: element["gender"],
+            hubungan: element["hubungan"]);
 
-        _allData.add(acc);
+        _allData.add(dataFamily);
       }
 
       notifyListeners();

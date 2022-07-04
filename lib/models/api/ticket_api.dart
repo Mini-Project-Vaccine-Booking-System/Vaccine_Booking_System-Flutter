@@ -2,29 +2,26 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class TicketAPI {
-  static Future addData(data, token) async {
-    Uri url = Uri.parse("https://vaccine-api-strapi.herokuapp.com/api/tickets");
+  static Future addData(data) async {
+    Uri url =
+        Uri.parse("https://booking-vaksin-alta.herokuapp.com/api/booking");
 
     try {
-      var response = await http.post(url, body: jsonEncode(data), headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      });
+      var response = await http.post(url,
+          body: jsonEncode(data),
+          headers: {"Content-Type": "application/json"});
       return response;
     } catch (e) {
       rethrow;
     }
   }
 
-  static Future getAllTicket(id, token) async {
+  static Future getAllTicket(id) async {
     Uri url = Uri.parse(
-        "https://vaccine-api-strapi.herokuapp.com/api/tickets?filters[parent_id][\$eq]=$id");
+        "https://booking-vaksin-alta.herokuapp.com/api/booking/s/$id");
 
     try {
-      var response = await http.get(url, headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      });
+      var response = await http.get(url);
       return response;
     } catch (e) {
       rethrow;

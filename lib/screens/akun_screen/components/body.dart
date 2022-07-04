@@ -64,11 +64,11 @@ class Body extends StatelessWidget {
             height: size.height * 0.03,
           ),
           Text(
-            account.data != null ? account.data!.name : "",
+            account.data != null ? account.data!.nama : "",
             style: headingSemiBold2(Colors.black),
           ),
           Text(
-            account.data != null ? account.data!.nik : "",
+            "NIK : ${account.data != null ? account.data!.nik : ""}",
           ),
           SizedBox(
             height: size.height * 0.02,

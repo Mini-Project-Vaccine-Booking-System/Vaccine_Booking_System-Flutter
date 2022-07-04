@@ -6,20 +6,27 @@ import 'package:intl/intl.dart';
 import 'package:vaccine/models/api/hospital_api.dart';
 import 'package:vaccine/models/hospital.dart';
 import 'package:vaccine/models/schedule.dart';
+import 'package:vaccine/models/session.dart';
 import 'package:vaccine/models/vaccine.dart';
 
 class HospitalViewModel extends ChangeNotifier {
   int? userId;
   String? token;
 
-  void updateData(uid, tokenData) {
-    token = tokenData;
+  void updateData(
+    uid,
+    /* tokenData */
+  ) {
+    // token = tokenData;
     userId = uid;
     notifyListeners();
   }
 
-  List<Hospital> _dataHome = [];
-  List<Hospital> get dataHome => _dataHome;
+  List<Session> _dataSession = [];
+  List<Session> get dataSession => _dataSession;
+
+  List<Session> _dataHome = [];
+  List<Session> get dataHome => _dataHome;
 
   List<Hospital> _data = [];
   List<Hospital> get data => _data;
@@ -30,73 +37,59 @@ class HospitalViewModel extends ChangeNotifier {
   List<Vaccine> _dataVaccine = [];
   List<Vaccine> get dataVaccine => _dataVaccine;
 
-  late Hospital dataSelect;
-  Schedule? scheduleSelect;
-  Vaccine? vaccineSelect;
+  late Session dataSelect;
 
   Future homeData() async {
+    var dateNow = DateTime.now();
     _dataHome.clear();
-    Response data = await HospitalAPI.getDataByCity('surakarta', token);
+    // print(DateFormat("yyyy-MM-dd").format(dateNow));
+    Response data = await HospitalAPI.getDataByCity("Yogyakarta", "2022-06-28");
     if (data.statusCode == 200) {
-      final dataHospital = jsonDecode(data.body) as Map<String, dynamic>;
-      if (dataHospital["data"].length > 0) {
-        for (var value in dataHospital["data"]) {
-          Response schedules =
-              await HospitalAPI.checkSchedule(value["id"], token);
-          final dataSchedules =
-              jsonDecode(schedules.body) as Map<String, dynamic>;
-          Hospital data = Hospital(
-              id: value["id"],
-              name: value["attributes"]["name"].toString(),
-              address: value["attributes"]["address"].toString(),
-              city: value["attributes"]["city"].toString(),
-              availability: dataSchedules["data"].length > 0 ? true : false);
+      final sessions = jsonDecode(data.body) as List<dynamic>;
+      if (sessions.isNotEmpty) {
+        for (var session in sessions) {
+          Session data = Session(
+              id: session["idSession"],
+              name: session["vaksin"]["user"]["nama"].toString(),
+              address: session["vaksin"]["user"]["address"].toString(),
+              start: session["start"].toString(),
+              end: session["end"].toString(),
+              vaccine: session["vaksin"]["nama"].toString(),
+              stock: session["vaksin"]["quantity"],
+              date: DateTime.parse(session["date"].toString()));
 
           _dataHome.add(data);
           notifyListeners();
         }
 
         return true;
+      } else {
+        return "data tidak ditemukan";
       }
     }
   }
 
-  Future initialData(id, {status = 'search'}) async {
-    if (status == 'home') {
-      for (var item in dataHome) {
-        if (item.id == id) {
-          dataSelect = item;
-        }
-      }
-    } else {
-      for (var item in data) {
-        if (item.id == id) {
-          dataSelect = item;
-        }
-      }
-    }
-
-    await getSchedule(id);
-    _dataVaccine.clear();
-
-    // if (dataDate.length != 0) {
-    //   await getVaccineBySchedule(dataDate[0].id);
-
-    //   if (dataVaccine.length > 0) {
-    //     for (var item in _dataVaccine) {
-    //       await getVaccineName(item.id);
-    //     }
-    //   }
-    // }
-  }
-
-  Future getDataByCity(String city) async {
-    _data.clear();
-    Response data = await HospitalAPI.getDataByCity(city, token);
+  Future getDataByCity(String city, date) async {
+    _dataSession.clear();
+    Response data = await HospitalAPI.getDataByCity(city, date);
     if (data.statusCode == 200) {
-      final dataHospital = jsonDecode(data.body) as Map<String, dynamic>;
-      if (dataHospital["data"].length > 0) {
-        for (var value in dataHospital["data"]) {
+      final sessions = jsonDecode(data.body) as List<dynamic>;
+      if (sessions.isNotEmpty) {
+        for (var session in sessions) {
+          Session data = Session(
+              id: session["idSession"],
+              name: session["vaksin"]["user"]["nama"].toString(),
+              address: session["vaksin"]["user"]["address"].toString(),
+              start: session["start"].toString(),
+              end: session["end"].toString(),
+              vaccine: session["vaksin"]["nama"].toString(),
+              stock: session["vaksin"]["quantity"],
+              date: DateTime.parse(session["date"].toString()));
+
+          _dataSession.add(data);
+          notifyListeners();
+        }
+        /*   for (var value in dataHospital["data"]) {
           Response schedules =
               await HospitalAPI.checkSchedule(value["id"], token);
           final dataSchedules =
@@ -110,7 +103,7 @@ class HospitalViewModel extends ChangeNotifier {
 
           _data.add(data);
           notifyListeners();
-        }
+        }*/
 
         return true;
       } else {
