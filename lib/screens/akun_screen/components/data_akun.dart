@@ -39,7 +39,7 @@ class DataAkun extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   bottomModal(context, "nama", "Masukkan nama kamu",
-                      account.data!.nama, _formKey);
+                      account.data!.nama, _formKey, TextInputType.name);
                 },
                 child: Row(
                   children: [
@@ -74,7 +74,7 @@ class DataAkun extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   bottomModal(context, "nik", "Masukkan NIK kamu",
-                      account.data!.nik, _formKey);
+                      account.data!.nik, _formKey, TextInputType.number);
                 },
                 child: Row(
                   children: [
@@ -110,12 +110,11 @@ class DataAkun extends StatelessWidget {
                 onTap: () {
                   bottomModal(
                       context,
-                      "usia",
-                      "Masukkan usia kamu",
-                      DateFormat("dd-mm-yyyy")
-                          .format(account.data!.tanggalLahir)
-                          .toString(),
-                      _formKey);
+                      "tglLahir",
+                      "Masukkan tanggal lahir kamu",
+                      account.data!.tanggalLahir,
+                      _formKey,
+                      TextInputType.datetime);
                 },
                 child: Row(
                   children: [
@@ -154,7 +153,7 @@ class DataAkun extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   bottomModal(context, "phone", "Masukkan no telp kamu",
-                      account.data!.phone, _formKey);
+                      account.data!.phone, _formKey, TextInputType.phone);
                 },
                 child: Row(
                   children: [
@@ -188,8 +187,13 @@ class DataAkun extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  bottomModal(context, "email", "Masukkan email kamu",
-                      account.data!.email, _formKey);
+                  bottomModal(
+                      context,
+                      "email",
+                      "Masukkan email kamu",
+                      account.data!.email,
+                      _formKey,
+                      TextInputType.emailAddress);
                 },
                 child: Row(
                   children: [
@@ -227,15 +231,15 @@ class DataAkun extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  bottomModal(context, "password", "Masukkan password kamu",
-                      account.data!.password, _formKey);
+                  bottomModal(context, "password", "Masukkan password kamu", "",
+                      _formKey, TextInputType.none);
                 },
                 child: Row(
                   children: [
                     ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 100),
                       child: Text(
-                        account.data != null ? account.data!.password : "",
+                        "********",
                         style: paragraphRegular2(Colors.black),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -259,7 +263,7 @@ class DataAkun extends StatelessWidget {
   }
 
   Future<dynamic> bottomModal(
-      BuildContext context, name, hint, initial, formKey) {
+      BuildContext context, name, hint, initial, formKey, keyboardType) {
     return showModalBottomSheet(
         context: context,
         builder: (context) => Padding(
@@ -280,15 +284,29 @@ class DataAkun extends StatelessWidget {
                         key: formKey,
                         child: Column(
                           children: [
-                            FormBuilderTextField(
-                              decoration: const InputDecoration(
-                                  focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: cNeutral1))),
-                              initialValue: initial,
-                              name: name,
-                              autofocus: true,
-                            ),
+                            if (name == "tglLahir") ...[
+                              FormBuilderDateTimePicker(
+                                decoration: const InputDecoration(
+                                    suffixIcon: Icon(Icons.date_range),
+                                    focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: cNeutral1))),
+                                initialValue: initial,
+                                name: name,
+                                inputType: InputType.date,
+                              ),
+                            ] else ...[
+                              FormBuilderTextField(
+                                decoration: const InputDecoration(
+                                    focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: cNeutral1))),
+                                initialValue: initial,
+                                name: name,
+                                autofocus: true,
+                                keyboardType: keyboardType,
+                              ),
+                            ],
                             const SizedBox(
                               height: 10,
                             ),

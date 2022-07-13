@@ -15,7 +15,17 @@ import '../models/hospital.dart';
 import '../models/schedule.dart';
 import '../models/vaccine.dart';
 
+enum TicketViewState { none, loading, error }
+
 class TicketViewModel extends ChangeNotifier {
+  TicketViewState _state = TicketViewState.none;
+  TicketViewState get state => _state;
+
+  changeState(TicketViewState state) {
+    _state = state;
+    notifyListeners();
+  }
+
   // Hospital? _hospitalSelect;
   // Schedule? _scheduleSelect;
   // Vaccine? _vaccineSelect;
@@ -77,34 +87,42 @@ class TicketViewModel extends ChangeNotifier {
   }
 
   Future initialData() async {
-    _dataTicket.clear();
-    Response response = await TicketAPI.getAllTicket(userId);
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body) as List;
-      for (var element in data) {
-        Ticket ticket = Ticket(
-            idBooking: element["idBooking"],
-            idKelompok: element["kelompok"]["idKelompok"],
-            idRumahSakit: element["session"]["vaksin"]["user"]["idUser"],
-            idSession: element["session"]["idSession"],
-            namaRumahSakit:
-                element["session"]["vaksin"]["user"]["nama"].toString(),
-            alamatRumahSakit:
-                element["session"]["vaksin"]["user"]["address"].toString(),
-            kotaRumahSakit:
-                element["session"]["vaksin"]["user"]["kota"].toString(),
-            nik: element["kelompok"]["nik"].toString(),
-            namaPasien: element["kelompok"]["namaKelompok"].toString(),
-            dateSession: DateTime.parse(element["session"]["date"].toString()),
-            start: element["session"]["start"].toString(),
-            end: element["session"]["end"].toString(),
-            namaVaksin: element["session"]["vaksin"]["nama"]);
+    changeState(TicketViewState.loading);
 
-        _dataTicket.add(ticket);
-        notifyListeners();
+    try {
+      _dataTicket.clear();
+      Response response = await TicketAPI.getAllTicket(userId);
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body) as Map<String, dynamic>;
+        if (data["data"].isNotEmpty) {
+          for (var element in data["data"]) {
+            Ticket ticket = Ticket(
+                idBooking: element["idBooking"],
+                idKelompok: element["kelompok"]["idKelompok"],
+                idRumahSakit: element["session"]["vaksin"]["user"]["idUser"],
+                idSession: element["session"]["idSession"],
+                namaRumahSakit:
+                    element["session"]["vaksin"]["user"]["nama"].toString(),
+                alamatRumahSakit:
+                    element["session"]["vaksin"]["user"]["address"].toString(),
+                kotaRumahSakit:
+                    element["session"]["vaksin"]["user"]["kota"].toString(),
+                nik: element["kelompok"]["nik"].toString(),
+                namaPasien: element["kelompok"]["namaKelompok"].toString(),
+                dateSession:
+                    DateTime.parse(element["session"]["date"].toString()),
+                start: element["session"]["start"].toString(),
+                end: element["session"]["end"].toString(),
+                namaVaksin: element["session"]["vaksin"]["nama"]);
+
+            _dataTicket.add(ticket);
+            notifyListeners();
+          }
+        }
+        changeState(TicketViewState.none);
       }
-
-      return true;
+    } catch (e) {
+      changeState(TicketViewState.error);
     }
   }
 

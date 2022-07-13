@@ -5,7 +5,17 @@ import 'package:http/http.dart';
 import 'package:vaccine/models/api/family_api.dart';
 import 'package:vaccine/models/family.dart';
 
+enum FamilyViewState { none, loading, error }
+
 class FamilyViewModel extends ChangeNotifier {
+  FamilyViewState _state = FamilyViewState.none;
+  FamilyViewState get state => _state;
+
+  changeState(FamilyViewState state) {
+    _state = state;
+    notifyListeners();
+  }
+
   int? userId;
   String? token;
 
@@ -27,31 +37,38 @@ class FamilyViewModel extends ChangeNotifier {
   late Family dataSelect;
 
   Future<void> inisialData() async {
-    _data.clear();
-    Response response = await FamilyAPI.getAllData(userId);
-    if (response.statusCode == 200) {
-      final dataResponse = jsonDecode(response.body) as List;
-      for (var element in dataResponse) {
-        if (element["hubungan"] != "userParent") {
-          Family dataFamily = Family(
-              id: element["idKelompok"],
-              idParent: userId!,
-              name: element["namaKelompok"],
-              nik: element["nik"],
-              tanggalLahir: DateTime.parse(element["tglLahir"]),
-              telp: element["tlp"],
-              gender: element["gender"],
-              hubungan: element["hubungan"]);
+    changeState(FamilyViewState.loading);
 
-          _data.add(dataFamily);
+    try {
+      _data.clear();
+      Response response = await FamilyAPI.getAllData(userId);
+      if (response.statusCode == 200) {
+        final dataResponse = jsonDecode(response.body) as Map<String, dynamic>;
+        for (var element in dataResponse["data"]) {
+          if (element["hubungan"] != "userParent") {
+            Family dataFamily = Family(
+                id: element["idKelompok"],
+                idParent: userId!,
+                name: element["namaKelompok"],
+                nik: element["nik"],
+                tanggalLahir: DateTime.parse(element["tglLahir"]),
+                telp: element["tlp"],
+                gender: element["gender"],
+                hubungan: element["hubungan"]);
+
+            _data.add(dataFamily);
+          }
         }
-      }
 
-      notifyListeners();
+        notifyListeners();
+        changeState(FamilyViewState.none);
+      }
+    } catch (e) {
+      changeState(FamilyViewState.error);
     }
   }
 
-  Future addMember(String username, nik, date, phone, gender) async {
+  Future addMember(username, nik, date, phone, gender) async {
     Family dataFamily = Family(
         id: 0,
         idParent: userId!,
@@ -64,7 +81,7 @@ class FamilyViewModel extends ChangeNotifier {
 
     var response = await FamilyAPI.addData(dataFamily.toJson());
     if (response == true) {
-      _data.add(dataFamily);
+      await inisialData();
       return true;
     }
   }
@@ -73,8 +90,8 @@ class FamilyViewModel extends ChangeNotifier {
     _allData.clear();
     Response response = await FamilyAPI.getAllData(userId);
     if (response.statusCode == 200) {
-      final dataResponse = jsonDecode(response.body) as List;
-      for (var element in dataResponse) {
+      final dataResponse = jsonDecode(response.body) as Map<String, dynamic>;
+      for (var element in dataResponse["data"]) {
         Family dataFamily = Family(
             id: element["idKelompok"],
             idParent: userId!,
@@ -92,28 +109,32 @@ class FamilyViewModel extends ChangeNotifier {
     }
   }
 
-  // Future<void> allData() async {
-  //   print(userFamily);
-  //   final data = await FamilyAPI.getDataByUser(userId);
-  //   if (data != null) {
-  //     _data.clear();
-  //     data.forEach(
-  //       (key, value) {
-  //         Family acc = Family(
-  //             idFamily: key,
-  //             idUser: value["idUser"],
-  //             name: value["name"],
-  //             createdAt: DateTime.parse(value["createdAt"]),
-  //             nik: value["nik"],
-  //             usia: value["usia"],
-  //             telp: value["telp"],
-  //             gender: value["gender"]);
+  Future updateFam(Family family) async {
+    _data.firstWhere((element) {
+      if (element.id == family.id) {
+        element.name = family.name;
+        element.nik = family.nik;
+        element.tanggalLahir = family.tanggalLahir;
+        element.telp = family.telp;
+        element.gender = family.gender;
+      }
 
-  //         _data.add(acc);
-  //       },
-  //     );
+      return true;
+    });
 
-  //     notifyListeners();
-  //   }
-  // }
+    final dataResponse = await FamilyAPI.updateData(family.toJson(), family.id);
+    if (dataResponse == true) {
+      notifyListeners();
+      return true;
+    }
+  }
+
+  Future deleteData() async {
+    _data.removeWhere((element) => element.id == dataSelect.id);
+    final dataResponse = await FamilyAPI.deleteData(dataSelect.id);
+    if (dataResponse == true) {
+      notifyListeners();
+      return true;
+    }
+  }
 }

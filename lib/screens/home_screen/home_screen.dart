@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:vaccine/components/initial.dart';
 import 'package:vaccine/screens/home_screen/components/skeleton.dart';
+import 'package:vaccine/view_model/family_view_model.dart';
+import 'package:vaccine/view_model/hospital_view_model.dart';
+import 'package:vaccine/view_model/news_view_model.dart';
+import 'package:vaccine/view_model/ticket_view_model.dart';
 import '../../constants.dart';
 import '../../view_model/account_view_model.dart';
 import '../akun_screen/akun_screen.dart';
@@ -15,24 +18,39 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool? isInit;
+  // bool? isInit;
+
+  // @override
+  // void didChangeDependencies() async {
+  //   if (isInit == null) {
+  //     await Initial.getInitialData(context).then((value) {
+  //       if (value == true) {
+  //         setState(() {
+  //           isInit = false;
+  //         });
+  //       }
+  //     });
+  //   }
+  //   super.didChangeDependencies();
+  // }
 
   @override
-  void didChangeDependencies() async {
-    if (isInit == null) {
-      await Initial.getInitialData(context).then((value) {
-        if (value == true) {
-          setState(() {
-            isInit = false;
-          });
-        }
-      });
-    }
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      Future.wait([
+        Provider.of<AccoutnViewModel>(context, listen: false).inisialData(),
+        Provider.of<HospitalViewModel>(context, listen: false).homeData(),
+        Provider.of<NewsViewModel>(context, listen: false).initialData(),
+        Provider.of<FamilyViewModel>(context, listen: false).inisialData(),
+        Provider.of<TicketViewModel>(context, listen: false).initialData()
+      ]);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    var account = Provider.of<AccoutnViewModel>(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -61,10 +79,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           text: "Hai, ",
                           style: headingBold2(Colors.black),
                         ),
-                        TextSpan(
-                          text: "Rafi Ramadhana",
-                          style: headingBold2(Colors.black),
-                        ),
+                        account.data == null
+                            ? TextSpan(
+                                text: "Loading ...",
+                                style: headingBold2(cNeutral1),
+                              )
+                            : TextSpan(
+                                text: account.data!.nama,
+                                style: headingBold2(Colors.black),
+                              ),
                       ]),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
@@ -97,12 +120,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Container(
                     width: 50,
                     height: 50,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Colors.grey,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
                       image: DecorationImage(
                           fit: BoxFit.fill,
-                          image: AssetImage("assets/images/avatar.png")),
+                          image: account.data != null
+                              ? NetworkImage(account.data!.image)
+                              : const AssetImage("assets/images/avatar.png")
+                                  as ImageProvider),
                     )),
               )
             ],

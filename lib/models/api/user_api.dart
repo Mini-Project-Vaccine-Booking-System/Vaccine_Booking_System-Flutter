@@ -10,9 +10,9 @@ class UserAPI {
     try {
       bool result = true;
       var response = await http.get(url);
-      var hasilResponse = jsonDecode(response.body) as List;
-      if (hasilResponse.isNotEmpty) {
-        hasilResponse.forEach((element) {
+      var hasilResponse = jsonDecode(response.body) as Map<String, dynamic>;
+      if (hasilResponse["data"].isNotEmpty) {
+        hasilResponse["data"].forEach((element) {
           if (element["email"].toString().toLowerCase() ==
               email.toLowerCase()) {
             result = false;

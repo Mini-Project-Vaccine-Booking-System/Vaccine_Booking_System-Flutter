@@ -56,7 +56,8 @@ class AuthViewModel extends ChangeNotifier {
       String? nik,
       DateTime? tanggal_lahir,
       String? phone,
-      String? gender]) async {
+      String? gender,
+      String? image]) async {
     Uri url;
     User? dataRegister;
     if (status == "login") {
@@ -77,17 +78,19 @@ class AuthViewModel extends ChangeNotifier {
           phone: phone!,
           nama: name!,
           gender: gender!,
-          image: "",
+          image: image!,
           tanggalLahir: tanggal_lahir!);
       url = Uri.parse("https://booking-vaksin-alta.herokuapp.com/api/user");
     }
 
     try {
+      bool statusLogin = false;
       if (status == "login") {
         final userResponse = await http.get(url);
         if (userResponse.statusCode == 200) {
-          final response = jsonDecode(userResponse.body) as List;
-          for (var element in response) {
+          final response =
+              jsonDecode(userResponse.body) as Map<String, dynamic>;
+          for (var element in response["data"]) {
             if (element["email"] == email && element["password"] == password) {
               _parentId = element["idUser"];
               _email = element["email"].toString();
@@ -112,11 +115,11 @@ class AuthViewModel extends ChangeNotifier {
               );
 
               notifyListeners();
-              return true;
-            } else {
-              return false;
+              statusLogin = true;
             }
           }
+
+          return statusLogin;
         }
       } else {
         var checkEmail = await UserAPI.checkEmail(email);
@@ -127,9 +130,9 @@ class AuthViewModel extends ChangeNotifier {
           if (userResponse.statusCode == 200) {
             final response =
                 jsonDecode(userResponse.body) as Map<String, dynamic>;
-            _parentId = response["idUser"];
-            _email = response["email"].toString();
-            _password = response["password"].toString();
+            _parentId = response["data"]["idUser"];
+            _email = response["data"]["email"].toString();
+            _password = response["data"]["password"].toString();
 
             final prefs = await SharedPreferences.getInstance();
             final userData = jsonEncode(
@@ -203,18 +206,9 @@ class AuthViewModel extends ChangeNotifier {
   }
 
   Future signUp(String username, String nik, DateTime tanggalLahir, String telp,
-      String gender) async {
-    final data = await _authenticate(
-      email,
-      password,
-      "register",
-      username,
-      nik,
-      tanggalLahir,
-      telp,
-      gender,
-    );
-
+      String gender, String image) async {
+    final data = await _authenticate(email, password, "register", username, nik,
+        tanggalLahir, telp, gender, image);
 
     if (data == true) {
       Family dataFamily = Family(

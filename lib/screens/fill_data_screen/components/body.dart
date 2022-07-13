@@ -1,5 +1,10 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:vaccine/components/roundedButtonLoading.dart';
@@ -20,6 +25,47 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   String? dropdownvalue;
+  XFile? pickedFile;
+  UploadTask? uploadTask;
+  String urlImage = "";
+
+  Future<String> uploadFile() async {
+    late String urlPhoto;
+    if (pickedFile != null) {
+      final path = 'files/${pickedFile!.name}';
+      final file = File(pickedFile!.path);
+
+      final ref = FirebaseStorage.instance.ref().child(path);
+      setState(() {
+        uploadTask = ref.putFile(file);
+      });
+
+      final snapshot = await uploadTask!.whenComplete(() {});
+
+      final urlDownload = await snapshot.ref.getDownloadURL();
+      print("Download LINK : $urlDownload");
+      urlPhoto = urlDownload;
+
+      setState(() {
+        uploadTask = null;
+      });
+    }
+
+    return urlImage = urlPhoto;
+  }
+
+  Future selectFile() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? result = await _picker.pickImage(source: ImageSource.gallery);
+    /* FilePicker.platform
+        .pickFiles(type: FileType.custom, allowedExtensions: ['jpg', 'png']); */
+    if (result == null) return;
+
+    setState(() {
+      pickedFile = result;
+    });
+  }
+
   List gender = ["Laki-Laki", "Perempuan"];
   bool isLoading = false;
   final _formKey = GlobalKey<FormBuilderState>();
@@ -51,16 +97,21 @@ class _BodyState extends State<Body> {
                         offset: const Offset(0, 1)),
                   ],
                   shape: BoxShape.rectangle,
-                  image: const DecorationImage(
+                  image: DecorationImage(
                       fit: BoxFit.fill,
-                      image: AssetImage("assets/images/user-avatar.png")),
+                      image: pickedFile != null
+                          ? FileImage(File(pickedFile!.path))
+                          : const AssetImage("assets/images/user-avatar.png")
+                              as ImageProvider),
                 ),
               ),
               Positioned(
                   bottom: 2,
                   right: 2,
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () async {
+                      await selectFile();
+                    },
                     child: Container(
                       height: 40,
                       width: 40,
@@ -207,7 +258,7 @@ class _BodyState extends State<Body> {
                   ? RoundedButtonSolid(
                       size: size,
                       text: "Simpan",
-                      onAction: () {
+                      onAction: () async {
                         setState(() {
                           isLoading = !isLoading;
                         });
@@ -222,13 +273,19 @@ class _BodyState extends State<Body> {
                               _formKey.currentState!.value["date"] != null &&
                               _formKey.currentState!.value["phone"] != null &&
                               _formKey.currentState!.value["gender"] != null) {
+                                
+                            if (pickedFile != null) {
+                              await uploadFile();
+                            }
+
                             auth
                                 .signUp(
                                     _formKey.currentState!.value["username"],
                                     _formKey.currentState!.value["nik"],
                                     _formKey.currentState!.value["date"],
                                     _formKey.currentState!.value["phone"],
-                                    _formKey.currentState!.value["gender"])
+                                    _formKey.currentState!.value["gender"],
+                                    urlImage)
                                 .then((value) {
                               setState(() {
                                 isLoading = !isLoading;
@@ -241,7 +298,8 @@ class _BodyState extends State<Body> {
                                         builder: (_) => HomeScreen()),
                                     (route) => false);
                               } else {
-                                showError(const Text("Kesalahan server!"), context);
+                                showError(
+                                    const Text("Kesalahan server!"), context);
                               }
                             });
                           } else {

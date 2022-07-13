@@ -1,33 +1,28 @@
 import 'package:flutter/material.dart';
+
 import '../constants.dart';
 
-class RoundedButtonSolid extends StatelessWidget {
-  const RoundedButtonSolid(
-      {Key? key,
-      required this.size,
-      required this.text,
-      required this.onAction})
+class RoundedButtonLoadingDanger extends StatelessWidget {
+  const RoundedButtonLoadingDanger({Key? key, required this.size})
       : super(key: key);
-
   final Size size;
-  final String text;
-  final Function() onAction;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: size.width,
       height: 55,
       child: ElevatedButton(
-          onPressed: onAction,
+          onPressed: () {},
           style: ElevatedButton.styleFrom(
-              primary: cPrimary1,
+              primary: cFail,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),
               elevation: 3),
-          child: Text(
-            text,
-            style: paragraphSemiBold1(cMainWhite),
+          child: const Center(
+            child: CircularProgressIndicator(
+              color: cMainWhite,
+            ),
           )),
     );
   }

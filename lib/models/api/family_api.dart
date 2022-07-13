@@ -33,74 +33,39 @@ class FamilyAPI {
     }
   }
 
-  // static Future getData(userId, token) async {
-  //   Uri url = Uri.parse(
-  //       'https://vaccine-api-strapi.herokuapp.com/api/families?filters[user_id][\$eq]=$userId&filters[isParent][\$eq]=false');
+  static Future updateData(data, id) async {
+    Uri url =
+        Uri.parse("https://booking-vaksin-alta.herokuapp.com/api/kelompok/$id");
 
-  //   try {
-  //     var response = await http.get(url, headers: {
-  //       "Content-Type": "application/json",
-  //       "Authorization": "Bearer $token"
-  //     });
-  //     return response;
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
+    try {
+      bool result = false;
+      var response = await http.put(url,
+          body: jsonEncode(data),
+          headers: {"Content-Type": "application/json"});
+      if (response.statusCode == 200) {
+        result = true;
+      }
 
-  // static Future getAllData(userId, token) async {
-  //   Uri url = Uri.parse(
-  //       'https://vaccine-api-strapi.herokuapp.com/api/families?filters[user_id][\$eq]=$userId');
+      return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
 
-  //   try {
-  //     var response = await http.get(url, headers: {
-  //       "Content-Type": "application/json",
-  //       "Authorization": "Bearer $token"
-  //     });
-  //     return response;
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
+  static Future deleteData(id) async {
+    Uri url =
+        Uri.parse("https://booking-vaksin-alta.herokuapp.com/api/kelompok/$id");
 
-  // static Future getDataById(userId, token) async {
-  //   Uri url = Uri.parse(
-  //       'https://vaccine-api-strapi.herokuapp.com/api/families?filters[id][\$eq]=$userId');
+    try {
+      bool result = false;
+      var response = await http.delete(url);
+      if (response.statusCode == 200) {
+        result = true;
+      }
 
-  //   try {
-  //     var response = await http.get(url, headers: {
-  //       "Content-Type": "application/json",
-  //       "Authorization": "Bearer $token"
-  //     });
-  //     return response;
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
-
-  // static Future updateDataById(userId, data) async {
-  //   Uri url = Uri.parse(
-  //       "https://vaccine-13ee4-default-rtdb.asia-southeast1.firebasedatabase.app/family/$userId.json");
-
-  //   try {
-  //     var response = await http.patch(url, body: data);
-  //     var hasilResponse = jsonDecode(response.body);
-  //     return hasilResponse;
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
-
-  // static Future isAdmin() async {
-  //   Uri url = Uri.parse(
-  //       'https://vaccine-13ee4-default-rtdb.asia-southeast1.firebasedatabase.app/family.json?orderBy="isAdmin"&equalTo="true"');
-
-  //   try {
-  //     var response = await http.get(url);
-  //     var hasilResponse = jsonDecode(response.body) as Map<String, dynamic>;
-  //     return hasilResponse;
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
+      return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

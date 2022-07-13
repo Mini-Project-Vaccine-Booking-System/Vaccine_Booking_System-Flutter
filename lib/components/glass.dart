@@ -26,10 +26,12 @@ class Glass extends StatelessWidget {
           border: Border.all(width: 1.5, color: Colors.white.withOpacity(0.2))),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: children,
+        child: SizedBox(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: children,
+          ),
         ),
       ),
     );

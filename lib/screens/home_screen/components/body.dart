@@ -106,35 +106,16 @@ class _BodyState extends State<Body> {
                   "Informasi Covid-19 Terkini",
                   style: paragraphBold2(cMainBlack),
                 ),
-                isLoading[1] == false
-                    ? GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isLoading[1] = true;
-                          });
-                          news.getDataNews().then((value) {
-                            setState(() {
-                              isLoading[1] = false;
-                            });
-
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => NewsMoreScreen()));
-                          });
-                        },
-                        child: Text(
-                          "Lihat Semua",
-                          style: paragraphBold4(cPrimary1),
-                        ),
-                      )
-                    : const SizedBox(
-                        width: 11,
-                        height: 11,
-                        child: CircularProgressIndicator(
-                          color: cPrimary2,
-                        ),
-                      ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => const NewsMoreScreen()));
+                  },
+                  child: Text(
+                    "Lihat Semua",
+                    style: paragraphBold4(cPrimary1),
+                  ),
+                ),
               ],
             ),
           ),

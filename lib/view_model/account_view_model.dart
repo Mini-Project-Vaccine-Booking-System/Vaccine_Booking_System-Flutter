@@ -8,8 +8,19 @@ import 'package:vaccine/models/user.dart';
 
 import '../models/account.dart';
 import '../models/api/account_api.dart';
+import '../models/family.dart';
+
+enum AccountViewState { none, loading, error }
 
 class AccoutnViewModel extends ChangeNotifier {
+  AccountViewState _state = AccountViewState.none;
+  AccountViewState get state => _state;
+
+  changeState(AccountViewState state) {
+    _state = state;
+    notifyListeners();
+  }
+
   int? userId;
   // String? token;
 
@@ -25,49 +36,38 @@ class AccoutnViewModel extends ChangeNotifier {
   User? _data;
   User? get data => _data;
 
+  Family? _family;
+  Family? get family => _family;
+
   Future<void> inisialData() async {
-    Response response = await UserAPI.getDataUserById(userId.toString());
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
-      User dataUser = User(
-          id: data["idUser"],
-          email: data["email"],
-          password: data["password"],
-          nik: data["nik"],
-          phone: data["noHp"],
-          nama: data["nama"],
-          gender: data["gender"],
-          tanggalLahir: DateTime.parse(data["tglLahir"]),
-          image: data["image"]);
+    changeState(AccountViewState.loading);
 
-      _data = dataUser;
-      notifyListeners();
+    try {
+      Response response = await UserAPI.getDataUserById(userId.toString());
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        User dataUser = User(
+            id: data["data"]["idUser"],
+            email: data["data"]["email"],
+            password: data["data"]["password"],
+            nik: data["data"]["nik"],
+            phone: data["data"]["noHp"],
+            nama: data["data"]["nama"],
+            gender: data["data"]["gender"],
+            tanggalLahir: DateTime.parse(data["data"]["tglLahir"]),
+            image: data["data"]["image"]);
+
+        _data = dataUser;
+        await getDataFam();
+        notifyListeners();
+        changeState(AccountViewState.none);
+      }
+    } catch (e) {
+      changeState(AccountViewState.error);
     }
-    // Response response = await AccountAPI.getDataFamilyParent(userId, token);
-    // if (response.statusCode == 200) {
-    //   final data = jsonDecode(response.body) as Map<String, dynamic>;
-    //   final dataUser = data["data"][0] as Map<String, dynamic>;
-    //   Account dataAccount = Account(
-    //       id: dataUser["id"],
-    //       idUser: dataUser["attributes"]["user_id"],
-    //       name: dataUser["attributes"]["fullname"].toString(),
-    //       email: dataUser["attributes"]["email"].toString(),
-    //       password: dataUser["attributes"]["password"].toString(),
-    //       nik: dataUser["attributes"]["nik"].toString(),
-    //       usia: dataUser["attributes"]["usia"].toString(),
-    //       telp: dataUser["attributes"]["phone"].toString(),
-    //       gender: dataUser["attributes"]["gender"].toString(),
-    //       photo: dataUser["attributes"]["photo"].toString(),
-    //       isParent: dataUser["attributes"]["isParent"],
-    //       createdAt: DateTime.now());
-
-    //   _data = dataAccount;
-
-    //   notifyListeners();
-    // }
   }
 
-  Future updateUser(String hint, String newData) async {
+  Future updateUser(String hint, newData) async {
     Map dataUser = _data!.toJson();
     for (String key in dataUser.keys) {
       if (key == hint) {
@@ -83,39 +83,74 @@ class AccoutnViewModel extends ChangeNotifier {
         phone: dataUser["noHp"],
         nama: dataUser["nama"],
         gender: dataUser["gender"],
-        tanggalLahir: DateTime.parse(dataUser["tglLahir"]),
+        tanggalLahir: dataUser["tglLahir"],
         image: dataUser["image"]);
     _data = dataNew;
+    final dataResponse = await UserAPI.updateData(_data!.toJson(), userId);
+    await updateFam(hint, newData);
+    if (dataResponse == true) {
+      notifyListeners();
+      return true;
+    }
+  }
+
+  Future updatePhoto(String photo) async {
+    _data!.image = photo;
     final dataResponse = await UserAPI.updateData(_data!.toJson(), userId);
     if (dataResponse == true) {
       notifyListeners();
       return true;
     }
+  }
 
-    // if (hint != "password" || hint != "email") {
-    //   await FamilyAPI.updateDataById(userFamily, jsonEncode(dataUpdate));
-    // }
+  Future getDataFam() async {
+    late Family dataFam;
+    Response response = await FamilyAPI.getAllData(userId);
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      data["data"].forEach((element) {
+        if (element["hubungan"] != "userParent") {
+          return;
+        }
+        dataFam = Family(
+            id: element["idKelompok"],
+            idParent: userId!,
+            name: element["namaKelompok"],
+            nik: element["nik"],
+            tanggalLahir: DateTime.parse(element["tglLahir"]),
+            telp: element["tlp"],
+            gender: element["gender"],
+            hubungan: element["hubungan"]);
+        _family = dataFam;
+      });
+    }
+  }
 
-    // if (dataResponse != null) {
-    //   var dataMap = _data!.toMap();
-    //   dataMap[hint] = value;
-    //   dataMap.forEach(
-    //     (key, value) {
-    //       Account acc = Account(
-    //           photo: dataMap["photo"],
-    //           idUser: userId!,
-    //           name: dataMap["name"],
-    //           email: dataMap["email"],
-    //           password: dataMap["password"],
-    //           createdAt: DateTime.parse(dataMap["createdAt"]),
-    //           nik: dataMap["nik"],
-    //           usia: dataMap["usia"],
-    //           telp: dataMap["telp"],
-    //           gender: dataMap["gender"]);
-    //       _data = acc;
-    //     },
-    //   );
-    //   notifyListeners();
-    // }
+  Future updateFam(hint, newData) async {
+    Map dataFam = _family!.updateJson();
+    for (String key in dataFam.keys) {
+      if (key == hint) {
+        dataFam[key] = newData;
+
+        Family dataNew = Family(
+            id: dataFam["id"],
+            idParent: dataFam["id_user"],
+            name: dataFam["nama"],
+            nik: dataFam["nik"],
+            tanggalLahir: dataFam["tglLahir"],
+            telp: dataFam["noHp"],
+            gender: dataFam["gender"],
+            hubungan: dataFam["hubungan"]);
+
+        _family = dataNew;
+
+        final dataResponse =
+            await FamilyAPI.updateData(dataNew.toJson(), family!.id);
+        if (dataResponse == true) {
+          notifyListeners();
+          return true;
+        }
+      }
+    }
   }
 }

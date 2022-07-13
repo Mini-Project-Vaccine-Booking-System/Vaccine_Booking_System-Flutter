@@ -22,4 +22,15 @@ class Family {
         "hubungan": hubungan,
         "gender": gender
       };
+
+  Map updateJson() => {
+        "id": id,
+        "id_user": idParent,
+        "nik": nik,
+        "noHp": telp,
+        "nama": name,
+        "tglLahir": tanggalLahir.toIso8601String(),
+        "hubungan": hubungan,
+        "gender": gender
+      };
 }

@@ -48,7 +48,7 @@ class AnggotaScreen extends StatelessWidget {
                 labelStyle: paragraphSemiBold3(cNeutral3),
                 labelColor: cPrimary1,
                 unselectedLabelColor: cNeutral3,
-                tabs: [
+                tabs: const [
                   Tab(
                     text: 'Tambah Anggota',
                   ),

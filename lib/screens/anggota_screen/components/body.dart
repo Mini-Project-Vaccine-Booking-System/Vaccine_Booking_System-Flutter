@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:vaccine/view_model/family_view_model.dart';
+import 'package:vaccine/view_model/ticket_view_model.dart';
+import '../../../components/stateFailed.dart';
 import '../../../constants.dart';
 import 'daftar_anggota.dart';
 import 'tambah_anggota.dart';
@@ -27,6 +29,7 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    var family = Provider.of<FamilyViewModel>(context);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
       child: Column(
@@ -59,13 +62,29 @@ class _BodyState extends State<Body> {
             height: size.height * 0.02,
           ),
           Expanded(
-            child: TabBarView(children: [
-              TambahAnggota(size: size),
-              DaftarAnggota(size: size)
-            ]),
+            child:
+                TabBarView(children: [TambahAnggota(size: size), body(family)]),
           ),
         ],
       ),
     );
+  }
+
+  Widget body(FamilyViewModel viewModel) {
+    Size size = MediaQuery.of(context).size;
+    final isLoading = viewModel.state == FamilyViewState.loading;
+    final isError = viewModel.state == FamilyViewState.error;
+
+    if (isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    if (isError) {
+      return const StateFailed();
+    }
+
+    return DaftarAnggota(size: size);
   }
 }

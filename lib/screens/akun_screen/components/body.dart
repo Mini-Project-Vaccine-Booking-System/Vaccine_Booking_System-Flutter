@@ -21,45 +21,10 @@ class Body extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
       child: Column(
         children: [
-          // SizedBox(
-          //   height: size.height * 0.02,
-          // ),
-          // SafeArea(
-          //   child: Stack(
-          //     alignment: Alignment.centerLeft,
-          //     children: [
-          //       Center(
-          //         child: Text(
-          //           "Daftar Vaksin",
-          //           style: GoogleFonts.poppins(
-          //               textStyle: const TextStyle(
-          //                   color: cMainBlack,
-          //                   fontSize: 18,
-          //                   fontWeight: FontWeight.bold)),
-          //         ),
-          //       ),
-          //       InkWell(
-          //         onTap: () {
-          //           Navigator.pop(context);
-          //         },
-          //         child: Container(
-          //           width: 32,
-          //           height: 32,
-          //           decoration:
-          //               BoxDecoration(color: cPrimary1, shape: BoxShape.circle),
-          //           child: Icon(
-          //             Icons.arrow_back_ios_rounded,
-          //             color: Colors.white,
-          //           ),
-          //         ),
-          //       )
-          //     ],
-          //   ),
-          // ),
           SizedBox(
             height: size.height * 0.03,
           ),
-          TopPhoto(),
+          TopPhoto(size: size),
           SizedBox(
             height: size.height * 0.03,
           ),
@@ -86,12 +51,38 @@ class Body extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  auth.logOut().then((value) => Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => const WelcomeScreen()),
-                        (Route) => false,
-                      ));
+                  showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                            title: const Text("Keluar"),
+                            content: const Text(
+                                "Anda akan kembali ke halaman depan"),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text(
+                                    "Batal",
+                                    style: TextStyle(color: cPrimary1),
+                                  )),
+                              TextButton(
+                                  onPressed: () {
+                                    auth.logOut().then(
+                                        (value) => Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      const WelcomeScreen()),
+                                              (Route) => false,
+                                            ));
+                                  },
+                                  child: const Text(
+                                    "Keluar",
+                                    style: TextStyle(color: cPrimary1),
+                                  )),
+                            ],
+                          ));
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 8),
