@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:vaccine/screens/anggota_screen/components/body.dart';
-
+import '../../../bindings/package_binding.dart';
+import '../../screens/anggota_screen/components/body.dart';
 import '../../constants.dart';
 
 class AnggotaScreen extends StatelessWidget {
-  const AnggotaScreen({Key? key}) : super(key: key);
+  const AnggotaScreen({Key? key, this.currentIndex = 0}) : super(key: key);
+  final int currentIndex;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return DefaultTabController(
+      initialIndex: currentIndex,
       length: 2,
       child: Scaffold(
           appBar: AppBar(

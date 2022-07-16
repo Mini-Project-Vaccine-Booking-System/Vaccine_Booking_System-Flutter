@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:vaccine/components/roundedButtonLoading.dart';
-import 'package:validators/validators.dart';
-
-import '../../../components/roundedButtonSolid.dart';
-import '../../../components/roundedContainer.dart';
+import '../../anggota_screen/anggota_screen.dart';
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/component_binding.dart';
+import '../../../bindings/view_model_binding.dart';
 import '../../../constants.dart';
-import '../../../view_model/family_view_model.dart';
 
 class TambahAnggota extends StatefulWidget {
   const TambahAnggota({
@@ -39,7 +34,7 @@ class _TambahAnggotaState extends State<TambahAnggota> {
               "Nama Lengkap",
               style: paragraphMedium2(cMainBlack),
             ),
-            roundedContainer(
+            RoundedContainer(
               child: Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: widget.size.width * 0.05),
@@ -62,7 +57,7 @@ class _TambahAnggotaState extends State<TambahAnggota> {
               "NIK",
               style: paragraphMedium2(cMainBlack),
             ),
-            roundedContainer(
+            RoundedContainer(
               child: Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: widget.size.width * 0.05),
@@ -85,7 +80,7 @@ class _TambahAnggotaState extends State<TambahAnggota> {
               "Tanggal Lahir",
               style: paragraphMedium2(cMainBlack),
             ),
-            roundedContainer(
+            RoundedContainer(
               child: Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: widget.size.width * 0.05),
@@ -109,7 +104,7 @@ class _TambahAnggotaState extends State<TambahAnggota> {
               "No. Handphone",
               style: paragraphMedium2(cMainBlack),
             ),
-            roundedContainer(
+            RoundedContainer(
               child: Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: widget.size.width * 0.05),
@@ -131,14 +126,13 @@ class _TambahAnggotaState extends State<TambahAnggota> {
               "Jenis Kelamin",
               style: paragraphMedium2(cMainBlack),
             ),
-            roundedContainer(
+            RoundedContainer(
               child: Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: widget.size.width * 0.05),
                 child: FormBuilderDropdown(
                   decoration: const InputDecoration(border: InputBorder.none),
                   name: 'gender',
-                  // initialValue: 'Male',
                   allowClear: true,
                   hint: const Text('Jenis Kelamin'),
                   items: gender
@@ -184,7 +178,15 @@ class _TambahAnggotaState extends State<TambahAnggota> {
                             });
 
                             if (value == true) {
-                              showSuccess(const Text("Data berhasil disimpan!"),
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => const AnggotaScreen(
+                                            currentIndex: 1,
+                                          )));
+
+                              showSuccess(
+                                  const Text("Data berhasil ditambahkan!"),
                                   context);
                             } else {
                               showError(

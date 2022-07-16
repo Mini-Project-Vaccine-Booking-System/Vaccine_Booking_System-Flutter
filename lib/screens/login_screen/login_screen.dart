@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vaccine/constants.dart';
-
+import '../../constants.dart';
 import 'components/body.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -11,7 +10,7 @@ class LoginScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: TopBar(context, size, "Masuk"),
-      body: Body(),
+      body: const Body(),
     );
   }
 }

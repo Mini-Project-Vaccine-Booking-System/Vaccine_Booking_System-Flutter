@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:vaccine/models/hospital.dart';
-import 'package:vaccine/models/schedule.dart';
-import 'package:vaccine/models/vaccine.dart';
-import 'package:vaccine/view_model/hospital_view_model.dart';
-
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/view_model_binding.dart';
 import '../../../constants.dart';
-import '../../../view_model/family_view_model.dart';
 
 class TopCard extends StatelessWidget {
   const TopCard({Key? key, required this.size}) : super(key: key);
@@ -17,25 +11,27 @@ class TopCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var hospital = Provider.of<HospitalViewModel>(context);
+    var family = Provider.of<FamilyViewModel>(context);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
       padding: EdgeInsets.symmetric(
           horizontal: size.width * 0.05, vertical: size.width * 0.05),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
         boxShadow: [
           BoxShadow(
               spreadRadius: 2,
               blurRadius: 5,
               color: Colors.black.withOpacity(0.2),
-              offset: Offset(0, 1)),
+              offset: const Offset(0, 1)),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: 80,
@@ -128,6 +124,33 @@ class TopCard extends StatelessWidget {
                   )
                 ],
               )
+            ],
+          ),
+          SizedBox(height: size.height * 0.01),
+          const Divider(
+            thickness: 2,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Pasien",
+              ),
+              if (family.dataSelect != null) ...[
+                Text(
+                  family.dataSelect!.name,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  family.dataSelect!.nik,
+                  style: const TextStyle(fontWeight: FontWeight.normal),
+                )
+              ] else ...[
+                const Text(
+                  "Pasien belum ditambahkan",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )
+              ],
             ],
           ),
         ],

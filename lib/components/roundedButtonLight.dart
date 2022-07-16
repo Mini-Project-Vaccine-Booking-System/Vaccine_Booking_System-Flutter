@@ -16,7 +16,7 @@ class RoundedButtonLight extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: size.width,
       height: 55,
       child: ElevatedButton(

@@ -31,7 +31,7 @@ class _EmailTextState extends State<EmailText> {
             "Email",
             style: paragraphMedium2(cMainBlack),
           ),
-          roundedContainer(
+          RoundedContainer(
             child: FormBuilderTextField(
               keyboardType: TextInputType.emailAddress,
               name: "email",
@@ -61,7 +61,7 @@ class _EmailTextState extends State<EmailText> {
                                 color: cFail,
                               ),
                             )
-                          : Icon(
+                          : const Icon(
                               Icons.email_outlined,
                               color: cNeutral1,
                             ),
@@ -70,7 +70,7 @@ class _EmailTextState extends State<EmailText> {
                       hintText: "youareemail@gmail.com",
                       hintStyle: paragraphRegular1(cNeutral1),
                       border: InputBorder.none,
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.email_outlined,
                         color: cNeutral1,
                       ),

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:vaccine/screens/login_screen/login_screen.dart';
-import 'package:vaccine/screens/register_screen/register_screen.dart';
-
-import '../../../components/roundedButtonLight.dart';
-import '../../../components/roundedButtonSolid.dart';
+import '../../login_screen/login_screen.dart';
+import '../../register_screen/register_screen.dart';
+import '../../../bindings/component_binding.dart';
 import '../../../constants.dart';
 
 class Body extends StatelessWidget {
@@ -51,7 +49,7 @@ class Body extends StatelessWidget {
               text: "Masuk",
               onAction: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => LoginScreen()));
+                    context, MaterialPageRoute(builder: (_) => const LoginScreen()));
               }),
           SizedBox(
             height: size.height * 0.02,
@@ -61,7 +59,7 @@ class Body extends StatelessWidget {
               text: "Daftar",
               onAction: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => RegisterScreen()));
+                    MaterialPageRoute(builder: (_) => const RegisterScreen()));
               })
         ],
       ),

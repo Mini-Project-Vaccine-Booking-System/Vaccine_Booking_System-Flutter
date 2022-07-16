@@ -1,13 +1,12 @@
 import 'dart:convert';
 import '../../bindings/package_binding.dart';
 
-class TicketAPI {
-  static Future addData(data, token) async {
+class AuthAPI {
+  static Future signup(data) async {
     try {
       Response response = await PackageBinding.dio.post(
-          'https://booking-vaksin-alta.herokuapp.com/api/booking',
-          data: jsonEncode(data),
-          options: Options(headers: {"Authorization": "Bearer $token"}));
+          'https://booking-vaksin-alta.herokuapp.com/api/regUser',
+          data: jsonEncode(data));
       return response;
     } on DioError catch (e) {
       if (e.response != null) {
@@ -21,11 +20,11 @@ class TicketAPI {
     }
   }
 
-  static Future getAllTicket(id) async {
+  static Future login(data) async {
     try {
-      Response response = await PackageBinding.dio.get(
-        'https://booking-vaksin-alta.herokuapp.com/api/booking/s/$id',
-      );
+      Response response = await PackageBinding.dio.post(
+          'https://booking-vaksin-alta.herokuapp.com/api/login',
+          data: jsonEncode(data));
       return response;
     } on DioError catch (e) {
       if (e.response != null) {

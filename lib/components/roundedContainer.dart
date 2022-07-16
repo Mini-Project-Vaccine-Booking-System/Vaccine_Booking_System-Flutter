@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 
-class roundedContainer extends StatelessWidget {
-  const roundedContainer({Key? key, required this.child}) : super(key: key);
+class RoundedContainer extends StatelessWidget {
+  const RoundedContainer({Key? key, required this.child}) : super(key: key);
   final Widget child;
 
   @override

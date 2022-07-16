@@ -1,9 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:vaccine/models/api/news_api.dart';
-import 'package:vaccine/models/news.dart';
+import '../bindings/model_binding.dart';
+import '../bindings/api_binding.dart';
+import '../bindings/package_binding.dart';
 
 enum NewsViewState { none, loading, error }
 
@@ -15,9 +14,6 @@ class NewsViewModel extends ChangeNotifier {
     _state = state;
     notifyListeners();
   }
-
-  // List<News> _newsDataHome = [];
-  // List<News> get newsDataHome => _newsDataHome;
 
   List<News> _newsData = [];
   List<News> get newsData => _newsData;
@@ -36,18 +32,17 @@ class NewsViewModel extends ChangeNotifier {
 
     try {
       _newsData.clear();
-      Response newsResponse = await NewsAPI.getDataHome();
+      Response newsResponse = await NewsAPI.getAllData();
       if (newsResponse.statusCode == 200) {
-        var news = jsonDecode(newsResponse.body) as Map<String, dynamic>;
-        // print(news);
+        var news = newsResponse.data as Map<String, dynamic>;
         for (var element in news["articles"]) {
           News data = News(
               author: "",
               publishedAt: "",
-              title: element["title"],
-              description: element["description"],
-              image: element["urlToImage"],
-              content: element["content"]);
+              title: element["title"].toString(),
+              description: element["description"].toString(),
+              image: element["urlToImage"].toString(),
+              content: element["content"].toString());
 
           _newsData.add(data);
           notifyListeners();
@@ -58,25 +53,4 @@ class NewsViewModel extends ChangeNotifier {
       changeState(NewsViewState.error);
     }
   }
-
-  // Future getDataNews() async {
-  //   _newsData.clear();
-  //   Response newsResponse = await NewsAPI.getData();
-  //   if (newsResponse.statusCode == 200) {
-  //     var news = jsonDecode(newsResponse.body) as Map<String, dynamic>;
-  //     // print(news);
-  //     for (var element in news["articles"]) {
-  //       News data = News(
-  //           author: "",
-  //           publishedAt: "",
-  //           title: element["title"],
-  //           description: element["description"],
-  //           image: element["urlToImage"],
-  //           content: element["content"]);
-
-  //       _newsData.add(data);
-  //       notifyListeners();
-  //     }
-  //   }
-  // }
 }

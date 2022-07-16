@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/view_model_binding.dart';
 import '../../../constants.dart';
-import '../../../view_model/news_view_model.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -28,7 +26,7 @@ class Body extends StatelessWidget {
                 image: DecorationImage(
                     image: NetworkImage(news.getDataSelect.image),
                     fit: BoxFit.cover),
-                borderRadius: BorderRadius.all(Radius.circular(20)),
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
               ),
             ),
             Text(
@@ -47,7 +45,7 @@ class Body extends StatelessWidget {
             ),
             Text(
               news.getDataSelect.content,
-              style: paragraphMedium2(cMainBlack),
+              style: paragraphRegular2(cMainBlack),
             )
           ],
         ));

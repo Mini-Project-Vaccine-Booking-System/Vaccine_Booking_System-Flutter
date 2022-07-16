@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:vaccine/constants.dart';
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/view_model_binding.dart';
+import '../../../constants.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -8,6 +9,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    var covid = Provider.of<CovidViewModel>(context, listen: false);
     return DefaultTabController(
       length: 3,
       child: Padding(
@@ -43,7 +45,7 @@ class Body extends StatelessWidget {
                         style: paragraphRegular3(Colors.white),
                       ),
                       Text(
-                        "2.589.012",
+                        covid.data.positive,
                         style: paragraphSemiBold1(Colors.white),
                       )
                     ],
@@ -64,7 +66,7 @@ class Body extends StatelessWidget {
                         style: paragraphRegular3(Colors.white),
                       ),
                       Text(
-                        "2.589.012",
+                        covid.data.recovered,
                         style: paragraphSemiBold1(Colors.white),
                       )
                     ],
@@ -85,7 +87,7 @@ class Body extends StatelessWidget {
                         style: paragraphRegular3(Colors.white),
                       ),
                       Text(
-                        "2.589.012",
+                        covid.data.death,
                         style: paragraphSemiBold1(Colors.white),
                       ),
                     ],
@@ -106,8 +108,7 @@ class Body extends StatelessWidget {
             Container(
               height: 48,
               decoration: BoxDecoration(
-                  color: cNeutral2,
-                  borderRadius: BorderRadius.circular(10)),
+                  color: cNeutral2, borderRadius: BorderRadius.circular(10)),
               child: const Padding(
                 padding: EdgeInsets.all(7.0),
                 child: TabBar(
@@ -135,7 +136,7 @@ class Body extends StatelessWidget {
               child: TabBarView(children: [
                 TabBarOne(size: size),
                 TabBarTwo(size: size),
-                Container(
+                SizedBox(
                   width: size.width,
                   child: SingleChildScrollView(
                       child: Column(
@@ -254,17 +255,7 @@ class _TabBarTwoState extends State<TabBarTwo> {
     return SingleChildScrollView(
       child: Container(
         width: widget.size.width,
-        decoration: BoxDecoration(
-            // border: Border.all(color: cNeutral2, width: 2),
-            // borderRadius: BorderRadius.circular(10),
-            // boxShadow: [
-            //   BoxShadow(
-            //       spreadRadius: 2,
-            //       blurRadius: 5,
-            //       color: Colors.black.withOpacity(0.1),
-            //       offset: Offset(0, 1)),
-            // ],
-            ),
+        decoration: const BoxDecoration(),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: ExpansionPanelList(
@@ -300,10 +291,10 @@ class _TabBarTwoState extends State<TabBarTwo> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: widget.size.width * 0.1,
                             height: 20,
-                            child: Center(
+                            child: const Center(
                               child: CircleAvatar(
                                 radius: 3,
                                 backgroundColor: cMainBlack,
@@ -325,10 +316,10 @@ class _TabBarTwoState extends State<TabBarTwo> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: widget.size.width * 0.1,
                             height: 20,
-                            child: Center(
+                            child: const Center(
                               child: CircleAvatar(
                                 radius: 3,
                                 backgroundColor: cMainBlack,
@@ -350,10 +341,10 @@ class _TabBarTwoState extends State<TabBarTwo> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: widget.size.width * 0.1,
                             height: 20,
-                            child: Center(
+                            child: const Center(
                               child: CircleAvatar(
                                 radius: 3,
                                 backgroundColor: cMainBlack,
@@ -375,10 +366,10 @@ class _TabBarTwoState extends State<TabBarTwo> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: widget.size.width * 0.1,
                             height: 20,
-                            child: Center(
+                            child: const Center(
                               child: CircleAvatar(
                                 radius: 3,
                                 backgroundColor: cMainBlack,
@@ -400,10 +391,10 @@ class _TabBarTwoState extends State<TabBarTwo> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: widget.size.width * 0.1,
                             height: 20,
-                            child: Center(
+                            child: const Center(
                               child: CircleAvatar(
                                 radius: 3,
                                 backgroundColor: cMainBlack,
@@ -425,10 +416,10 @@ class _TabBarTwoState extends State<TabBarTwo> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: widget.size.width * 0.1,
                             height: 20,
-                            child: Center(
+                            child: const Center(
                               child: CircleAvatar(
                                 radius: 3,
                                 backgroundColor: cMainBlack,
@@ -450,10 +441,10 @@ class _TabBarTwoState extends State<TabBarTwo> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: widget.size.width * 0.1,
                             height: 20,
-                            child: Center(
+                            child: const Center(
                               child: CircleAvatar(
                                 radius: 3,
                                 backgroundColor: cMainBlack,
@@ -475,10 +466,10 @@ class _TabBarTwoState extends State<TabBarTwo> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: widget.size.width * 0.1,
                             height: 20,
-                            child: Center(
+                            child: const Center(
                               child: CircleAvatar(
                                 radius: 3,
                                 backgroundColor: cMainBlack,
@@ -500,10 +491,10 @@ class _TabBarTwoState extends State<TabBarTwo> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: widget.size.width * 0.1,
                             height: 20,
-                            child: Center(
+                            child: const Center(
                               child: CircleAvatar(
                                 radius: 3,
                                 backgroundColor: cMainBlack,
@@ -525,10 +516,10 @@ class _TabBarTwoState extends State<TabBarTwo> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: widget.size.width * 0.1,
                             height: 20,
-                            child: Center(
+                            child: const Center(
                               child: CircleAvatar(
                                 radius: 3,
                                 backgroundColor: cMainBlack,
@@ -550,10 +541,10 @@ class _TabBarTwoState extends State<TabBarTwo> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: widget.size.width * 0.1,
                             height: 20,
-                            child: Center(
+                            child: const Center(
                               child: CircleAvatar(
                                 radius: 3,
                                 backgroundColor: cMainBlack,
@@ -575,10 +566,10 @@ class _TabBarTwoState extends State<TabBarTwo> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: widget.size.width * 0.1,
                             height: 20,
-                            child: Center(
+                            child: const Center(
                               child: CircleAvatar(
                                 radius: 3,
                                 backgroundColor: cMainBlack,
@@ -600,10 +591,10 @@ class _TabBarTwoState extends State<TabBarTwo> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: widget.size.width * 0.1,
                             height: 20,
-                            child: Center(
+                            child: const Center(
                               child: CircleAvatar(
                                 radius: 3,
                                 backgroundColor: cMainBlack,
@@ -627,7 +618,7 @@ class _TabBarTwoState extends State<TabBarTwo> {
                 ExpansionPanel(
                   canTapOnHeader: true,
                   isExpanded: _isOpen[1],
-                  headerBuilder: (context, isExpanded) => ListTile(
+                  headerBuilder: (context, isExpanded) => const ListTile(
                     title: Text(
                       "Terapi Medis",
                       style: TextStyle(
@@ -651,10 +642,10 @@ class _TabBarTwoState extends State<TabBarTwo> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: widget.size.width * 0.1,
                             height: 20,
-                            child: Center(
+                            child: const Center(
                               child: CircleAvatar(
                                 radius: 3,
                                 backgroundColor: cMainBlack,
@@ -676,10 +667,10 @@ class _TabBarTwoState extends State<TabBarTwo> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: widget.size.width * 0.1,
                             height: 20,
-                            child: Center(
+                            child: const Center(
                               child: CircleAvatar(
                                 radius: 3,
                                 backgroundColor: cMainBlack,
@@ -724,7 +715,7 @@ class TabBarOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: size.width,
       child: SingleChildScrollView(
         child: Column(

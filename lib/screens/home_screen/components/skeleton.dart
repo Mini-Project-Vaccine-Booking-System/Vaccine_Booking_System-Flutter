@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
+import '../../../bindings/package_binding.dart';
 
 class Skeleton extends StatelessWidget {
   const Skeleton({Key? key}) : super(key: key);

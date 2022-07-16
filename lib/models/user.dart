@@ -1,7 +1,6 @@
 class User {
   int id;
-  String email, password, nik, phone, nama, gender, image;
-  DateTime tanggalLahir;
+  String email, password, nik, phone, nama, gender, image, tanggalLahir;
 
   User(
       {required this.id,
@@ -16,16 +15,14 @@ class User {
 
   Map toJson() => {
         "email": email,
-        "username": "",
         "password": password,
-        "role": "user",
         "nik": nik,
         "noHp": phone,
         "nama": nama,
         "gender": gender,
+        "tglLahir": tanggalLahir,
         "image": image,
         "address": "",
         "kota": "",
-        "tglLahir": tanggalLahir.toIso8601String(),
       };
 }

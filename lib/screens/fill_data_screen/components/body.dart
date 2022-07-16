@@ -1,20 +1,10 @@
 import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:vaccine/components/roundedButtonLoading.dart';
-import 'package:vaccine/screens/home_screen/home_screen.dart';
-import 'package:validators/validators.dart';
-
-import '../../../components/roundedButtonSolid.dart';
-import '../../../components/roundedContainer.dart';
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/component_binding.dart';
+import '../../../bindings/view_model_binding.dart';
+import '../../../screens/home_screen/home_screen.dart';
 import '../../../constants.dart';
-import '../../../view_model/auth_view_model.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -57,8 +47,6 @@ class _BodyState extends State<Body> {
   Future selectFile() async {
     final ImagePicker _picker = ImagePicker();
     final XFile? result = await _picker.pickImage(source: ImageSource.gallery);
-    /* FilePicker.platform
-        .pickFiles(type: FileType.custom, allowedExtensions: ['jpg', 'png']); */
     if (result == null) return;
 
     setState(() {
@@ -168,7 +156,7 @@ class _BodyState extends State<Body> {
                 "Tanggal Lahir",
                 style: paragraphMedium2(cMainBlack),
               ),
-              roundedContainer(
+              RoundedContainer(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
                   child: FormBuilderDateTimePicker(
@@ -205,13 +193,12 @@ class _BodyState extends State<Body> {
                 "Jenis Kelamin",
                 style: paragraphMedium2(cMainBlack),
               ),
-              roundedContainer(
+              RoundedContainer(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
                   child: FormBuilderDropdown(
                     decoration: const InputDecoration(border: InputBorder.none),
                     name: 'gender',
-                    // initialValue: 'Male',
                     allowClear: true,
                     hint: const Text('Jenis Kelamin'),
                     items: gender
@@ -223,34 +210,6 @@ class _BodyState extends State<Body> {
                   ),
                 ),
               ),
-              // roundedContainer(
-              //   child: Padding(
-              //     padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
-              //     child: DropdownButtonHideUnderline(
-              //       child: DropdownButton(
-              //         hint: const Text("Jenis kelamin"),
-              //         value: dropdownvalue == null
-              //             ? null
-              //             : gender.firstWhere(
-              //                 (element) => element == dropdownvalue!),
-              //         isExpanded: true,
-              //         iconSize: 36,
-              //         icon: const Icon(Icons.keyboard_arrow_down_rounded),
-              //         items: gender.map((items) {
-              //           return DropdownMenuItem(
-              //             value: items,
-              //             child: Text(items),
-              //           );
-              //         }).toList(),
-              //         onChanged: (newValue) {
-              //           setState(() {
-              //             dropdownvalue = newValue as String;
-              //           });
-              //         },
-              //       ),
-              //     ),
-              //   ),
-              // ),
               SizedBox(
                 height: size.height * 0.05,
               ),
@@ -273,29 +232,27 @@ class _BodyState extends State<Body> {
                               _formKey.currentState!.value["date"] != null &&
                               _formKey.currentState!.value["phone"] != null &&
                               _formKey.currentState!.value["gender"] != null) {
-                                
                             if (pickedFile != null) {
                               await uploadFile();
                             }
 
                             auth
-                                .signUp(
-                                    _formKey.currentState!.value["username"],
+                                .fillData(
                                     _formKey.currentState!.value["nik"],
-                                    _formKey.currentState!.value["date"],
                                     _formKey.currentState!.value["phone"],
+                                    _formKey.currentState!.value["username"],
                                     _formKey.currentState!.value["gender"],
+                                    _formKey.currentState!.value["date"],
                                     urlImage)
                                 .then((value) {
                               setState(() {
                                 isLoading = !isLoading;
                               });
-                              // print(value);
                               if (value == true) {
                                 Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => HomeScreen()),
+                                        builder: (_) => const HomeScreen()),
                                     (route) => false);
                               } else {
                                 showError(
@@ -343,7 +300,7 @@ class BuildTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return roundedContainer(
+    return RoundedContainer(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
         child: FormBuilderTextField(

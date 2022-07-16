@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:vaccine/screens/welcome_screen/welcome_screen.dart';
-import 'package:vaccine/view_model/auth_view_model.dart';
-
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/view_model_binding.dart';
+import '../../../screens/welcome_screen/welcome_screen.dart';
 import '../../../constants.dart';
-import '../../../view_model/account_view_model.dart';
 import 'data_akun.dart';
 import 'top_photo.dart';
 
@@ -85,18 +82,18 @@ class Body extends StatelessWidget {
                           ));
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   height: 50,
                   width: 100,
                   decoration: BoxDecoration(
                     color: cPrimary1,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
                     boxShadow: [
                       BoxShadow(
                           spreadRadius: 2,
                           blurRadius: 10,
                           color: Colors.black.withOpacity(0.4),
-                          offset: Offset(0, 1)),
+                          offset: const Offset(0, 1)),
                     ],
                   ),
                   child: Row(

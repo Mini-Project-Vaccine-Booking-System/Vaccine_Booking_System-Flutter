@@ -1,13 +1,9 @@
 import 'dart:io';
-
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:path/path.dart';
-
+import '../../../bindings/package_binding.dart';
 import '../../../constants.dart';
-import '../../../view_model/account_view_model.dart';
+import '../../../bindings/view_model_binding.dart';
 
 class TopPhoto extends StatefulWidget {
   const TopPhoto({Key? key, required this.size}) : super(key: key);
@@ -73,28 +69,94 @@ class _TopPhotoState extends State<TopPhoto> {
         children: [
           Stack(
             children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 15, right: 15, left: 15),
-                width: 150,
-                height: 150,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  boxShadow: [
-                    BoxShadow(
-                        spreadRadius: 2,
-                        blurRadius: 10,
-                        color: Colors.black.withOpacity(0.4),
-                        offset: const Offset(0, 1)),
-                  ],
-                  shape: BoxShape.rectangle,
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: account.data != null
-                          ? NetworkImage(account.data!.image)
-                          : const AssetImage("assets/images/avatar.png")
-                              as ImageProvider),
-                ),
-              ),
+              account.data != null && account.data!.image != null
+                  ? CachedNetworkImage(
+                      imageUrl: account.data!.image,
+                      imageBuilder: (context, imageProvider) => Container(
+                        margin: const EdgeInsets.only(
+                            bottom: 15, right: 15, left: 15),
+                        width: 150,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 10,
+                                color: Colors.black.withOpacity(0.4),
+                                offset: const Offset(0, 1)),
+                          ],
+                          shape: BoxShape.rectangle,
+                          image: DecorationImage(
+                              fit: BoxFit.cover, image: imageProvider),
+                        ),
+                      ),
+                      placeholder: (context, url) => Shimmer.fromColors(
+                        baseColor: Colors.grey[500]!,
+                        highlightColor: Colors.grey[300]!,
+                        child: Container(
+                          margin: const EdgeInsets.only(
+                              bottom: 15, right: 15, left: 15),
+                          width: 150,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
+                            boxShadow: [
+                              BoxShadow(
+                                  spreadRadius: 2,
+                                  blurRadius: 10,
+                                  color: Colors.black.withOpacity(0.4),
+                                  offset: const Offset(0, 1)),
+                            ],
+                            shape: BoxShape.rectangle,
+                          ),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        margin: const EdgeInsets.only(
+                            bottom: 15, right: 15, left: 15),
+                        width: 150,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 10,
+                                color: Colors.black.withOpacity(0.4),
+                                offset: const Offset(0, 1)),
+                          ],
+                          shape: BoxShape.rectangle,
+                          image: const DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage("assets/images/avatar.png")),
+                        ),
+                      ),
+                    )
+                  : Container(
+                      margin: const EdgeInsets.only(
+                          bottom: 15, right: 15, left: 15),
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
+                        boxShadow: [
+                          BoxShadow(
+                              spreadRadius: 2,
+                              blurRadius: 10,
+                              color: Colors.black.withOpacity(0.4),
+                              offset: const Offset(0, 1)),
+                        ],
+                        shape: BoxShape.rectangle,
+                        image: const DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage("assets/images/avatar.png")),
+                      ),
+                    ),
               Positioned(
                   bottom: 2,
                   right: 2,

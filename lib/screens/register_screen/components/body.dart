@@ -29,12 +29,12 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    var auth = Provider.of<AuthViewModel>(context, listen: false);
+    var auth = Provider.of<AuthViewModel>(context);
     Size size = MediaQuery.of(context).size;
 
     void showError(content) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: content,
+        content: Text(content),
         backgroundColor: cFail,
         behavior: SnackBarBehavior.floating,
         action: SnackBarAction(
@@ -65,11 +65,11 @@ class _BodyState extends State<Body> {
               key: _formKey,
               child: Column(
                 children: [
-                  EmailText(),
+                  const EmailText(),
                   SizedBox(
                     height: size.height * 0.02,
                   ),
-                  PasswordText(),
+                  const PasswordText(),
                   SizedBox(
                     height: size.height * 0.06,
                   ),
@@ -91,23 +91,23 @@ class _BodyState extends State<Body> {
                                 email = _formKey.currentState!.value["email"];
                                 password =
                                     _formKey.currentState!.value["password"];
-                                auth
-                                    .checkEmail(
-                                        _formKey.currentState!.value["email"])
-                                    .then((value) {
+
+                                auth.email = email;
+                                auth.password = password;
+
+                                auth.signUp().then((value) {
                                   setState(() {
                                     isLoading = !isLoading;
                                   });
-
-                                  if (value == false) {
-                                    showError("Email sudah digunakan");
-                                  } else {
-                                    auth.email = email;
-                                    auth.password = password;
+                                  if (value == true) {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (_) => FillDataScreen()));
+                                            builder: (_) =>
+                                                const FillDataScreen()));
+                                  } else {
+                                    showError(
+                                        "Email yang anda masukkan sudah digunakan!");
                                   }
                                 });
                               } else {
@@ -118,30 +118,6 @@ class _BodyState extends State<Body> {
                                 showError(
                                     "Data yang anda masukkan tidak tepat!");
                               }
-                              //   auth
-                              //       .signUp(
-                              //           "",
-                              //           "",
-                              //           _formKey.currentState!.value["email"],
-                              //           _formKey.currentState!.value["password"],
-                              //           "",
-                              //           "",
-                              //           "",
-                              //           "",
-                              //           "")
-                              //       .then((value) {
-                              //     if (value == true) {
-                              //       Navigator.pushAndRemoveUntil(
-                              //         context,
-                              //         MaterialPageRoute(
-                              //             builder: (_) => const HomeScreen()),
-                              //         (Route) => false,
-                              //       );
-                              //     } else {
-                              //       print(value);
-                              //     }
-                              //   });
-                              // }
                             }),
                   ),
                 ],
@@ -163,7 +139,7 @@ class _BodyState extends State<Body> {
                   onTap: () {
                     Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (_) => LoginScreen()),
+                        MaterialPageRoute(builder: (_) => const LoginScreen()),
                         (route) => false);
                   },
                   child: Text(

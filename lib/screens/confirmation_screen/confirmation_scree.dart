@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:vaccine/models/ticket.dart';
-import 'package:vaccine/screens/confirmation_screen/components/body.dart';
-
-import '../../components/roundedButtonLoading.dart';
-import '../../components/roundedButtonSolid.dart';
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/model_binding.dart';
+import '../../../bindings/component_binding.dart';
+import '../../../bindings/view_model_binding.dart';
 import '../../constants.dart';
-import '../../view_model/family_view_model.dart';
-import '../../view_model/hospital_view_model.dart';
-import '../../view_model/ticket_view_model.dart';
 import '../pass_screen/pass_screen.dart';
+import 'components/body.dart';
+import 'components/confirmation.dart';
 
 class ConfirmationScreen extends StatelessWidget {
   const ConfirmationScreen({Key? key}) : super(key: key);
@@ -22,29 +19,7 @@ class ConfirmationScreen extends StatelessWidget {
     var family = Provider.of<FamilyViewModel>(context);
     return Scaffold(
       appBar: TopBar(context, size, "Detail"),
-      /*   appBar: AppBar(
-        shape: const Border(bottom: BorderSide(color: cNeutral2, width: 1)),
-        leadingWidth: 50,
-        leading: IconButton(
-            padding: const EdgeInsets.all(0.0),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back_rounded,
-              size: 24,
-              color: cMainWhite,
-            )),
-        backgroundColor: cPrimary1,
-        elevation: 0.0,
-        title: const Text(
-          "Konfirmasi Pesanan",
-          style: TextStyle(
-              color: cMainWhite, fontSize: 17, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: false,
-      ), */
-      body: Body(),
+      body: const Body(),
       bottomSheet: Container(
         width: size.width,
         height: 70,
@@ -55,7 +30,7 @@ class ConfirmationScreen extends StatelessWidget {
                 spreadRadius: 2,
                 blurRadius: 2,
                 color: Colors.black.withOpacity(0.2),
-                offset: Offset(0, 1)),
+                offset: const Offset(0, 1)),
           ],
         ),
         child: Padding(
@@ -67,24 +42,35 @@ class ConfirmationScreen extends StatelessWidget {
               onAction: () {
                 showDialog(
                     context: context,
-                    builder: (context) => AlertDialog(
-                          title: const Text("Konfirmasi"),
-                          content: const Text(
-                              "Apakah anda yakin data sudah benar ?"),
+                    builder: (context) {
+                      bool isLoading = false;
+                      return StatefulBuilder(
+                        builder: (BuildContext context, StateSetter setState) =>
+                            (AlertDialog(
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0))),
+                          content: Confirmation(size: size),
                           actions: [
                             TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: const Text("Batal")),
+                                child: const Text(
+                                  "Kembali",
+                                  style: TextStyle(color: cFail2),
+                                )),
                             TextButton(
                                 onPressed: () async {
-                                  if (hospital.dataSelect != null &&
-                                      family.dataSelect != null) {
+                                  if (family.dataSelect != null) {
+                                    setState(() {
+                                      isLoading = !isLoading;
+                                    });
+
                                     ticket
                                         .saveTicket(Ticket(
                                             idBooking: 0,
-                                            idKelompok: family.dataSelect.id,
+                                            idKelompok: family.dataSelect!.id,
                                             idRumahSakit: 0,
                                             idSession: hospital.dataSelect.id,
                                             namaRumahSakit:
@@ -92,8 +78,8 @@ class ConfirmationScreen extends StatelessWidget {
                                             alamatRumahSakit:
                                                 hospital.dataSelect.address,
                                             kotaRumahSakit: "",
-                                            nik: family.dataSelect.nik,
-                                            namaPasien: family.dataSelect.name,
+                                            nik: family.dataSelect!.nik,
+                                            namaPasien: family.dataSelect!.name,
                                             dateSession:
                                                 hospital.dataSelect.date,
                                             start: hospital.dataSelect.start,
@@ -102,30 +88,53 @@ class ConfirmationScreen extends StatelessWidget {
                                                 hospital.dataSelect.vaccine))
                                         .then((value) {
                                       if (value == true) {
+                                        setState(() {
+                                          isLoading = !isLoading;
+                                        });
                                         Navigator.pushAndRemoveUntil(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (_) => PassScreen()),
+                                                builder: (_) =>
+                                                    const PassScreen()),
                                             (route) => false);
+
+                                        showSuccess(
+                                            const Text("Pemesanan berhasil!"),
+                                            context);
+                                      } else {
+                                        setState(() {
+                                          isLoading = !isLoading;
+                                        });
+
+                                        Navigator.pop(context);
+
+                                        showError(
+                                            const Text(
+                                                "Pemesanan hanya bisa dilakukan satu kali oleh user yang sama!"),
+                                            context);
                                       }
                                     });
                                   }
                                 },
-                                child: const Text("Yakin"))
+                                child: isLoading == true
+                                    ? const SizedBox(
+                                        width: 11,
+                                        height: 11,
+                                        child: CircularProgressIndicator(
+                                          color: cPrimary2,
+                                        ),
+                                      )
+                                    : Text(
+                                        "Konfirmasi",
+                                        style: TextStyle(
+                                            color: family.dataSelect != null
+                                                ? cPrimary1
+                                                : cNeutral3),
+                                      ))
                           ],
-                        ));
-                // ticket
-                //     .saveTicket(
-                //         family_id: ticket.userSelect!.id,
-                //         vaccine_id: ticket.vaccineSelect!.id,
-                //         shcedule_id: ticket.scheduleSelect!.id,
-                //         hospital_id: ticket.hospitalSelect!.id)
-                //     .then((value) {
-                //   Navigator.pushAndRemoveUntil(
-                //       context,
-                //       MaterialPageRoute(builder: (_) => PassScreen()),
-                //       (route) => false);
-                // });
+                        )),
+                      );
+                    });
               }),
         ),
       ),

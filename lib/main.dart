@@ -1,17 +1,8 @@
-import 'package:device_preview/device_preview.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:vaccine/components/loading.dart';
-import 'package:vaccine/models/family.dart';
-import 'package:vaccine/screens/home_screen/home_screen.dart';
-import 'package:vaccine/screens/welcome_screen/welcome_screen.dart';
-import 'package:vaccine/view_model/account_view_model.dart';
-import 'package:vaccine/view_model/auth_view_model.dart';
-import 'package:vaccine/view_model/family_view_model.dart';
-import 'package:vaccine/view_model/hospital_view_model.dart';
-import 'package:vaccine/view_model/news_view_model.dart';
-import 'package:vaccine/view_model/ticket_view_model.dart';
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/view_model_binding.dart';
+import 'screens/home_screen/home_screen.dart';
+import 'screens/welcome_screen/welcome_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,21 +21,26 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => AuthViewModel()),
         ChangeNotifierProvider(create: (context) => NewsViewModel()),
+        ChangeNotifierProvider(create: (context) => CovidViewModel()),
         ChangeNotifierProxyProvider<AuthViewModel, AccoutnViewModel>(
           create: (context) => AccoutnViewModel(),
-          update: (context, auth, datas) => datas!..updateData(auth.parentId),
+          update: (context, auth, datas) =>
+              datas!..updateData(auth.parentId, auth.token),
         ),
         ChangeNotifierProxyProvider<AuthViewModel, FamilyViewModel>(
           create: (context) => FamilyViewModel(),
-          update: (context, auth, datas) => datas!..updateData(auth.parentId),
+          update: (context, auth, datas) =>
+              datas!..updateData(auth.parentId, auth.token),
         ),
         ChangeNotifierProxyProvider<AuthViewModel, HospitalViewModel>(
           create: (context) => HospitalViewModel(),
-          update: (context, auth, datas) => datas!..updateData(auth.parentId),
+          update: (context, auth, datas) =>
+              datas!..updateData(auth.parentId, auth.token),
         ),
         ChangeNotifierProxyProvider<AuthViewModel, TicketViewModel>(
           create: (context) => TicketViewModel(),
-          update: (context, auth, datas) => datas!..updateData(auth.parentId),
+          update: (context, auth, datas) =>
+              datas!..updateData(auth.parentId, auth.token),
         ),
       ],
       builder: (context, child) => Consumer<AuthViewModel>(
@@ -56,7 +52,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'VaksinQu',
             home: auth.isAuth
-                ? HomeScreen()
+                ? const HomeScreen()
                 : FutureBuilder(
                     future: auth.autoLogin(),
                     builder: (context, snapshot) {

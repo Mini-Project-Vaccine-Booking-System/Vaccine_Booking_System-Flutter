@@ -1,71 +1,81 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import '../../bindings/package_binding.dart';
 
 class FamilyAPI {
-  static Future addData(data) async {
-    Uri url =
-        Uri.parse("https://booking-vaksin-alta.herokuapp.com/api/kelompok");
-
+  static Future addData(data, token) async {
     try {
-      bool result = false;
-      var response = await http.post(url,
-          body: jsonEncode(data),
-          headers: {"Content-Type": "application/json"});
-      if (response.statusCode == 200) {
-        result = true;
+      Response response = await PackageBinding.dio
+          .post('https://booking-vaksin-alta.herokuapp.com/api/kelompok',
+              data: jsonEncode(data),
+              options: Options(headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer $token',
+              }));
+      return response;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        return e.response!;
+      } else {
+        // Something happened in setting up or sending the request that triggered an Error
+        print(e.requestOptions);
+        print(e.message);
+        print(e);
       }
-
-      return result;
-    } catch (e) {
-      rethrow;
     }
   }
 
   static Future getAllData(id) async {
-    Uri url = Uri.parse(
-        "https://booking-vaksin-alta.herokuapp.com/api/kelompok/user/$id");
-
     try {
-      var response = await http.get(url);
+      Response response = await PackageBinding.dio.get(
+          'https://booking-vaksin-alta.herokuapp.com/api/kelompok/user/$id');
       return response;
-    } catch (e) {
-      rethrow;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        return e.response!;
+      } else {
+        // Something happened in setting up or sending the request that triggered an Error
+        print(e.requestOptions);
+        print(e.message);
+        print(e);
+      }
     }
   }
 
-  static Future updateData(data, id) async {
-    Uri url =
-        Uri.parse("https://booking-vaksin-alta.herokuapp.com/api/kelompok/$id");
-
+  static Future updateData(data, id, token) async {
     try {
-      bool result = false;
-      var response = await http.put(url,
-          body: jsonEncode(data),
-          headers: {"Content-Type": "application/json"});
-      if (response.statusCode == 200) {
-        result = true;
+      Response response = await PackageBinding.dio.put(
+          'https://booking-vaksin-alta.herokuapp.com/api/kelompok/$id',
+          data: jsonEncode(data),
+          options: Options(headers: {"Authorization": "Bearer $token"}));
+      return response;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        return e.response!;
+      } else {
+        // Something happened in setting up or sending the request that triggered an Error
+        print(e.requestOptions);
+        print(e.message);
+        print(e);
       }
-
-      return result;
-    } catch (e) {
-      rethrow;
     }
   }
 
-  static Future deleteData(id) async {
-    Uri url =
-        Uri.parse("https://booking-vaksin-alta.herokuapp.com/api/kelompok/$id");
-
+  static Future deleteData(id, token) async {
     try {
-      bool result = false;
-      var response = await http.delete(url);
-      if (response.statusCode == 200) {
-        result = true;
+      Response response = await PackageBinding.dio.delete(
+          'https://booking-vaksin-alta.herokuapp.com/api/kelompok/$id',
+          options: Options(headers: {"Authorization": "Bearer $token"}));
+      return response;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        return e.response!;
+      } else {
+        // Something happened in setting up or sending the request that triggered an Error
+        print(e.requestOptions);
+        print(e.message);
+        print(e);
       }
-
-      return result;
-    } catch (e) {
-      rethrow;
     }
   }
 }

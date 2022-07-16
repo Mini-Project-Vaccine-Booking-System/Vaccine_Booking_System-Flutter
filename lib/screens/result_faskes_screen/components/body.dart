@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:vaccine/components/roundedButtonSolid.dart';
-import 'package:vaccine/screens/confirmation_screen/confirmation_scree.dart';
-import 'package:vaccine/screens/detail_pesan_screen/detail_pesan_screen.dart';
-import 'package:vaccine/view_model/hospital_view_model.dart';
-
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/view_model_binding.dart';
+import '../../../bindings/component_binding.dart';
+import '../../confirmation_screen/confirmation_scree.dart';
 import '../../../constants.dart';
-import '../../../view_model/family_view_model.dart';
-import '../../../components/stateNull.dart';
 
 class Body extends StatefulWidget {
-  const Body({Key? key}) : super(key: key);
+  const Body({Key? key, required this.date}) : super(key: key);
+  final DateTime date;
 
   @override
   State<Body> createState() => _BodyState();
@@ -38,7 +33,7 @@ class _BodyState extends State<Body> {
                   height: size.height * 0.02,
                 ),
                 Text(
-                  "Hasil pencarian tanggal 2 Juli 2022",
+                  "Hasil pencarian tanggal ${DateFormat("d MMMM yyyy").format(widget.date)}",
                   style: paragraphSemiBold3(cNeutral3),
                 ),
                 SizedBox(
@@ -62,31 +57,14 @@ class _BodyState extends State<Body> {
                                   spreadRadius: 2,
                                   blurRadius: 5,
                                   color: Colors.black.withOpacity(0.4),
-                                  offset: Offset(0, 1)),
+                                  offset: const Offset(0, 1)),
                             ],
                             color: Colors.white,
                             borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                                const BorderRadius.all(Radius.circular(10))),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            /*   Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                "RS Kasih Ibu Surakarta",
-                                style: paragraphSemiBold1(cMainBlack),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            Text(
-                              "Sinovac",
-                              style: paragraphSemiBold2(cFail2),
-                            )
-                          ],
-                        ), */
                             Text(
                               hospital.dataSession[index].name,
                               style: paragraphSemiBold1(cMainBlack),
@@ -205,95 +183,7 @@ class _BodyState extends State<Body> {
                               ],
                             )
                           ],
-                        )
-                        /* Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        width: 80,
-                        height: 80,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          shape: BoxShape.rectangle,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage("assets/images/rs.png")),
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            hospital.data[index].name,
-                            style: paragraphSemiBold1(
-                              hospital.data[index].availability == true
-                                  ? cMainWhite
-                                  : Colors.grey,
-                            ),
-                          ),
-                          ConstrainedBox(
-                            constraints: BoxConstraints(maxWidth: 180),
-                            child: Text(
-                              hospital.data[index].address,
-                              style: paragraphRegular3(
-                                hospital.data[index].availability == true
-                                    ? cMainWhite
-                                    : Colors.grey,
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          hospital.data[index].availability == true
-                              ? Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.check_circle_rounded,
-                                      color: cSuccess,
-                                      size: 15,
-                                    ),
-                                    Text(
-                                      "Vaksin Tersedia",
-                                      style: paragraphSemiBold4(cSuccess),
-                                    )
-                                  ],
-                                )
-                              : Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.error_outlined,
-                                      color: cFail,
-                                      size: 15,
-                                    ),
-                                    Text(
-                                      "Vaksin Tidak Tersedia",
-                                      style: paragraphSemiBold4(cFail),
-                                    )
-                                  ],
-                                )
-                        ],
-                      ),
-                      if (indexBox == null || indexBox != index) ...[
-                        Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          size: 24,
-                          color: hospital.data[index].availability == true
-                              ? cMainWhite
-                              : Colors.grey,
-                        )
-                      ],
-                      if (indexBox != null && indexBox == index) ...[
-                        Container(
-                            width: 24,
-                            height: 24,
-                            child: const CircularProgressIndicator(
-                              color: cMainWhite,
-                            ))
-                      ]
-                    ],
-                  ), */
-                        );
+                        ));
                   },
                 ),
                 SizedBox(

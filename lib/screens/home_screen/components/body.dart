@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:vaccine/screens/home_screen/components/caraousel_news.dart';
-import 'package:vaccine/screens/news_more_screen/news_more_scree.dart';
-import 'package:vaccine/screens/result_faskes_screen/result_faskes_screen.dart';
-import 'package:vaccine/view_model/account_view_model.dart';
-import 'package:vaccine/view_model/news_view_model.dart';
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/view_model_binding.dart';
+import '../../../screens/news_more_screen/news_more_scree.dart';
 import '../../../constants.dart';
-import '../../../view_model/hospital_view_model.dart';
+import '../../result_faskes_screen/result_faskes_screen.dart';
 import 'horizontal_list.dart';
 import 'menu.dart';
 import 'top_card.dart';
-import 'top_name.dart';
+import 'caraousel_news.dart';
 
 class Body extends StatefulWidget {
-  const Body({Key? key}) : super(key: key);
+  const Body({Key? key, required this.city}) : super(key: key);
+  final String city;
 
   @override
   State<Body> createState() => _BodyState();
@@ -23,6 +21,8 @@ class _BodyState extends State<Body> {
   List<bool> isLoading = [false, false];
   @override
   Widget build(BuildContext context) {
+    final DateTime now = DateTime.now();
+    final String stringDate = DateFormat("yyyy-MM-dd").format(now).toString();
     Size size = MediaQuery.of(context).size;
     var hospital = Provider.of<HospitalViewModel>(context, listen: false);
     var news = Provider.of<NewsViewModel>(context, listen: false);
@@ -60,18 +60,22 @@ class _BodyState extends State<Body> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    /*   setState(() {
+                    setState(() {
                       isLoading[0] = true;
-                    }); */
-                    /* hospital.getDataByCity("surakarta").then((value) {
+                    });
+                    hospital
+                        .getDataByCity(widget.city, stringDate)
+                        .then((value) {
                       setState(() {
                         isLoading[0] = false;
                       });
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => ResultFaskesScreen()));
-                    }); */
+                              builder: (_) => ResultFaskesScreen(
+                                    date: now,
+                                  )));
+                    });
                   },
                   child: isLoading[0] == false
                       ? Text(
@@ -108,8 +112,10 @@ class _BodyState extends State<Body> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const NewsMoreScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const NewsMoreScreen()));
                   },
                   child: Text(
                     "Lihat Semua",

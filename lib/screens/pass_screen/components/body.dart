@@ -1,12 +1,7 @@
-import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:vaccine/view_model/ticket_view_model.dart';
-
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/view_model_binding.dart';
 import '../../../constants.dart';
-import 'bottomButton.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key, required this.status}) : super(key: key);

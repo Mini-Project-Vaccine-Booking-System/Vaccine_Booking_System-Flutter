@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
 import 'package:vaccine/components/roundedButtonLoading.dart';
-import 'package:vaccine/screens/home_screen/home_screen.dart';
 import 'package:vaccine/screens/register_screen/register_screen.dart';
 import 'package:vaccine/view_model/auth_view_model.dart';
 import 'package:validators/validators.dart';
 
 import '../../../components/roundedButtonSolid.dart';
 import '../../../constants.dart';
+import '../../home_screen/home_screen.dart';
 import 'email_field.dart';
 import 'password_field.dart';
 
@@ -91,13 +91,11 @@ class _BodyState extends State<Body> {
                                 email = _formKey.currentState!.value["email"];
                                 password =
                                     _formKey.currentState!.value["password"];
-                                auth
-                                    .signIn(
-                                        _formKey.currentState!.value["email"],
-                                        _formKey
-                                            .currentState!.value["password"])
-                                    .then((value) {
-                                  print(value);
+
+                                auth.email = email;
+                                auth.password = password;
+
+                                auth.signIn().then((value) {
                                   setState(() {
                                     isLoading = !isLoading;
                                   });
@@ -105,8 +103,6 @@ class _BodyState extends State<Body> {
                                   if (value == false) {
                                     showError();
                                   } else {
-                                    auth.email = email;
-                                    auth.password = password;
                                     Navigator.pushAndRemoveUntil(
                                         context,
                                         MaterialPageRoute(
@@ -158,8 +154,10 @@ class _BodyState extends State<Body> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => RegisterScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const RegisterScreen()));
                   },
                   child: Text(
                     "Daftar",

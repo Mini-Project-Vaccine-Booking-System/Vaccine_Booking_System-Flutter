@@ -1,27 +1,20 @@
-import 'package:http/http.dart' as http;
+import '../../bindings/package_binding.dart';
 
 class NewsAPI {
-  static Future getDataHome() async {
-    Uri url = Uri.parse(
-        'https://newsapi.org/v2/everything?q=covid&apiKey=c47dff9434ec4d8d99f40c178fcfe53d&pagesize=10');
-
+  static Future getAllData() async {
     try {
-      var response = await http.get(url);
+      Response response = await PackageBinding.dio.get(
+          'https://newsapi.org/v2/everything?q=covid&apiKey=c47dff9434ec4d8d99f40c178fcfe53d&pagesize=10');
       return response;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  static Future getData() async {
-    Uri url = Uri.parse(
-        'https://newsapi.org/v2/everything?q=covid&apiKey=c47dff9434ec4d8d99f40c178fcfe53d&pagesize=10');
-
-    try {
-      var response = await http.get(url);
-      return response;
-    } catch (e) {
-      rethrow;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        return e.response!;
+      } else {
+        // Something happened in setting up or sending the request that triggered an Error
+        print(e.requestOptions);
+        print(e.message);
+        print(e);
+      }
     }
   }
 }

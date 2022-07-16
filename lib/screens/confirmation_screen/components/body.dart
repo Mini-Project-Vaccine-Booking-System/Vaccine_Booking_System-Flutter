@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:vaccine/components/roundedButtonLoading.dart';
-import 'package:vaccine/components/roundedButtonSolid.dart';
-import 'package:vaccine/models/family.dart';
-import 'package:vaccine/screens/pass_screen/pass_screen.dart';
-import 'package:vaccine/view_model/family_view_model.dart';
-
-import '../../../components/roundedContainer.dart';
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/component_binding.dart';
+import '../../../bindings/model_binding.dart';
+import '../../../bindings/view_model_binding.dart';
 import '../../../constants.dart';
-import '../../../view_model/ticket_view_model.dart';
-import 'middle_card.dart';
 import 'top_card.dart';
 
 class Body extends StatefulWidget {
@@ -54,7 +46,7 @@ class _BodyState extends State<Body> {
             key: _formKey,
             child: Column(
               children: [
-                roundedContainer(
+                RoundedContainer(
                   child: Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: size.width * 0.05),
@@ -66,7 +58,6 @@ class _BodyState extends State<Body> {
                       decoration:
                           const InputDecoration(border: InputBorder.none),
                       // initialValue: 'Male',
-                      allowClear: true,
                       hint: const Text('Pilih Pasien'),
                       items: family.allData
                           .map((item) => DropdownMenuItem(

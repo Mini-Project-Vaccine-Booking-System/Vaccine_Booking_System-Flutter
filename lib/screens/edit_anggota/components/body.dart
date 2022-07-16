@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:vaccine/components/roundedButtonDanger.dart';
-import 'package:vaccine/components/roundedButtonLoadingDanger.dart';
-import 'package:vaccine/models/family.dart';
-import 'package:validators/validators.dart';
-
-import '../../../components/roundedButtonLoading.dart';
-import '../../../components/roundedButtonSolid.dart';
-import '../../../components/roundedContainer.dart';
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/component_binding.dart';
+import '../../../bindings/model_binding.dart';
 import '../../../constants.dart';
-import '../../../view_model/family_view_model.dart';
+import '../../../bindings/view_model_binding.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -43,17 +35,15 @@ class _BodyState extends State<Body> {
               "Nama Lengkap",
               style: paragraphMedium2(cMainBlack),
             ),
-            roundedContainer(
+            RoundedContainer(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
                 child: FormBuilderTextField(
-                  initialValue: family.dataSelect.name,
+                  initialValue: family.dataSelect!.name,
                   textCapitalization: TextCapitalization.words,
                   keyboardType: TextInputType.name,
                   name: "username",
                   decoration: const InputDecoration(
-                    // hintText: "ketik nama lengkap disini",
-                    // hintStyle: paragraphRegular1(cNeutral1),
                     border: InputBorder.none,
                   ),
                 ),
@@ -66,17 +56,15 @@ class _BodyState extends State<Body> {
               "NIK",
               style: paragraphMedium2(cMainBlack),
             ),
-            roundedContainer(
+            RoundedContainer(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
                 child: FormBuilderTextField(
-                  initialValue: family.dataSelect.nik,
+                  initialValue: family.dataSelect!.nik,
                   textCapitalization: TextCapitalization.none,
                   keyboardType: TextInputType.number,
                   name: "nik",
-                  decoration: InputDecoration(
-                    // hintText: "ketik nama lengkap disini",
-                    // hintStyle: paragraphRegular1(cNeutral1),
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                   ),
                 ),
@@ -89,18 +77,16 @@ class _BodyState extends State<Body> {
               "Tanggal Lahir",
               style: paragraphMedium2(cMainBlack),
             ),
-            roundedContainer(
+            RoundedContainer(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
                 child: FormBuilderDateTimePicker(
-                  initialValue: family.dataSelect.tanggalLahir,
+                  initialValue: DateTime.parse(family.dataSelect!.tanggalLahir),
                   format: DateFormat("EEEE, d MMMM yyyy"),
                   name: 'date',
                   inputType: InputType.date,
-                  decoration: InputDecoration(
-                    suffixIcon: const Icon(Icons.date_range),
-                    // hintText: "Sunday, 1 January 1945",
-                    // hintStyle: paragraphRegular1(cNeutral1),
+                  decoration: const InputDecoration(
+                    suffixIcon: Icon(Icons.date_range),
                     border: InputBorder.none,
                   ),
                 ),
@@ -113,11 +99,11 @@ class _BodyState extends State<Body> {
               "No. Handphone",
               style: paragraphMedium2(cMainBlack),
             ),
-            roundedContainer(
+            RoundedContainer(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
                 child: FormBuilderTextField(
-                  initialValue: family.dataSelect.telp,
+                  initialValue: family.dataSelect!.telp,
                   keyboardType: TextInputType.phone,
                   name: "phone",
                   decoration: InputDecoration(
@@ -135,13 +121,13 @@ class _BodyState extends State<Body> {
               "Jenis Kelamin",
               style: paragraphMedium2(cMainBlack),
             ),
-            roundedContainer(
+            RoundedContainer(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
                 child: FormBuilderDropdown(
                   decoration: const InputDecoration(border: InputBorder.none),
                   name: 'gender',
-                  initialValue: family.dataSelect.gender,
+                  initialValue: family.dataSelect!.gender,
                   allowClear: true,
                   items: gender
                       .map((gender) => DropdownMenuItem(
@@ -175,17 +161,18 @@ class _BodyState extends State<Body> {
                             _formKey.currentState!.value["gender"] != null) {
                           family
                               .updateFam(Family(
-                                  id: family.dataSelect.id,
-                                  idParent: family.dataSelect.idParent,
+                                  id: family.dataSelect!.id,
+                                  idParent: family.dataSelect!.idParent,
                                   name:
                                       _formKey.currentState!.value["username"],
                                   nik: _formKey.currentState!.value["nik"],
-                                  tanggalLahir:
-                                      _formKey.currentState!.value["date"],
+                                  tanggalLahir: (_formKey.currentState!
+                                          .value["date"] as DateTime)
+                                      .toIso8601String(),
                                   telp: _formKey.currentState!.value["phone"],
                                   gender:
                                       _formKey.currentState!.value["gender"],
-                                  hubungan: family.dataSelect.hubungan))
+                                  hubungan: family.dataSelect!.hubungan))
                               .then((value) {
                             setState(() {
                               isLoading[0] = !isLoading[0];

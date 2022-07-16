@@ -1,10 +1,16 @@
+import 'dart:convert';
 import '../../bindings/package_binding.dart';
 
-class HospitalAPI {
-  static Future getDataByCity(city, date) async {
+class CovidAPI {
+  static Future getData(date) async {
     try {
       Response response = await PackageBinding.dio.get(
-          'https://booking-vaksin-alta.herokuapp.com/api/session/date/$date/$city');
+          'https://covid-193.p.rapidapi.com/history?country=indonesia&day=$date',
+          options: Options(headers: {
+            "X-RapidAPI-Key":
+                "e8c276c21emshe992b24cbf34eb1p198320jsnadaf0b414358",
+            "X-RapidAPI-Host": "covid-193.p.rapidapi.com"
+          }));
       return response;
     } on DioError catch (e) {
       if (e.response != null) {

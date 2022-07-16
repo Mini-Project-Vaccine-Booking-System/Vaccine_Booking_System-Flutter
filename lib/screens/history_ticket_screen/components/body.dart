@@ -1,14 +1,8 @@
-import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:vaccine/components/stateNull.dart';
-import 'package:vaccine/screens/history_ticket_screen/components/skeleton.dart';
-import 'package:vaccine/screens/pass_screen/pass_screen.dart';
-import 'package:vaccine/view_model/ticket_view_model.dart';
-
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/view_model_binding.dart';
+import '../../../bindings/component_binding.dart';
+import '../../../screens/pass_screen/pass_screen.dart';
 import '../../../constants.dart';
 
 class Body extends StatefulWidget {
@@ -60,13 +54,13 @@ class _BodyState extends State<Body> {
                         width: size.width,
                         decoration: BoxDecoration(
                           color: cMainWhite,
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          borderRadius: const BorderRadius.all(Radius.circular(15)),
                           boxShadow: [
                             BoxShadow(
                                 spreadRadius: 2,
                                 blurRadius: 10,
                                 color: Colors.black.withOpacity(0.6),
-                                offset: Offset(0, 5)),
+                                offset: const Offset(0, 5)),
                           ],
                         ),
                         child: Column(

@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:vaccine/screens/home_screen/components/skeleton.dart';
-import 'package:vaccine/view_model/family_view_model.dart';
-import 'package:vaccine/view_model/hospital_view_model.dart';
-import 'package:vaccine/view_model/news_view_model.dart';
-import 'package:vaccine/view_model/ticket_view_model.dart';
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/view_model_binding.dart';
 import '../../constants.dart';
-import '../../view_model/account_view_model.dart';
 import '../akun_screen/akun_screen.dart';
 import 'components/body.dart';
 
@@ -18,21 +13,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // bool? isInit;
-
-  // @override
-  // void didChangeDependencies() async {
-  //   if (isInit == null) {
-  //     await Initial.getInitialData(context).then((value) {
-  //       if (value == true) {
-  //         setState(() {
-  //           isInit = false;
-  //         });
-  //       }
-  //     });
-  //   }
-  //   super.didChangeDependencies();
-  // }
+  String city = "Yogyakarta";
+  final _formKey = GlobalKey<FormBuilderState>();
 
   @override
   void initState() {
@@ -40,10 +22,11 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       Future.wait([
         Provider.of<AccoutnViewModel>(context, listen: false).inisialData(),
-        Provider.of<HospitalViewModel>(context, listen: false).homeData(),
+        Provider.of<HospitalViewModel>(context, listen: false).homeData(city),
         Provider.of<NewsViewModel>(context, listen: false).initialData(),
         Provider.of<FamilyViewModel>(context, listen: false).inisialData(),
-        Provider.of<TicketViewModel>(context, listen: false).initialData()
+        Provider.of<TicketViewModel>(context, listen: false).initialData(),
+        Provider.of<CovidViewModel>(context, listen: false).getData()
       ]);
     });
   }
@@ -103,10 +86,70 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           width: size.width * 0.02,
                         ),
-                        Text(
-                          "Yogyakarta, DIY",
-                          style: paragraphMedium2(cNeutral1),
-                        )
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 150),
+                          child: Text(
+                            city,
+                            style: paragraphMedium2(cNeutral1),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  String? tempCity;
+                                  return AlertDialog(
+                                    title: const Text("Ubah Kota"),
+                                    content: FormBuilder(
+                                      key: _formKey,
+                                      child: FormBuilderTextField(
+                                        onChanged: (value) {
+                                          setState(() {
+                                            tempCity = value!;
+                                          });
+                                        },
+                                        decoration: const InputDecoration(
+                                            focusedBorder: UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: cNeutral1))),
+                                        name: "city",
+                                        autofocus: true,
+                                        keyboardType: TextInputType.text,
+                                        textCapitalization:
+                                            TextCapitalization.words,
+                                      ),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            if (tempCity != null) {
+                                              setState(() {
+                                                city = tempCity!;
+                                                Provider.of<HospitalViewModel>(
+                                                        context,
+                                                        listen: false)
+                                                    .homeData(city);
+                                              });
+                                            }
+                                          },
+                                          child: const Text(
+                                            "Ubah",
+                                            style: TextStyle(color: cPrimary1),
+                                          )),
+                                    ],
+                                  );
+                                });
+                          },
+                          child: const Icon(
+                            Icons.arrow_drop_down,
+                            color: cPrimaryG,
+                            size: 24,
+                          ),
+                        ),
                       ],
                     )
                   ],
@@ -117,75 +160,60 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                       context, MaterialPageRoute(builder: (_) => const Akun()));
                 },
-                child: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: account.data != null
-                              ? NetworkImage(account.data!.image)
-                              : const AssetImage("assets/images/avatar.png")
-                                  as ImageProvider),
-                    )),
+                child: account.data != null && account.data!.image != null
+                    ? CachedNetworkImage(
+                        imageUrl: account.data!.image,
+                        imageBuilder: (context, imageProvider) => Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
+                              image: DecorationImage(
+                                  fit: BoxFit.fill, image: imageProvider),
+                            )),
+                        placeholder: (context, url) => Shimmer.fromColors(
+                            baseColor: Colors.grey[500]!,
+                            highlightColor: Colors.grey[300]!,
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: const BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                              ),
+                            )),
+                        errorWidget: (context, url, error) => Container(
+                          width: 50,
+                          height: 50,
+                          decoration: const BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image:
+                                      AssetImage("assets/images/avatar.png"))),
+                        ),
+                      )
+                    : Container(
+                        width: 50,
+                        height: 50,
+                        decoration: const BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage("assets/images/avatar.png")),
+                        )),
               )
             ],
           ),
         ),
-        // title: Container(
-        //   margin: EdgeInsets.only(top: size.height * 0.04),
-        //   padding: EdgeInsets.only(left: size.width * 0.05),
-        //   child: Column(
-        //     children: [
-        //       RichText(
-        //         text: TextSpan(children: [
-        //           TextSpan(
-        //             text: "Halo, ",
-        //             style: headingBold2(Colors.black),
-        //           ),
-        //           TextSpan(
-        //             text: "Rafi Ramadhana",
-        //             style: headingBold2(Colors.black),
-        //           ),
-        //         ]),
-        //         overflow: TextOverflow.ellipsis,
-        //         maxLines: 1,
-        //       ),
-        //       Row(
-        //         mainAxisAlignment: MainAxisAlignment.start,
-        //         children: [
-        //           const Icon(
-        //             Icons.location_on_rounded,
-        //             color: cPrimaryG,
-        //             size: 16,
-        //           ),
-        //           SizedBox(
-        //             width: size.width * 0.02,
-        //           ),
-        //           Text(
-        //             "Surakarta, Jawa Tengah",
-        //             style: paragraphMedium2(cNeutral1),
-        //           )
-        //         ],
-        //       )
-        //     ],
-        //   ),
-        // ),
       ),
-      body: Body(),
-      // FutureBuilder(
-      //   future:
-      //       Provider.of<AccoutnViewModel>(context, listen: false).inisialData(),
-      //   builder: (context, snapshot) {
-      //     if (snapshot.connectionState == ConnectionState.waiting) {
-      //       return Skeleton();
-      //     }
-
-      //     return Body();
-      //   },
-      // ),
+      body: Body(city: city),
     );
   }
 }

@@ -33,7 +33,7 @@ class _PasswordTextState extends State<PasswordText> {
             "Password",
             style: paragraphMedium2(cMainBlack),
           ),
-          roundedContainer(
+          RoundedContainer(
             child: FormBuilderTextField(
               keyboardType: TextInputType.visiblePassword,
               onChanged: (value) {
@@ -64,7 +64,7 @@ class _PasswordTextState extends State<PasswordText> {
                                 color: cFail,
                               ),
                             )
-                          : Icon(
+                          : const Icon(
                               Icons.lock_outline_rounded,
                               color: cNeutral1,
                             ),
@@ -90,7 +90,7 @@ class _PasswordTextState extends State<PasswordText> {
                       hintText: "ketik password disini",
                       hintStyle: paragraphRegular1(cNeutral1),
                       border: InputBorder.none,
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.lock_outline_rounded,
                         color: cNeutral1,
                       ),

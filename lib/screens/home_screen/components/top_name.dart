@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:vaccine/screens/akun_screen/akun_screen.dart';
-
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/view_model_binding.dart';
+import '../../akun_screen/akun_screen.dart';
 import '../../../constants.dart';
-import '../../../view_model/account_view_model.dart';
 
 class TopName extends StatelessWidget {
   const TopName({
@@ -59,7 +58,7 @@ class TopName extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) => Akun()));
+            Navigator.push(context, MaterialPageRoute(builder: (_) => const Akun()));
           },
           child: Container(
               width: 50,

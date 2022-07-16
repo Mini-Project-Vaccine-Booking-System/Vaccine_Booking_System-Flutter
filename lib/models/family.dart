@@ -1,7 +1,6 @@
 class Family {
   int id, idParent;
-  String name, nik, telp, gender, hubungan;
-  DateTime tanggalLahir;
+  String name, nik, telp, gender, hubungan, tanggalLahir;
 
   Family(
       {required this.id,
@@ -18,7 +17,7 @@ class Family {
         "nik": nik,
         "tlp": telp,
         "nama_kelompok": name,
-        "tgl_lahir": tanggalLahir.toIso8601String(),
+        "tgl_lahir": tanggalLahir,
         "hubungan": hubungan,
         "gender": gender
       };
@@ -29,7 +28,7 @@ class Family {
         "nik": nik,
         "noHp": telp,
         "nama": name,
-        "tglLahir": tanggalLahir.toIso8601String(),
+        "tglLahir": tanggalLahir,
         "hubungan": hubungan,
         "gender": gender
       };

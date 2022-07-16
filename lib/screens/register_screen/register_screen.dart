@@ -11,7 +11,7 @@ class RegisterScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: TopBar(context, size, "Daftar"),
-      body: Body(),
+      body: const Body(),
     );
   }
 }

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/view_model_binding.dart';
 import '../../../constants.dart';
-import '../../../view_model/account_view_model.dart';
 
 class DataAkun extends StatelessWidget {
   DataAkun({Key? key, required this.size}) : super(key: key);
@@ -13,6 +10,7 @@ class DataAkun extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final account = Provider.of<AccoutnViewModel>(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -121,7 +119,8 @@ class DataAkun extends StatelessWidget {
                     Text(
                       account.data != null
                           ? DateFormat("dd-M-yyyy")
-                              .format(account.data!.tanggalLahir)
+                              .format(
+                                  DateTime.parse(account.data!.tanggalLahir))
                               .toString()
                           : "",
                       style: paragraphRegular2(Colors.black),
@@ -232,7 +231,7 @@ class DataAkun extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   bottomModal(context, "password", "Masukkan password kamu", "",
-                      _formKey, TextInputType.none);
+                      _formKey, TextInputType.text);
                 },
                 child: Row(
                   children: [
@@ -271,7 +270,7 @@ class DataAkun extends StatelessWidget {
                   bottom: MediaQuery.of(context).viewInsets.bottom),
               child: SizedBox(
                 width: size.width,
-                height: 150,
+                height: name == "password" ? 200 : 150,
                 child: ListView(
                     padding: EdgeInsets.symmetric(
                         horizontal: size.width * 0.05, vertical: 15),
@@ -294,6 +293,28 @@ class DataAkun extends StatelessWidget {
                                 initialValue: initial,
                                 name: name,
                                 inputType: InputType.date,
+                              ),
+                            ] else if (name == "password") ...[
+                              FormBuilderTextField(
+                                obscureText: true,
+                                decoration: const InputDecoration(
+                                    focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: cNeutral1)),
+                                    hintText: "Masukkan password sekarang"),
+                                name: name,
+                                autofocus: true,
+                                keyboardType: keyboardType,
+                              ),
+                              FormBuilderTextField(
+                                obscureText: true,
+                                decoration: const InputDecoration(
+                                    focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: cNeutral1)),
+                                    hintText: "Masukkan password baru"),
+                                name: "oldPassword",
+                                keyboardType: keyboardType,
                               ),
                             ] else ...[
                               FormBuilderTextField(
@@ -344,10 +365,17 @@ class DataAkun extends StatelessWidget {
                                               .updateUser(
                                                   name,
                                                   formKey.currentState!
-                                                      .value[name])
+                                                      .value[name],
+                                                  formKey.currentState!.value[
+                                                          "oldPassword"] ??
+                                                      "")
                                               .then((value) {
                                             if (value == true) {
                                               Navigator.pop(context);
+                                              showSuccess(const Text("Data berhasil diubah"), context);
+                                            } else {
+                                              Navigator.pop(context);
+                                              showError(const Text("Data gagal diubah"), context);
                                             }
                                           });
                                         }

@@ -1,12 +1,9 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:vaccine/screens/detail_news/detail_news.dart';
-
-import '../../../components/glass.dart';
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/component_binding.dart';
+import '../../../bindings/view_model_binding.dart';
+import '../../detail_news/detail_news.dart';
 import '../../../constants.dart';
-import '../../../view_model/news_view_model.dart';
 
 class CarouselNews extends StatelessWidget {
   const CarouselNews({
@@ -112,7 +109,7 @@ class CarouselNews extends StatelessWidget {
         child: CarouselSlider.builder(
             options: CarouselOptions(
               height: size.height * 0.2,
-              viewportFraction: 1,
+              viewportFraction: 0.9,
               autoPlay: true,
             ),
             itemCount: 3,
@@ -120,11 +117,13 @@ class CarouselNews extends StatelessWidget {
               return InkWell(
                 onTap: () {
                   news.setDataSelect(news.newsData[index]).then((value) =>
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => DetailNews())));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const DetailNews())));
                 },
                 child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
                     height: size.height * 0.2,
                     decoration: BoxDecoration(
                       image: DecorationImage(

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../components/stateFailed.dart';
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/component_binding.dart';
 import '../../constants.dart';
-import '../../view_model/account_view_model.dart';
+import '../../../bindings/view_model_binding.dart';
 import 'components/body.dart';
 
 class Akun extends StatelessWidget {
@@ -33,6 +32,6 @@ class Akun extends StatelessWidget {
       return const StateFailed();
     }
 
-    return Body();
+    return const Body();
   }
 }

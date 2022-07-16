@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:vaccine/components/roundedButtonLoading.dart';
-import 'package:vaccine/screens/result_faskes_screen/result_faskes_screen.dart';
-import 'package:vaccine/view_model/hospital_view_model.dart';
-import 'package:validators/validators.dart';
-
-import '../../../components/roundedButtonSolid.dart';
-import '../../../components/roundedContainer.dart';
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/component_binding.dart';
+import '../../../screens/result_faskes_screen/result_faskes_screen.dart';
+import '../../../bindings/view_model_binding.dart';
 import '../../../constants.dart';
 
 class Body extends StatefulWidget {
-  Body({Key? key}) : super(key: key);
+  const Body({Key? key}) : super(key: key);
 
   @override
   State<Body> createState() => _BodyState();
@@ -31,7 +24,6 @@ class _BodyState extends State<Body> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Center(child: Image.asset("assets/icons/icon.png")),
           SizedBox(
             height: size.height * 0.03,
           ),
@@ -59,7 +51,7 @@ class _BodyState extends State<Body> {
                       "Cari lokasi vaksin",
                       style: paragraphMedium2(cMainBlack),
                     ),
-                    roundedContainer(
+                    RoundedContainer(
                       child: Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: size.width * 0.05),
@@ -79,11 +71,12 @@ class _BodyState extends State<Body> {
                       "Tanggal vaksin",
                       style: paragraphMedium2(cMainBlack),
                     ),
-                    roundedContainer(
+                    RoundedContainer(
                       child: Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: size.width * 0.05),
                         child: FormBuilderDateTimePicker(
+                          firstDate: DateTime.now(),
                           format: DateFormat("EEEE, d MMMM yyyy"),
                           name: 'date',
                           inputType: InputType.date,
@@ -127,8 +120,10 @@ class _BodyState extends State<Body> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (_) =>
-                                                ResultFaskesScreen()));
+                                            builder: (_) => ResultFaskesScreen(
+                                                  date: _formKey.currentState!
+                                                      .value["date"],
+                                                )));
                                   });
                                 } else {
                                   setState(() {

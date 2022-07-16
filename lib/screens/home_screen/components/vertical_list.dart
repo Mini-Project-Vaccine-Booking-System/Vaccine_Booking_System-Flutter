@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../components/glass.dart';
+import '../../../bindings/component_binding.dart';
 import '../../../constants.dart';
 
 class VerticalList extends StatelessWidget {
@@ -16,7 +15,7 @@ class VerticalList extends StatelessWidget {
     return SizedBox(
       child: ListView.builder(
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: 3,
         itemBuilder: (context, index) {
           return Container(

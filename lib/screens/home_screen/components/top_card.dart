@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:vaccine/screens/anggota_screen/anggota_screen.dart';
-
+import '../../../bindings/package_binding.dart';
+import '../../../bindings/view_model_binding.dart';
 import '../../../constants.dart';
-import '../../../view_model/account_view_model.dart';
 import '../../daftar_vaksin_screen/daftar_vaksin_screen.dart';
 
 class TopCard extends StatelessWidget {
@@ -23,13 +21,6 @@ class TopCard extends StatelessWidget {
       decoration: const BoxDecoration(
         color: cPrimary1,
         borderRadius: BorderRadius.all(Radius.circular(20)),
-        // boxShadow: [
-        //   BoxShadow(
-        //       spreadRadius: 2,
-        //       blurRadius: 1,
-        //       color: Colors.black.withOpacity(0.2),
-        //       offset: Offset(0, 1)),
-        // ],
       ),
       child: Stack(
         children: [
@@ -58,7 +49,7 @@ class TopCard extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => DaftarVaksinScreen()));
+                              builder: (_) => const DaftarVaksinScreen()));
                     },
                     child: Text(
                       "Daftar Sekarang",
@@ -77,62 +68,6 @@ class TopCard extends StatelessWidget {
               ))
         ],
       ),
-      /* Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: size.width * 0.08, vertical: size.height * 0.02),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      account.data != null
-                          ? account.data!.name
-                          : "Nama belum diisi",
-                      style: paragraphBold1(Colors.white),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.002,
-                    ),
-                    Text(
-                      account.data != null ? account.data!.nik : "",
-                      style: paragraphRegular3(cMainWhite),
-                    ),
-                  ],
-                ),
-                IconButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => AnggotaScreen()));
-                    },
-                    icon: Icon(
-                      Icons.add_box_rounded,
-                      color: cMainWhite,
-                      size: 28,
-                    ))
-              ],
-            ),
-            Row(
-              children: [
-                Icon(
-                  Icons.notifications,
-                  color: cMainWhite,
-                ),
-                SizedBox(width: size.width * 0.01),
-                Text(
-                  "Pastikan data sudah lengkap",
-                  style: paragraphMedium4(cMainWhite),
-                ),
-              ],
-            )
-          ],
-        ),
-      ), */
     );
   }
 }

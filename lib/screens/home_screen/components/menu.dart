@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
-import 'package:vaccine/screens/anggota_screen/anggota_screen.dart';
-import 'package:vaccine/screens/covid_screen/covid_screen.dart';
-import 'package:vaccine/screens/daftar_vaksin_screen/daftar_vaksin_screen.dart';
-import 'package:vaccine/screens/history_ticket_screen/history_ticket_screen.dart';
-import 'package:vaccine/view_model/ticket_view_model.dart';
-
+import '../../../bindings/package_binding.dart';
+import '../../anggota_screen/anggota_screen.dart';
+import '../../covid_screen/covid_screen.dart';
+import '../../../bindings/view_model_binding.dart';
+import '../../history_ticket_screen/history_ticket_screen.dart';
 import '../../../constants.dart';
 
 class Menu extends StatelessWidget {
@@ -25,7 +22,7 @@ class Menu extends StatelessWidget {
         GestureDetector(
             onTap: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => AnggotaScreen()));
+                  context, MaterialPageRoute(builder: (_) => const AnggotaScreen()));
             },
             child: Column(
               children: [
@@ -43,15 +40,6 @@ class Menu extends StatelessWidget {
                 )
               ],
             )
-            /* Column(
-            children: [
-              Image.asset("assets/icons/left.png"),
-              Text(
-                "Daftar Vaksin",
-                style: paragraphMedium4(cMainBlack),
-              )
-            ],
-          ), */
             ),
         GestureDetector(
             onTap: () {
@@ -76,15 +64,6 @@ class Menu extends StatelessWidget {
                 )
               ],
             )
-            /* Column(
-            children: [
-              Image.asset("assets/icons/left.png"),
-              Text(
-                "Daftar Vaksin",
-                style: paragraphMedium4(cMainBlack),
-              )
-            ],
-          ), */
             ),
         GestureDetector(
             onTap: () {
@@ -107,75 +86,7 @@ class Menu extends StatelessWidget {
                 )
               ],
             )
-            /* Column(
-              children: [
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    boxShadow: [
-                      BoxShadow(
-                          spreadRadius: 2,
-                          blurRadius: 1,
-                          color: Colors.black.withOpacity(0.2),
-                          offset: const Offset(0, 1)),
-                    ],
-                  ),
-                  child: Center(
-                    child: Image.asset("assets/icons/informasi.png"),
-                  ),
-                ),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
-                Text(
-                  "Informasi",
-                  style: paragraphSemiBold3(cPrimary1),
-                )
-              ],
-            ) */
-            /* Column(
-            children: [
-              Image.asset("assets/icons/left.png"),
-              Text(
-                "Daftar Vaksin",
-                style: paragraphMedium4(cMainBlack),
-              )
-            ],
-          ), */
             ),
-        /* GestureDetector(
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (_) => HistoryTicketScreen()));
-          },
-          child: Column(
-            children: [
-              Image.asset("assets/icons/center.png"),
-              Text(
-                "Tiket Vaksin",
-                style: paragraphMedium4(cMainBlack),
-              )
-            ],
-          ),
-        ), */
-        /* GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (_) => CovidScreen()));
-          },
-          child: Column(
-            children: [
-              Image.asset("assets/icons/right.png"),
-              Text(
-                "Informasi Covid",
-                style: paragraphMedium4(cMainBlack),
-              )
-            ],
-          ),
-        ) */
       ],
     );
   }
