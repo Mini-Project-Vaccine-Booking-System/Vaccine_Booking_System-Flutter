@@ -144,7 +144,7 @@ class Body extends StatelessWidget {
                     children: [
                       Text(
                         "Pengumuman Layanan Masyarakat",
-                        style: paragraphRegular4(cNeutral3),
+                        style: paragraphRegular3(cNeutral3),
                       ),
                       SizedBox(height: size.height * 0.01),
                       Center(
@@ -254,6 +254,7 @@ class _TabBarTwoState extends State<TabBarTwo> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
         width: widget.size.width,
         decoration: const BoxDecoration(),
         child: ClipRRect(
@@ -723,14 +724,14 @@ class TabBarOne extends StatelessWidget {
           children: [
             Text(
               "Masing-masing orang memiliki respons yang berbeda terhadap COVID-19. Sebagian besar orang yang terpapar virus ini akan mengalami gejala ringan hingga sedang, dan akan pulih tanpa perlu dirawat di rumah sakit.",
-              style: paragraphRegular4(cMainBlack),
+              style: paragraphRegular3(cMainBlack),
             ),
             SizedBox(
               height: size.height * 0.01,
             ),
             Text(
               "Gejala yang paling umum:",
-              style: paragraphSemiBold4(cMainBlack),
+              style: paragraphSemiBold3(cMainBlack),
             ),
             RichText(
               text: TextSpan(children: [
@@ -740,7 +741,7 @@ class TabBarOne extends StatelessWidget {
                 ),
                 TextSpan(
                   text: " demam",
-                  style: paragraphRegular4(Colors.black),
+                  style: paragraphRegular3(Colors.black),
                 ),
               ]),
               overflow: TextOverflow.ellipsis,
@@ -754,7 +755,7 @@ class TabBarOne extends StatelessWidget {
                 ),
                 TextSpan(
                   text: " batuk",
-                  style: paragraphRegular4(Colors.black),
+                  style: paragraphRegular3(Colors.black),
                 ),
               ]),
               overflow: TextOverflow.ellipsis,
@@ -768,7 +769,7 @@ class TabBarOne extends StatelessWidget {
                 ),
                 TextSpan(
                   text: " kelelahan",
-                  style: paragraphRegular4(Colors.black),
+                  style: paragraphRegular3(Colors.black),
                 ),
               ]),
               overflow: TextOverflow.ellipsis,
@@ -782,7 +783,7 @@ class TabBarOne extends StatelessWidget {
                 ),
                 TextSpan(
                   text: " kehilangan rasa atau bau",
-                  style: paragraphRegular4(Colors.black),
+                  style: paragraphRegular3(Colors.black),
                 ),
               ]),
               overflow: TextOverflow.ellipsis,
@@ -803,7 +804,7 @@ class TabBarOne extends StatelessWidget {
                 ),
                 TextSpan(
                   text: " sakit tenggorokan",
-                  style: paragraphRegular4(Colors.black),
+                  style: paragraphRegular3(Colors.black),
                 ),
               ]),
               overflow: TextOverflow.ellipsis,
@@ -817,7 +818,7 @@ class TabBarOne extends StatelessWidget {
                 ),
                 TextSpan(
                   text: " sakit kepala",
-                  style: paragraphRegular4(Colors.black),
+                  style: paragraphRegular3(Colors.black),
                 ),
               ]),
               overflow: TextOverflow.ellipsis,
@@ -831,7 +832,7 @@ class TabBarOne extends StatelessWidget {
                 ),
                 TextSpan(
                   text: " sakit dan nyeri",
-                  style: paragraphRegular4(Colors.black),
+                  style: paragraphRegular3(Colors.black),
                 ),
               ]),
               overflow: TextOverflow.ellipsis,
@@ -845,7 +846,7 @@ class TabBarOne extends StatelessWidget {
                 ),
                 TextSpan(
                   text: " diare",
-                  style: paragraphRegular4(Colors.black),
+                  style: paragraphRegular3(Colors.black),
                 ),
               ]),
               overflow: TextOverflow.ellipsis,
@@ -858,9 +859,8 @@ class TabBarOne extends StatelessWidget {
                   style: paragraphBold3(Colors.black),
                 ),
                 TextSpan(
-                  text:
-                      " ruam pada kulit, atau perubahan warna pada jari tangan atau jari kaki",
-                  style: paragraphRegular4(Colors.black),
+                  text: " perubahan warna pada jari",
+                  style: paragraphRegular3(Colors.black),
                 ),
               ]),
               overflow: TextOverflow.ellipsis,
@@ -874,7 +874,7 @@ class TabBarOne extends StatelessWidget {
                 ),
                 TextSpan(
                   text: " mata merah atau iritasi",
-                  style: paragraphRegular4(Colors.black),
+                  style: paragraphRegular3(Colors.black),
                 ),
               ]),
               overflow: TextOverflow.ellipsis,
@@ -895,7 +895,7 @@ class TabBarOne extends StatelessWidget {
                 ),
                 TextSpan(
                   text: " kesulitan bernapas atau sesak napas",
-                  style: paragraphRegular4(Colors.black),
+                  style: paragraphRegular3(Colors.black),
                 ),
               ]),
               overflow: TextOverflow.ellipsis,
@@ -908,8 +908,8 @@ class TabBarOne extends StatelessWidget {
                   style: paragraphBold3(Colors.black),
                 ),
                 TextSpan(
-                  text: " kesulitan berbicara atau bergerak, atau bingung",
-                  style: paragraphRegular4(Colors.black),
+                  text: " kesulitan berbicara, bergerak, bingung",
+                  style: paragraphRegular3(Colors.black),
                 ),
               ]),
               overflow: TextOverflow.ellipsis,
@@ -923,7 +923,7 @@ class TabBarOne extends StatelessWidget {
                 ),
                 TextSpan(
                   text: " nyeri dada",
-                  style: paragraphRegular4(Colors.black),
+                  style: paragraphRegular3(Colors.black),
                 ),
               ]),
               overflow: TextOverflow.ellipsis,
@@ -934,21 +934,21 @@ class TabBarOne extends StatelessWidget {
             ),
             Text(
               "Segera cari bantuan medis jika Anda mengalami gejala serius. Selalu hubungi dokter atau fasilitas kesehatan sebelum mengunjunginya.",
-              style: paragraphRegular4(cMainBlack),
+              style: paragraphRegular3(cMainBlack),
             ),
             SizedBox(
               height: size.height * 0.01,
             ),
             Text(
               "Orang dengan gejala ringan yang dinyatakan sehat harus melakukan perawatan mandiri di rumah.",
-              style: paragraphRegular4(cMainBlack),
+              style: paragraphRegular3(cMainBlack),
             ),
             SizedBox(
               height: size.height * 0.01,
             ),
             Text(
               "Rata-rata gejala akan muncul 5–6 hari setelah seseorang pertama kali terinfeksi virus ini, tetapi bisa juga sampai 14 hari setelah terinfeksi.",
-              style: paragraphRegular4(cMainBlack),
+              style: paragraphRegular3(cMainBlack),
             ),
             SizedBox(
               height: size.height * 0.01,

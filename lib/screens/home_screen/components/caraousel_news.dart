@@ -90,13 +90,13 @@ class CarouselNews extends StatelessWidget {
           children: [
             Center(
                 child: Image.asset(
-              "assets/images/data.png",
+              "assets/images/pana.png",
               scale: 2.5,
             )),
             Center(
               child: Text(
-                "Data tidak tersedia!",
-                style: paragraphBold3(cMainBlack),
+                "Yah:( informasi covid saat ini sedang tidak tersedia!",
+                style: paragraphRegular3(cMainBlack),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -115,6 +115,7 @@ class CarouselNews extends StatelessWidget {
             itemCount: 3,
             itemBuilder: (context, index, realIndex) {
               return InkWell(
+                key: Key(index.toString()),
                 onTap: () {
                   news.setDataSelect(news.newsData[index]).then((value) =>
                       Navigator.push(

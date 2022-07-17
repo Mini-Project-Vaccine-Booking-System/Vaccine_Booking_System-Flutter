@@ -254,5 +254,6 @@ class _PassScreenState extends State<PassScreen> {
     final file = File('${appStorage.path}/tiket_$nama.png');
     await file.writeAsBytes(bytes);
     await GallerySaver.saveImage(file.path);
+    await OpenFile.open(file.path);
   }
 }

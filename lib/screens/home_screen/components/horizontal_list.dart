@@ -95,13 +95,12 @@ class _HorizontalListState extends State<HorizontalList> {
           children: [
             Center(
                 child: Image.asset(
-              "assets/images/data.png",
-              scale: 2.5,
+              "assets/images/pana.png",
             )),
             Center(
               child: Text(
-                "Data tidak tersedia!",
-                style: paragraphBold3(cMainBlack),
+                "Yah:( di lokasi yang kamu cari belum tersedia pelayanan vaksinasi COVID-19, pantau secara berkala ya!",
+                style: paragraphRegular3(cMainBlack),
                 textAlign: TextAlign.center,
               ),
             ),

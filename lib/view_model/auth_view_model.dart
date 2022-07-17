@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import '../bindings/package_binding.dart';
 import '../bindings/model_binding.dart';
@@ -44,7 +45,7 @@ class AuthViewModel extends ChangeNotifier {
         id: 0,
         email: email,
         password: password,
-        nik: "28072022",
+        nik: Random().nextInt(10000000000).toString(),
         phone: "",
         nama: "",
         gender: "",
@@ -65,6 +66,7 @@ class AuthViewModel extends ChangeNotifier {
     var data = {"email": email, "password": password};
     Response login = await AuthAPI.login(data);
     print(login.statusCode);
+    print(login.data);
     if (login.statusCode == 200) {
       final response = login.data as Map<String, dynamic>;
       _token = response["token"].toString();

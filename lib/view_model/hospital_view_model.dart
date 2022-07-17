@@ -33,7 +33,7 @@ class HospitalViewModel extends ChangeNotifier {
   late Session dataSelect;
 
   Future homeData(String city) async {
-    _dataHome.clear();
+    _dataHome = [];
     changeState(HospitalViewState.loading);
 
     try {

@@ -47,11 +47,10 @@ class TicketViewModel extends ChangeNotifier {
   }
 
   Future initialData() async {
-    print("tiket");
+    _dataTicket = [];
     changeState(TicketViewState.loading);
 
     try {
-      _dataTicket.clear();
       Response response = await TicketAPI.getAllTicket(userId);
       print("Tiket $response");
       if (response.statusCode == 200) {

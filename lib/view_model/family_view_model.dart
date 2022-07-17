@@ -33,10 +33,10 @@ class FamilyViewModel extends ChangeNotifier {
   Family? dataSelect;
 
   Future inisialData() async {
+    _data = [];
     changeState(FamilyViewState.loading);
 
     try {
-      _data.clear();
       Response response = await FamilyAPI.getAllData(userId);
       if (response.statusCode == 200) {
         final dataResponse = response.data as Map<String, dynamic>;
