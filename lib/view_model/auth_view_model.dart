@@ -45,7 +45,7 @@ class AuthViewModel extends ChangeNotifier {
         id: 0,
         email: email,
         password: password,
-        nik: Random().nextInt(10000000000).toString(),
+        nik: Random().nextInt(1999).toString(),
         phone: "",
         nama: "",
         gender: "",

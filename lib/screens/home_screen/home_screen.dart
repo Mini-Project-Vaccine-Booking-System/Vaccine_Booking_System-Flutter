@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                       context, MaterialPageRoute(builder: (_) => const Akun()));
                 },
-                child: account.data != null && account.data!.image != null
+                child: account.data != null && account.data!.image != ""
                     ? CachedNetworkImage(
                         imageUrl: account.data!.image,
                         imageBuilder: (context, imageProvider) => Container(

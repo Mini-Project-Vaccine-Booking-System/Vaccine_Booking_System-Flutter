@@ -69,7 +69,7 @@ class _TopPhotoState extends State<TopPhoto> {
         children: [
           Stack(
             children: [
-              account.data != null && account.data!.image != null
+              account.data != null && account.data!.image != ""
                   ? CachedNetworkImage(
                       imageUrl: account.data!.image,
                       imageBuilder: (context, imageProvider) => Container(
