@@ -10,8 +10,8 @@ class DataAkun extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final account = Provider.of<AccoutnViewModel>(context);
+    print(account.userId);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
@@ -290,7 +290,7 @@ class DataAkun extends StatelessWidget {
                                     focusedBorder: UnderlineInputBorder(
                                         borderSide:
                                             BorderSide(color: cNeutral1))),
-                                initialValue: initial,
+                                initialValue: DateTime.parse(initial),
                                 name: name,
                                 inputType: InputType.date,
                               ),
@@ -372,10 +372,16 @@ class DataAkun extends StatelessWidget {
                                               .then((value) {
                                             if (value == true) {
                                               Navigator.pop(context);
-                                              showSuccess(const Text("Data berhasil diubah"), context);
+                                              showSuccess(
+                                                  const Text(
+                                                      "Data berhasil diubah"),
+                                                  context);
                                             } else {
                                               Navigator.pop(context);
-                                              showError(const Text("Data gagal diubah"), context);
+                                              showError(
+                                                  const Text(
+                                                      "Data gagal diubah"),
+                                                  context);
                                             }
                                           });
                                         }

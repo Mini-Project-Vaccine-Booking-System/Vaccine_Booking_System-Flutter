@@ -76,10 +76,14 @@ class AccoutnViewModel extends ChangeNotifier {
       Map dataUser = _data!.toJson();
       for (String key in dataUser.keys) {
         if (key == hint) {
-          dataUser[key] = newData;
+          if (hint == "tglLahir") {
+            DateTime tanggalLahir = newData;
+            dataUser[key] = tanggalLahir.toIso8601String();
+          } else {
+            dataUser[key] = newData;
+          }
         }
       }
-      print(dataUser);
       User dataNew = User(
           id: data!.id,
           email: dataUser["email"],
@@ -93,6 +97,7 @@ class AccoutnViewModel extends ChangeNotifier {
       _data = dataNew;
       Response dataResponse =
           await UserAPI.updateData(_data!.toJson(), userId!, token!);
+      print(dataResponse.data);
       await updateFam(hint, newData);
       if (dataResponse.statusCode == 200) {
         notifyListeners();
@@ -138,7 +143,12 @@ class AccoutnViewModel extends ChangeNotifier {
     Map dataFam = _family!.updateJson();
     for (String key in dataFam.keys) {
       if (key == hint) {
-        dataFam[key] = newData;
+        if (hint == "tglLahir") {
+          DateTime tanggalLahir = newData;
+          dataFam[key] = tanggalLahir.toIso8601String();
+        } else {
+          dataFam[key] = newData;
+        }
 
         Family dataNew = Family(
             id: dataFam["id"],

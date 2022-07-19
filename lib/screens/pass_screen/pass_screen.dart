@@ -70,10 +70,13 @@ class _PassScreenState extends State<PassScreen> {
                                   const BorderRadius.all(Radius.circular(15))),
                           child: PopupMenuButton(
                               offset: const Offset(0, -120),
-                              icon: const Icon(
-                                Icons.share,
-                                color: cPrimary1,
-                                size: 30,
+                              icon: const RotationTransition(
+                                turns: AlwaysStoppedAnimation(320 / 360),
+                                child: Icon(
+                                  Icons.send,
+                                  color: cPrimary1,
+                                  size: 30,
+                                ),
                               ),
                               itemBuilder: (context) => [
                                     PopupMenuItem(

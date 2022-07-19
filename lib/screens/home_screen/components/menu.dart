@@ -59,7 +59,7 @@ class Menu extends StatelessWidget {
                   height: size.height * 0.01,
                 ),
                 Text(
-                  "Riwayat",
+                  "Tiket",
                   style: paragraphRegular3(cMainBlack),
                 )
               ],

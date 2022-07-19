@@ -127,32 +127,6 @@ class TopCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: size.height * 0.01),
-          const Divider(
-            thickness: 2,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Pasien",
-              ),
-              if (family.dataSelect != null) ...[
-                Text(
-                  family.dataSelect!.name,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  family.dataSelect!.nik,
-                  style: const TextStyle(fontWeight: FontWeight.normal),
-                )
-              ] else ...[
-                const Text(
-                  "Pasien belum ditambahkan",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )
-              ],
-            ],
-          ),
         ],
       ),
     );

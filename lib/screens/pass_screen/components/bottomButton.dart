@@ -49,7 +49,7 @@ class _BottomButtonState extends State<BottomButton> {
                   border: Border.all(color: cPrimary1, width: 2),
                   borderRadius: const BorderRadius.all(Radius.circular(15))),
               child: const Icon(
-                Icons.share,
+                Icons.send,
                 color: cPrimary1,
                 size: 30,
               ),
