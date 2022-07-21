@@ -42,7 +42,7 @@ class TopCard extends StatelessWidget {
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: cPrimary3,
+                        primary: cMainWhite,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8))),
                     onPressed: () {
@@ -53,7 +53,7 @@ class TopCard extends StatelessWidget {
                     },
                     child: Text(
                       "Daftar Sekarang",
-                      style: paragraphBold3(Colors.white),
+                      style: paragraphBold3(cPrimary1),
                     ))
               ],
             ),

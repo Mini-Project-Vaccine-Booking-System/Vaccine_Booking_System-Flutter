@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vaccine/bindings/package_binding.dart';
 import '../constants.dart';
 import 'roundedButtonSolid.dart';
 
@@ -14,7 +15,7 @@ class StateFailed extends StatelessWidget {
         SizedBox(
           height: size.height * 0.05,
         ),
-        Center(child: Image.asset("assets/images/error.png")),
+        Center(child: SvgPicture.asset("assets/svg/error.svg")),
         Center(
           child: Text(
             "Mendapatkan Data Gagal!",

@@ -154,6 +154,7 @@ class CarouselNews extends StatelessWidget {
                           maxLines: 1,
                         )
                       ],
+                      status: "news",
                     )),
               );
             }),

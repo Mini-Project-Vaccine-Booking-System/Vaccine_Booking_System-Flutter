@@ -37,6 +37,7 @@ class VerticalList extends StatelessWidget {
                     style: paragraphLight3(Colors.white),
                   )
                 ],
+                status: "news",
               )
               );
         },

@@ -128,32 +128,32 @@ class _HorizontalListState extends State<HorizontalList> {
                               builder: (_) => const ConfirmationScreen()));
                     });
                   },
-                  child: Stack(
-                    children: [
-                      Container(
-                          height: widget.size.height * 0.24,
-                          width: widget.size.width * 0.7,
-                          margin: EdgeInsets.only(
-                              left: widget.size.width * 0.05,
-                              right: hospital.dataHome.last ==
-                                      hospital.dataHome[index]
+                  child: Container(
+                      height: widget.size.height * 0.24,
+                      width: widget.size.width * 0.7,
+                      margin: EdgeInsets.only(
+                          left: widget.size.width * 0.05,
+                          right:
+                              hospital.dataHome.last == hospital.dataHome[index]
                                   ? widget.size.width * 0.05
                                   : 0.0),
-                          decoration: BoxDecoration(
-                            image: const DecorationImage(
-                                image: AssetImage("assets/images/rs.png"),
-                                fit: BoxFit.fill),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(20)),
-                            boxShadow: [
-                              BoxShadow(
-                                  spreadRadius: 2,
-                                  blurRadius: 1,
-                                  color: Colors.black.withOpacity(0.2),
-                                  offset: const Offset(0, 2)),
-                            ],
-                          ),
-                          child: Glass(
+                      decoration: BoxDecoration(
+                        image: const DecorationImage(
+                            image: AssetImage("assets/images/rs.png"),
+                            fit: BoxFit.fill),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
+                        boxShadow: [
+                          BoxShadow(
+                              spreadRadius: 2,
+                              blurRadius: 1,
+                              color: Colors.black.withOpacity(0.2),
+                              offset: const Offset(0, 2)),
+                        ],
+                      ),
+                      child: Stack(
+                        children: [
+                          Glass(
                             children: [
                               Text(
                                 hospital.dataHome[index].name,
@@ -165,61 +165,53 @@ class _HorizontalListState extends State<HorizontalList> {
                                 hospital.dataHome[index].address,
                                 style: paragraphRegular4(cNeutral3),
                                 overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
+                                maxLines: 2,
                               ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 2),
-                                decoration: BoxDecoration(
-                                    color: cNeutral3.withOpacity(0.30),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10))),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      flex: 1,
-                                      child: Text(
-                                        "${hospital.dataHome[index].start.substring(0, 5)} - ${hospital.dataHome[index].end.substring(0, 5)}",
-                                        style: paragraphSemiBold3(cMainBlack),
-                                      ),
-                                    ),
-                                    // Expanded(
-
-                                    //   flex: 1,
-                                    //   child: Text(
-                                    //     hospital.dataHome[index].vaccine,
-                                    //     style: paragraphBold2(cPrimary1),
-                                    //     textAlign: TextAlign.right,
-                                    //   ),
-                                    // )
-                                  ],
-                                ),
-                              )
                             ],
-                          )),
-                      Positioned(
-                          top: 5,
-                          right: 25,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                            decoration: const BoxDecoration(
-                                color: cPrimary1,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15))),
-                            child: Center(
-                                child: Text(
-                              hospital.dataHome[index].vaccine,
-                              style: paragraphSemiBold2(cMainWhite),
-                              textAlign: TextAlign.center,
-                            )),
-                          )),
-                    ],
-                  ),
+                            status: "hospital",
+                          ),
+                          Positioned(
+                              top: 0,
+                              left: 0,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                                decoration: const BoxDecoration(
+                                    color: cPrimary1,
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(15),
+                                      bottomRight: Radius.circular(15),
+                                    )),
+                                child: Center(
+                                    child: Text(
+                                  hospital.dataHome[index].vaccine,
+                                  style: paragraphSemiBold3(cMainWhite),
+                                  textAlign: TextAlign.center,
+                                )),
+                              )),
+                          Positioned(
+                              top: 0,
+                              right: 0,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                                decoration: const BoxDecoration(
+                                    color: cNeutral2,
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(20),
+                                      topLeft: Radius.circular(15),
+                                      bottomLeft: Radius.circular(15),
+                                    )),
+                                child: Center(
+                                    child: Text(
+                                  "${hospital.dataHome[index].start.substring(0, 5)} - ${hospital.dataHome[index].end.substring(0, 5)}",
+                                  style: paragraphRegular3(cMainBlack),
+                                  textAlign: TextAlign.center,
+                                )),
+                              )),
+                        ],
+                      )),
                 ),
                 if (indexBox == index) ...[
                   SizedBox(

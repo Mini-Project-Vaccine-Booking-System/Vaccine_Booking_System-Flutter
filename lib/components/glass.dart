@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 class Glass extends StatelessWidget {
-  const Glass({Key? key, required this.children}) : super(key: key);
+  const Glass({Key? key, required this.children, required this.status})
+      : super(key: key);
   final List<Widget> children;
+  final String status;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.only(
-        top: size.height * 0.12,
+        top: status != "hospital" ? size.height * 0.12 : size.height * 0.15,
       ),
       decoration: BoxDecoration(
           color: Colors.white,

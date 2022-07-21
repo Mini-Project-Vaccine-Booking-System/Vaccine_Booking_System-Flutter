@@ -54,7 +54,7 @@ dependencies:
   path_provider: ^2.0.11
   open_file: ^3.2.1
   gallery_saver: ^2.3.2
- 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

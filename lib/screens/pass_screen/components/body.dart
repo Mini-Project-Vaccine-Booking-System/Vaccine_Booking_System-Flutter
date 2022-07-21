@@ -127,6 +127,8 @@ class _BodyState extends State<Body> {
                                     Text(
                                       ticket.ticketSelect.namaRumahSakit,
                                       style: paragraphBold2(Colors.black),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
                                       ticket.ticketSelect.alamatRumahSakit,
@@ -143,7 +145,7 @@ class _BodyState extends State<Body> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      DateFormat("EEEE, dd MMMM yyyy")
+                                      DateFormat("E, dd-MM-yyyy")
                                           .format(
                                               ticket.ticketSelect.dateSession)
                                           .toString(),
@@ -327,7 +329,7 @@ class _BodyState extends State<Body> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5))),
                                       child: Text(
-                                        "Detail Tiket Vaksn",
+                                        "Detail Tiket Vaksin",
                                         style: paragraphBold3(cMainWhite),
                                       ),
                                     ),
@@ -357,6 +359,8 @@ class _BodyState extends State<Body> {
                                     Text(
                                       ticket.ticketSelect.namaRumahSakit,
                                       style: paragraphBold2(Colors.black),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
                                       ticket.ticketSelect.alamatRumahSakit,
@@ -373,7 +377,7 @@ class _BodyState extends State<Body> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      DateFormat("EEEE, dd MMMM yyyy")
+                                      DateFormat("E, dd-MM-yyyy")
                                           .format(
                                               ticket.ticketSelect.dateSession)
                                           .toString(),

@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String city = "Yogyakarta";
+  String city = "Jakarta";
   final _formKey = GlobalKey<FormBuilderState>();
 
   @override

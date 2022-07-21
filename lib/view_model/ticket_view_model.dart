@@ -36,9 +36,9 @@ class TicketViewModel extends ChangeNotifier {
 
   Future saveTicket(Ticket data) async {
     _ticketSelect = data;
-    _dataTicket.add(data);
     Response response = await TicketAPI.addData(data.toJson(), token);
     if (response.statusCode == 200) {
+      _dataTicket.add(data);
       notifyListeners();
       return true;
     } else {

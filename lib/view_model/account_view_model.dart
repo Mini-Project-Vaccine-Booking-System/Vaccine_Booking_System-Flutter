@@ -60,6 +60,10 @@ class AccoutnViewModel extends ChangeNotifier {
   }
 
   Future updateUser(String hint, newData, [String? oldPassword]) async {
+    if (newData == null || newData == "") {
+      return false;
+    }
+
     if (hint == "password") {
       final dataPassword = {
         "currentPassword": oldPassword,
